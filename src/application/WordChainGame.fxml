@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.WordChainGameController">
+   <children>
+      <TextField fx:id="inputWord" layoutX="174.0" layoutY="83.0" onKeyPressed="#onPressEnter" />
+      <Button layoutX="297.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClickMainButton" text="메인으로" />
+      <Label fx:id="lbMessage" layoutX="186.0" layoutY="160.0" />
+      <Label fx:id="lbPrevWord" layoutX="118.0" layoutY="87.0" />
+      <Label fx:id="lbScore" layoutX="249.0" layoutY="169.0" />
+   </children>
+</AnchorPane>
