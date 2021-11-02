@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class WordChainGameController {
+public class WordChainGameComputerController {
     private Stage stage;
     private int score;
     private ArrayList<String> wordList = new ArrayList<String>();

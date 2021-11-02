@@ -11,9 +11,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OmokController">
+<AnchorPane prefHeight="814.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OmokController">
    <children>
-      <GridPane fx:id="omokBoard" prefHeight="750.0" prefWidth="750.0" style="-fx-background-color: C69D30;" stylesheets="@Omok.css" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
+      <GridPane fx:id="omokBoard" prefHeight="750.0" prefWidth="750.0" style="-fx-background-color: C69D30;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="70.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -446,26 +446,21 @@
             </Line>
          </children>
       </GridPane>
-      <Label fx:id="turnText" layoutX="856.0" layoutY="113.0" text="흑돌의 차례입니다">
+      <Label fx:id="turnText" layoutX="14.0" layoutY="22.0" text="흑돌의 차례입니다">
          <font>
             <Font name="NanumGothic" size="29.0" />
          </font>
       </Label>
-      <Label fx:id="errorMessage" layoutX="806.0" layoutY="147.0">
-         <font>
-            <Font name="NanumGothic" size="29.0" />
-         </font>
-      </Label>
-      <Label layoutX="856.0" layoutY="243.0" text="남은 시간: ">
+      <Label layoutX="585.0" layoutY="30.0" text="남은 시간: ">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lbLimitTime" layoutX="949.0" layoutY="238.0">
+      <Label fx:id="lbLimitTime" layoutX="678.0" layoutY="25.0">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Button layoutX="969.0" layoutY="741.0" mnemonicParsing="false" onAction="#onClickMainButton" text="메인으로" />
+      <Button layoutX="448.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClickMainButton" prefHeight="50.0" prefWidth="131.0" text="메인으로" />
    </children>
 </AnchorPane>

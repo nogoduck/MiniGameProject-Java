@@ -13,16 +13,14 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("MainUI.fxml"));
 			Scene scene = new Scene(root);
-			//scene.getStylesheets().add(getClass().getResource("Omok.css").toExternalForm());
 			primaryStage.setTitle("미니게임");
+			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		//primaryStage.setOnCloseRequest(event -> terminate());
 	}
-
 
 	public static void main(String[] args) {
 		launch(args);

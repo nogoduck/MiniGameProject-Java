@@ -25,7 +25,6 @@ import javafx.stage.Stage;
 
 public class OmokController implements Initializable{
 
-	@FXML private Label errorMessage;
 	@FXML private Label turnText;
 	@FXML private Label lbLimitTime;
 	@FXML private GridPane omokBoard;
@@ -427,9 +426,9 @@ public class OmokController implements Initializable{
 		}
 	}
 
+
     @FXML
     void onClickBoard(MouseEvent e) {
-    	errorMessage.setText("");
     	runTimer();
     	Node source = (Node)e.getSource() ;
     	Integer row = GridPane.getRowIndex(source);
@@ -441,7 +440,10 @@ public class OmokController implements Initializable{
 		if(checkBoard(row, col)) return;
 		if (stoneType == 'W'){
 			System.out.println("stoneType = " + stoneType);
-			if(!isBlack5Stone(row,col))	if((is33(row, col))||(is44(row, col))) return;
+			if(!isBlack5Stone(row,col))	if((is33(row, col))||(is44(row, col))) {
+				turnText.setText("흑돌이 착수할 수 없는 위치 입니다");
+				return;
+			}
 		}
 		if ( gameTurn == 1 ) {
 			imageAdress.push(new BorderPane());
@@ -469,26 +471,8 @@ public class OmokController implements Initializable{
 		count++;
     }
 
-	//중복처리 하고싶다...
-	@FXML
-	void onClickMainButton(ActionEvent e) throws IOException {
-
-		if (count > 1){
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setTitle("오목");
-			alert.setContentText("진행중인 게임을 종료하고 메인으로 이동할까요?");
-			Optional<ButtonType> btnResult = alert.showAndWait();
-			if (btnResult.get() == ButtonType.OK){
-				Node node = (Node)(e.getSource());
-				stage = (Stage)(node.getScene().getWindow());
-				Parent root = FXMLLoader.load(getClass().getResource("MainUI.fxml"));
-				Scene scene = new Scene(root);
-				stage.setTitle("미니게임");
-				stage.setScene(scene);
-				stage.show();
-			}
-			return;
-		}
+	void onShowMain(ActionEvent e) throws IOException{
+		if (timerTask != null) timerTask.cancel();
 		Node node = (Node)(e.getSource());
 		stage = (Stage)(node.getScene().getWindow());
 		Parent root = FXMLLoader.load(getClass().getResource("MainUI.fxml"));
@@ -498,8 +482,20 @@ public class OmokController implements Initializable{
 		stage.show();
 	}
 
+	@FXML
+	void onClickMainButton(ActionEvent e) throws IOException {
+		if (count > 1){
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("오목");
+			alert.setContentText("진행중인 게임을 종료하고 메인으로 이동할까요?");
+			Optional<ButtonType> btnResult = alert.showAndWait();
+			if (btnResult.get() == ButtonType.OK) onShowMain(e);
+			return;
+		}
+		onShowMain(e);
+	}
+
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initBoard();
 	}
-
 }

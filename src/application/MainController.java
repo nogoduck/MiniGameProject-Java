@@ -14,8 +14,14 @@ public class MainController {
     private Stage stage;
 
     @FXML
-    void onClick2048Button(ActionEvent e) {
-
+    void onClick2048Button(ActionEvent e) throws IOException {
+    	Node node = (Node)(e.getSource());
+        stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(getClass().getResource("Play2048UI.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("2048");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -33,11 +39,21 @@ public class MainController {
     void onClickWorkChainGameButton(ActionEvent e) throws IOException {
         Node node = (Node)(e.getSource());
         stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("WordChainGame.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("WordChainGameUI.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("끝말잇기");
         stage.setScene(scene);
         stage.show();
     }
 
+    @FXML
+    void onClickWorkChainGameComputerButton(ActionEvent e) throws IOException {
+        Node node = (Node)(e.getSource());
+        stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(getClass().getResource("WordChainGameComputerUI.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("끝말잇기");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
