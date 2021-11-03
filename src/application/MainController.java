@@ -50,7 +50,7 @@ public class MainController {
     void onClickWorkChainGameComputerButton(ActionEvent e) throws IOException {
         Node node = (Node)(e.getSource());
         stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("WordChainGameComputerUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("WordChainGameComputerUI2.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("끝말잇기");
         stage.setScene(scene);

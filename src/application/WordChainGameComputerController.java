@@ -3,13 +3,18 @@ package application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -18,12 +23,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class WordChainGameComputerController {
     private Stage stage;
     private int score;
+    private int chatIndex = 0;
     private ArrayList<String> wordList = new ArrayList<String>();
+    private List<Label> messageList = new ArrayList<>();
     private char lastWord;
     private char firstWord;
     private char subLastWord;
@@ -34,6 +42,12 @@ public class WordChainGameComputerController {
     @FXML private Label lbPrevWord;
     @FXML private Label lbScore;
     @FXML private Label lbComputerWord;
+    @FXML private Label lbWordList;
+    @FXML private ImageView backBtn;
+    @FXML private VBox chatContainer;
+    private ScrollPane scrollContainer = new ScrollPane();
+    private final VBox newBox = new VBox(5);
+
     private final int minLetterCnt = 2;
 
 
@@ -86,7 +100,7 @@ public class WordChainGameComputerController {
             }else {
                 for(int i = 1; i<wordBox.length;i++) {
                     randomNum = (int) Math.floor(Math.random()* wordBox.length);
-                    if (!wordList.contains(wordBox[randomNum])){
+                    if (!wordList.contains(wordBox[randomNum]) && randomNum != 0){
                         return wordBox[randomNum];
                     }
                 }
@@ -133,7 +147,14 @@ public class WordChainGameComputerController {
     void addScore(){
         lbScore.setText(Integer.toString(++score));
     }
-
+    void setCombineWordList(){
+        String combineWordList = "";
+        for(String i:wordList){
+            combineWordList = combineWordList + ", \n "  + i;
+        }
+        System.out.println("combineWordList = " + combineWordList);
+        lbWordList.setText(combineWordList);
+    }
 
     @FXML
     void onPressEnter(KeyEvent e) {
@@ -153,12 +174,21 @@ public class WordChainGameComputerController {
             } else {
                 // 새로 입력한 단어가 전에 입력한 마지막 글자와 같은지 비교
                 if((score>=1)&&(lastWord!=word.charAt(0))) {
-                    setMessage("시작 글자는[ " + lastWord + " ]입니다.");
+                    setMessage("시작 글자는 \'" + lastWord + "\'입니다.");
                     return;
                 }
             }
             setMessage("");
             if(isWord(word)) {
+
+                messageList.add(new Label(word));
+                System.out.println("messageList = " + messageList);
+                if(chatIndex % 2 == 0) messageList.get(chatIndex).setAlignment(Pos.CENTER_LEFT);
+                else messageList.get(chatIndex).setAlignment(Pos.CENTER_RIGHT);
+                chatContainer.getChildren().add(messageList.get(chatIndex));
+                chatIndex += 1;
+
+
                 wordList.add(word);
                 setLastWord(word);
                 runPhoneticRule();
@@ -166,7 +196,7 @@ public class WordChainGameComputerController {
                 if(phoneticRule) comWord = computerWord(subLastWord);
                 else comWord = computerWord(lastWord);
                 if(comWord != null) setComWord(comWord);
-                else setComWord("단어가 떠오르지 않아요 😥");
+                else setComWord("단어가 떠오르지 않아요");
                 wordList.add(comWord);
                 lbPrevWord.setText(word);
                 setLastWord(comWord);
@@ -174,15 +204,17 @@ public class WordChainGameComputerController {
                 if(!phoneticRule) subLastWord = Character.MIN_VALUE;
                 if(subLastWord != Character.MIN_VALUE) msgSubLastWord = ", " + subLastWord;
                 else msgSubLastWord = "";
-                setMessage("[ " + lastWord + msgSubLastWord + " ]로 시작하는 단어를 입력하세요.");
+                setMessage("\'" + lastWord + msgSubLastWord + "\' (으)로 시작하는 단어를 입력하세요.");
                 inputWord.setText("");
                 addScore();
+                setCombineWordList();
             } else setMessage("등록되지 않은 단어입니다.");
         }
     }
 
+
     @FXML
-    void onClickMainButton(ActionEvent e) throws IOException {
+    void onClickMainButton(MouseEvent e) throws IOException {
         Node node = (Node)(e.getSource());
         stage = (Stage)(node.getScene().getWindow());
         Parent root = FXMLLoader.load(getClass().getResource("MainUI.fxml"));
