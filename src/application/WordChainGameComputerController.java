@@ -3,6 +3,7 @@ package application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -24,9 +25,10 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 
-public class WordChainGameComputerController {
+public class WordChainGameComputerController implements Initializable {
     private Stage stage;
     private int score;
     private int chatIndex = 0;
@@ -37,6 +39,8 @@ public class WordChainGameComputerController {
     private char subLastWord;
     private boolean phoneticRule = false;
     private String msgSubLastWord;
+
+    private VBox chatBox = new VBox(5);
     @FXML private TextField inputWord;
     @FXML private Label lbMessage;
     @FXML private Label lbPrevWord;
@@ -45,8 +49,8 @@ public class WordChainGameComputerController {
     @FXML private Label lbWordList;
     @FXML private ImageView backBtn;
     @FXML private VBox chatContainer;
-    private ScrollPane scrollContainer = new ScrollPane();
-    private final VBox newBox = new VBox(5);
+    @FXML private ScrollPane scrollContainer;
+
 
     private final int minLetterCnt = 2;
 
@@ -57,13 +61,13 @@ public class WordChainGameComputerController {
                 '늑', '늠', '능', '인', '임', '입', '냑', '략', '냥', '량',
                 '녀', '려', '녁', '력', '년', '련', '녈', '렬', '념', '렴',
                 '녕', '령', '녜', '례', '뇨', '료', '뉴', '류', '뉵', '륙',
-                '니', '리'};
+                '니', '리', '랴'};
         char beforeLetter[] = {'라', '락', '란', '랄', '람', '랍', '랑', '래', '랭', '렵',
                 '로', '록', '론', '롱', '뢰', '룡', '루', '륜', '률', '륭',
                 '륵', '름', '릉', '린', '림', '립', '약', '약', '양', '양',
                 '여', '여', '역', '역', '연', '연', '열', '열', '염', '염',
                 '영', '영', '예', '예', '요', '요', '유', '유', '육', '육',
-                '이', '이'};
+                '이', '이', '야'};
 
         for(int i = 0, letterLen = afterLetter.length; i < letterLen; i++){
             if(lastWord == afterLetter[i]){
@@ -155,6 +159,15 @@ public class WordChainGameComputerController {
         System.out.println("combineWordList = " + combineWordList);
         lbWordList.setText(combineWordList);
     }
+    void setChatList(String word){
+        messageList.add(new Label(word));
+        System.out.println("messageList = " + messageList);
+        System.out.println("chatIndex = " + chatIndex);
+        if(chatIndex % 2 == 0) messageList.get(chatIndex).setAlignment(Pos.CENTER_LEFT);
+        else messageList.get(chatIndex).setAlignment(Pos.CENTER_RIGHT);
+        chatContainer.getChildren().add(messageList.get(chatIndex));
+        chatIndex += 1;
+    }
 
     @FXML
     void onPressEnter(KeyEvent e) {
@@ -180,15 +193,7 @@ public class WordChainGameComputerController {
             }
             setMessage("");
             if(isWord(word)) {
-
-                messageList.add(new Label(word));
-                System.out.println("messageList = " + messageList);
-                if(chatIndex % 2 == 0) messageList.get(chatIndex).setAlignment(Pos.CENTER_LEFT);
-                else messageList.get(chatIndex).setAlignment(Pos.CENTER_RIGHT);
-                chatContainer.getChildren().add(messageList.get(chatIndex));
-                chatIndex += 1;
-
-
+                setChatList(word);
                 wordList.add(word);
                 setLastWord(word);
                 runPhoneticRule();
@@ -197,6 +202,7 @@ public class WordChainGameComputerController {
                 else comWord = computerWord(lastWord);
                 if(comWord != null) setComWord(comWord);
                 else setComWord("단어가 떠오르지 않아요");
+                setChatList(comWord);
                 wordList.add(comWord);
                 lbPrevWord.setText(word);
                 setLastWord(comWord);
@@ -224,4 +230,6 @@ public class WordChainGameComputerController {
         stage.show();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) { }
 }
