@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -57,10 +58,11 @@
                 </Label>
             </children>
         </AnchorPane>
-        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="54.0" onMouseClicked="#onClickMainButton" pickOnBounds="true">
-            <image>
-                <Image url="@texture/arrow.png" />
-            </image>
-        </ImageView>
+      <Pane layoutX="11.0" layoutY="54.0" onMouseClicked="#onClickMainButton" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="40.0" prefWidth="40.0" />
+      <ImageView fitHeight="28.0" fitWidth="33.0" layoutX="14.0" layoutY="60.0">
+         <image>
+            <Image url="@../../../../Downloads/arrow_2048.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

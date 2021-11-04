@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.*;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -471,7 +470,7 @@ public class OmokController implements Initializable{
 		count++;
 	}
 
-	void onShowMain(ActionEvent e)throws IOException{
+	void onShowMain(MouseEvent e)throws IOException{
 		if(timerTask != null)timerTask.cancel();
 		Node node =(Node)(e.getSource());
 		stage =(Stage)(node.getScene().getWindow());
@@ -483,7 +482,7 @@ public class OmokController implements Initializable{
 	}
 
 	@FXML
-	void onClickMainButton(ActionEvent e)throws IOException{
+	void onClickMainButton(MouseEvent e)throws IOException{
 		if(count > 1){
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("오목");
@@ -493,6 +492,17 @@ public class OmokController implements Initializable{
 			return;
 		}
 		onShowMain(e);
+	}
+
+	@FXML
+	void onHoverEnter(MouseEvent e) {
+		Node source = (Node)e.getSource();
+		source.setStyle("-fx-cursor:hand;");
+	}
+	@FXML
+	void onHoverExit(MouseEvent e) {
+		Node source = (Node)e.getSource();
+		source.setStyle("-fx-cursor:default;");
 	}
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
