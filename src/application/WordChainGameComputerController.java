@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -39,21 +40,15 @@ public class WordChainGameComputerController implements Initializable {
     private char subLastWord;
     private boolean phoneticRule = false;
     private String msgSubLastWord;
-
+    private final int minLetterCnt = 2;
     private VBox chatBox = new VBox(5);
     @FXML private TextField inputWord;
-    @FXML private Label lbMessage;
-    @FXML private Label lbPrevWord;
-    @FXML private Label lbScore;
-    @FXML private Label lbComputerWord;
-    @FXML private Label lbWordList;
-    @FXML private ImageView backBtn;
-    @FXML private VBox chatContainer;
+    @FXML private Text tMessage;
+    @FXML private Text tScore;
+//    @FXML private Label lbPrevWord;
+//    @FXML private Label lbComputerWord;
+    @FXML private VBox chatContainer1;
     @FXML private ScrollPane scrollContainer;
-
-
-    private final int minLetterCnt = 2;
-
 
     void runPhoneticRule(){
         char afterLetter[] = {'나', '낙', '난', '날', '남', '납', '낭', '내', '냉', '엽',
@@ -83,7 +78,6 @@ public class WordChainGameComputerController implements Initializable {
         }
         phoneticRule = false;
     }
-
     String computerWord(char word){
         try {
             String findWord;
@@ -115,7 +109,6 @@ public class WordChainGameComputerController implements Initializable {
         }
         return null;    // 컴퓨터가 입력할 단어가 없어서 패배
     }
-
     boolean isWord(String word){
         try {
             URL url = new URL("https://stdict.korean.go.kr/common/autoComplete.json?searchKeyword=" + word);
@@ -132,45 +125,42 @@ public class WordChainGameComputerController implements Initializable {
         }
         return false;
     }
-
     void setFirstWord(String word){
         firstWord = word.charAt(0);
-        System.out.println("firstWord >> " + firstWord);
     }
-
     void setLastWord(String word){
         lastWord = word.charAt(word.length() - 1);
-        System.out.println("lastWord = " + lastWord);
     }
-    void setComWord(String word){
-        lbComputerWord.setText(word);
-    }
+
     void setMessage(String message){
-        lbMessage.setText(message);
+        tMessage.setText(message);
+        scrollContainer.setVvalue(1D);
+
     }
     void addScore(){
-        lbScore.setText(Integer.toString(++score));
+        tScore.setText(Integer.toString(++score));
     }
-    void setCombineWordList(){
-        String combineWordList = "";
-        for(String i:wordList){
-            combineWordList = combineWordList + ", \n "  + i;
-        }
-        System.out.println("combineWordList = " + combineWordList);
-        lbWordList.setText(combineWordList);
-    }
+
     void setChatList(String word){
         messageList.add(new Label(word));
-        System.out.println("messageList = " + messageList);
-        System.out.println("chatIndex = " + chatIndex);
-        if(chatIndex % 2 == 0) messageList.get(chatIndex).setAlignment(Pos.CENTER_LEFT);
-        else messageList.get(chatIndex).setAlignment(Pos.CENTER_RIGHT);
-        chatContainer.getChildren().add(messageList.get(chatIndex));
+        if(chatIndex % 2 == 0) {
+            messageList.get(chatIndex).setAlignment(Pos.CENTER_RIGHT);
+            chatBox.getChildren().add(messageList.get(chatIndex));
+            chatBox.getStyleClass().add("right");
+        } else {
+            messageList.get(chatIndex).setAlignment(Pos.CENTER_LEFT);
+            chatBox.getChildren().add(messageList.get(chatIndex));
+            chatBox.getStyleClass().add("left");
+        }
         chatIndex += 1;
+        scrollContainer.setVvalue(1D);
+
     }
 
     @FXML
     void onPressEnter(KeyEvent e) {
+        scrollContainer.setVvalue(1D);
+        System.out.println("scrollContainer.getHvalue() = " + scrollContainer.getHvalue());
         if( e.getCode() == KeyCode.ENTER ) {
             String word = inputWord.getText();
             if(word.length() < minLetterCnt) {
@@ -200,11 +190,15 @@ public class WordChainGameComputerController implements Initializable {
                 String comWord;
                 if(phoneticRule) comWord = computerWord(subLastWord);
                 else comWord = computerWord(lastWord);
-                if(comWord != null) setComWord(comWord);
-                else setComWord("단어가 떠오르지 않아요");
+                if(comWord == null) {
+                    setMessage("컴퓨터 패배!");
+                    setChatList("단어가 떠오르지 않아요 ㅠㅠ");
+                    return;
+                }
                 setChatList(comWord);
+
                 wordList.add(comWord);
-                lbPrevWord.setText(word);
+
                 setLastWord(comWord);
                 runPhoneticRule();
                 if(!phoneticRule) subLastWord = Character.MIN_VALUE;
@@ -213,7 +207,9 @@ public class WordChainGameComputerController implements Initializable {
                 setMessage("\'" + lastWord + msgSubLastWord + "\' (으)로 시작하는 단어를 입력하세요.");
                 inputWord.setText("");
                 addScore();
-                setCombineWordList();
+//
+
+
             } else setMessage("등록되지 않은 단어입니다.");
         }
     }
@@ -231,5 +227,8 @@ public class WordChainGameComputerController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { }
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        scrollContainer.setContent(chatBox);
+        scrollContainer.setVvalue(1D);
+    }
 }
