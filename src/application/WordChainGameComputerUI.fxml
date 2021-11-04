@@ -6,7 +6,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.MeshView?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -21,8 +20,8 @@
                 </Text>
             </children>
         </Pane>
-      <Pane layoutX="17.0" layoutY="62.0" onMouseClicked="#onClickMainButton" opacity="0.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #0040ff;" />
-        <TextField fx:id="inputWord" layoutX="23.0" layoutY="591.0" onKeyPressed="#onPressEnter" prefHeight="39.0" prefWidth="350.0" promptText="단어를 입력하세요." style="-fx-background-color: #f5f6fa;">
+      <Pane layoutX="17.0" layoutY="62.0" onMouseClicked="#onClickMainButton" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" opacity="0.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #0040ff;" />
+        <TextField fx:id="inputWord" layoutX="72.0" layoutY="592.0" onKeyPressed="#onPressEnter" prefHeight="39.0" prefWidth="311.0" promptText="단어를 입력하세요." style="-fx-background-color: #f5f6fa;">
             <font>
                 <Font size="18.0" />
             </font></TextField>
@@ -36,12 +35,12 @@
                 <Font size="18.0" />
             </font></Text>
         <ScrollPane fx:id="scrollContainer" layoutX="12.0" layoutY="127.0" prefHeight="449.0" prefWidth="372.0" />
-        <ImageView fitHeight="24.0" fitWidth="27.0" layoutX="321.0" layoutY="599.0">
+        <ImageView fitHeight="24.0" fitWidth="27.0" layoutX="345.0" layoutY="600.0">
             <image>
                 <Image url="@texture/paper-plane.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="22.0" layoutY="66.0" onMouseClicked="#onClickMainButton">
+        <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="22.0" layoutY="66.0" onMouseClicked="#onClickMainButton" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit">
             <image>
                 <Image url="@texture/arrow.png" />
             </image>
@@ -61,7 +60,10 @@
                 <Image url="@texture/competition.png" />
             </image>
         </ImageView>
-      <MeshView />
-      <MeshView layoutX="12.0" layoutY="111.0" />
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="17.0" layoutY="592.0" onMouseClicked="#onClickRefresh" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit">
+         <image>
+            <Image url="@texture/refresh.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

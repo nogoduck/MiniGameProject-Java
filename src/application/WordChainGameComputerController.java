@@ -1,6 +1,6 @@
 package application;
 
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -45,9 +44,6 @@ public class WordChainGameComputerController implements Initializable {
     @FXML private TextField inputWord;
     @FXML private Text tMessage;
     @FXML private Text tScore;
-//    @FXML private Label lbPrevWord;
-//    @FXML private Label lbComputerWord;
-    @FXML private VBox chatContainer1;
     @FXML private ScrollPane scrollContainer;
 
     void runPhoneticRule(){
@@ -131,17 +127,15 @@ public class WordChainGameComputerController implements Initializable {
     void setLastWord(String word){
         lastWord = word.charAt(word.length() - 1);
     }
-
     void setMessage(String message){
         tMessage.setText(message);
-        scrollContainer.setVvalue(1D);
 
     }
     void addScore(){
         tScore.setText(Integer.toString(++score));
     }
-
     void setChatList(String word){
+
         messageList.add(new Label(word));
         if(chatIndex % 2 == 0) {
             messageList.get(chatIndex).setAlignment(Pos.CENTER_RIGHT);
@@ -153,14 +147,10 @@ public class WordChainGameComputerController implements Initializable {
             chatBox.getStyleClass().add("left");
         }
         chatIndex += 1;
-        scrollContainer.setVvalue(1D);
-
     }
-
     @FXML
     void onPressEnter(KeyEvent e) {
         scrollContainer.setVvalue(1D);
-        System.out.println("scrollContainer.getHvalue() = " + scrollContainer.getHvalue());
         if( e.getCode() == KeyCode.ENTER ) {
             String word = inputWord.getText();
             if(word.length() < minLetterCnt) {
@@ -193,12 +183,11 @@ public class WordChainGameComputerController implements Initializable {
                 if(comWord == null) {
                     setMessage("컴퓨터 패배!");
                     setChatList("단어가 떠오르지 않아요 ㅠㅠ");
+                    inputWord.setVisible(false);
                     return;
                 }
                 setChatList(comWord);
-
                 wordList.add(comWord);
-
                 setLastWord(comWord);
                 runPhoneticRule();
                 if(!phoneticRule) subLastWord = Character.MIN_VALUE;
@@ -207,14 +196,13 @@ public class WordChainGameComputerController implements Initializable {
                 setMessage("\'" + lastWord + msgSubLastWord + "\' (으)로 시작하는 단어를 입력하세요.");
                 inputWord.setText("");
                 addScore();
-//
-
-
+                scrollToBottom();
             } else setMessage("등록되지 않은 단어입니다.");
         }
     }
-
-
+    public void scrollToBottom() {
+        Platform.runLater(() -> this.scrollContainer.vvalueProperty().setValue(1.0));
+    }
     @FXML
     void onClickMainButton(MouseEvent e) throws IOException {
         Node node = (Node)(e.getSource());
@@ -225,10 +213,31 @@ public class WordChainGameComputerController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    void onHoverEnter(MouseEvent e) {
+        Node source = (Node)e.getSource();
+        source.setStyle("-fx-cursor:hand;");
+    }
+    @FXML
+    void onHoverExit(MouseEvent e) {
+        Node source = (Node)e.getSource();
+        source.setStyle("-fx-cursor:default;");
+    }
+
+    @FXML
+    void onClickRefresh(MouseEvent e) throws IOException {
+        Node node = (Node)(e.getSource());
+        stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(getClass().getResource("WordChainGameComputerUI.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("컴퓨터와 함께하는 끝말잇기");
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         scrollContainer.setContent(chatBox);
-        scrollContainer.setVvalue(1D);
+        scrollContainer.setFitToWidth(true);
     }
 }
