@@ -1,4 +1,4 @@
-package application.bluemarble.client.GameLobby;
+package application.Bluemarble.Client.ConnectModal;
 
 
 import javafx.event.ActionEvent;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class IndexController {
+public class ConnectModalController {
 
 
     @FXML private Label lbMessage;
@@ -22,7 +22,7 @@ public class IndexController {
     void onClickCancel(ActionEvent e) throws IOException {
         Node node = (Node)(e.getSource());
         Stage stage = (Stage) (node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("../MainUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../../../MainUI.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("미니게임");
         stage.setScene(scene);
