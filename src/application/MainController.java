@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -51,6 +50,16 @@ public class MainController {
         Parent root = FXMLLoader.load(getClass().getResource("WordChainGameComputerUI.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("컴퓨터와 함께하는 끝말잇기");
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    void onClickBluemarbleButton(MouseEvent e) throws IOException {
+        Node node = (Node)(e.getSource());
+        stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(getClass().getResource("bluemarble/client/ConnectModal/index.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("부루마블");
         stage.setScene(scene);
         stage.show();
     }

@@ -31,7 +31,7 @@
             <Image url="@texture/btn_2048.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="112.0" fitWidth="271.0" layoutX="15.0" layoutY="512.0" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit">
+      <ImageView fitHeight="112.0" fitWidth="271.0" layoutX="15.0" layoutY="512.0" onMouseClicked="#onClickBluemarbleButton" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit">
          <image>
             <Image url="@texture/btn_bluemarble.png" />
          </image>

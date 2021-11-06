@@ -445,17 +445,17 @@ public class OmokController implements Initializable{
 			}
 		}
 		if(gameTurn == 1) {
+			stoneType = 'B';
 			imageAdress.push(new BorderPane());
 			omokBoard.add((Node)imageAdress.peek(), col, row);  // AnchorPane 를 덮어 착수된 위치는 hover이 되지 않기위해
 			imageAdress.push(new ImageView(new Image(getClass().getResourceAsStream("texture/black.png"))));
 			omokBoard.add((Node)imageAdress.peek(),col, row);
-			stoneType = 'B';
-		} else {
+		}else{
+			stoneType = 'W';
 			imageAdress.push(new BorderPane());
 			omokBoard.add((Node)imageAdress.peek(), col, row);  // AnchorPane 를 덮어 착수된 위치는 hover이 되지 않기위해
 			imageAdress.push(new ImageView(new Image(getClass().getResourceAsStream("texture/white.png"))));
 			omokBoard.add((Node)imageAdress.peek(),col, row);
-			stoneType = 'W';
 		}
 		setBoard(row, col, stoneType);
 
