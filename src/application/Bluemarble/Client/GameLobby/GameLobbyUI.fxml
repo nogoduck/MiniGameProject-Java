@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="550.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameLobbyController">
+<AnchorPane prefHeight="550.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Bluemarble.Client.GameLobby.GameLobbyController">
    <children>
       <ScrollPane fx:id="GameRoomContainer" layoutX="14.0" layoutY="14.0" prefHeight="520.0" prefWidth="365.0">
         <content>
@@ -24,7 +24,7 @@
       </Button>
       <ImageView fitHeight="126.0" fitWidth="126.0" layoutX="616.0" layoutY="235.0" opacity="0.5">
          <image>
-            <Image url="@texture/logo_bluemarble.png" />
+            <Image url="@../../../texture/logo_bluemarble.png" />
          </image>
       </ImageView>
       <ScrollPane fx:id="PlayerListContainer" layoutX="393.0" layoutY="235.0" prefHeight="220.0" prefWidth="207.0">

@@ -1,10 +1,18 @@
-package application;
+package application.Bluemarble.Client.SetNicknameModal;
 
+import application.Bluemarble.Client.GameLobby.GameLobbyController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class SetNicknameModalController {
 
@@ -21,7 +29,9 @@ public class SetNicknameModalController {
     }
 
 
-    void setEnableNickname(boolean b){ enableNickname = b; }
+    void setEnableNickname(boolean bool){ enableNickname = bool; }
+
+
     void setMessage(String message, boolean type){
         //message: 메세지 / type: true(정상), false(불량)
         if (type){
@@ -48,10 +58,15 @@ public class SetNicknameModalController {
     }
 
     @FXML
-    void onClickRunGame(ActionEvent e) {
+    void onClickRunGame(ActionEvent e) throws IOException {
         if(!enableNickname) return;
-
-
+        Node node = (Node)(e.getSource());
+        Stage stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("부루마블");
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

@@ -1,4 +1,4 @@
-package application.Bluemarble.server;
+package application.Bluemarble.Server;
 
 
 public class Server {

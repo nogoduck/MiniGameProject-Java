@@ -1,33 +1,20 @@
 package application.Bluemarble.Client.GameLobby;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-
-import java.io.IOException;
+import javafx.scene.control.ScrollPane;
 
 public class GameLobbyController {
 
-
-    @FXML private Label lbMessage;
-
+    @FXML
+    private ScrollPane GameRoomContainer;
 
     @FXML
-    void onClickCancel(ActionEvent e) throws IOException {
-        Node node = (Node)(e.getSource());
-        Stage stage = (Stage) (node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("../MainUI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("미니게임");
-        stage.setScene(scene);
-        stage.show();
-    }
+    private ScrollPane PlayerListContainer;
 
+    @FXML
+    void onClickCreateRoom(ActionEvent event) {
+
+    }
 
 }
