@@ -58,8 +58,8 @@ public class MainController {
     void onClickBluemarbleButton(MouseEvent e) throws IOException {
         Node node = (Node)(e.getSource());
         stage = (Stage)(node.getScene().getWindow());
+//        Parent root = FXMLLoader.load(ConnectModalController.class.getResource("ConnectModalUI.fxml"));
         Parent root = FXMLLoader.load(ConnectModalController.class.getResource("ConnectModalUI.fxml"));
-//        Parent root = FXMLLoader.load(getClass().getResource("bluemarble/client/ConnectModal/ConnectModalUI.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("부루마블");
         stage.setScene(scene);

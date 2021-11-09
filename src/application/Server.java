@@ -9,6 +9,9 @@ public class Server {
 
 
     public static void main(String[] args) throws IOException {
+
+        // 참고용 (사용안함)
+        // 적용 예정 경로: Bluemable.Server.Server.java
         ServerSocket server = null;
         Socket socket = null;
         BufferedReader in = null; //입력
