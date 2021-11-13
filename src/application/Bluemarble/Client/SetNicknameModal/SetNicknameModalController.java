@@ -1,6 +1,7 @@
 package application.Bluemarble.Client.SetNicknameModal;
 
 import application.Bluemarble.Client.GameLobby.GameLobbyController;
+import application.Bluemarble.Client.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +15,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SetNicknameModalController {
+public class SetNicknameModalController extends Main {
 
+    Main main = new Main();
     private boolean enableNickname = false;
     @FXML private TextField ftNickname;
     @FXML private Label lbMessage;
@@ -60,13 +62,15 @@ public class SetNicknameModalController {
     @FXML
     void onClickRunGame(ActionEvent e) throws IOException {
         if(!enableNickname) return;
-        Node node = (Node)(e.getSource());
-        Stage stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("부루마블");
-        stage.setScene(scene);
-        stage.show();
+        main.startClient("127.0.0.1", 5005);
+        main.send("#Nickname:" + ftNickname.getText());
+        //        Node node = (Node)(e.getSource());
+//        Stage stage = (Stage)(node.getScene().getWindow());
+//        Parent root = FXMLLoader.load(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
+//        Scene scene = new Scene(root);
+//        stage.setTitle("부루마블");
+//        stage.setScene(scene);
+//        stage.show();
     }
 
 }

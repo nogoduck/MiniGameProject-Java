@@ -36,13 +36,19 @@ public class Client {
                         //UTF-8로 한글도 처리가능하게 세팅
                         String message =  new String(buffer, 0, length, "UTF-8");
 
-                        System.out.println("userList >> " + userList);
-                        System.out.println("receive ...5");
-                        System.out.println("message >> " + message);
-                            userList.add(message);
-                        if(message.contains("#NICKNAME:")){
-                            System.out.println("receive ...10");
-                            message.replaceAll("#NICKNAME:", "");
+
+                        if(message.contains("#Nickname:")){
+                            System.out.println("Nickname parsing...");
+                            System.out.println("message >> " + message);
+                            message = message.replace("#Nickname:", "");
+                            System.out.println("message >> " + message);
+
+                            if(userList.contains(message)){
+                                System.out.println("이미 등록되어 있는 닉네임 입니다.");
+                                send("이미 등록되어 있는 닉네임 입니다.");
+                                return;
+                            }
+
                             userList.add(message);
                         }
                         System.out.println("userList >> " + userList);
