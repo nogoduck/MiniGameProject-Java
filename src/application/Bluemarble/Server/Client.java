@@ -11,6 +11,7 @@ public class Client {
     Socket socket;
 
     public static ArrayList userList = new ArrayList();
+
     public Client(Socket socket){
         this.socket = socket;
         receive();

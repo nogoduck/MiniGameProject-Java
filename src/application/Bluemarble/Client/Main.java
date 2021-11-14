@@ -4,16 +4,9 @@ import application.Bluemarble.Client.SetNicknameModal.SetNicknameModalController
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,6 +23,12 @@ public class Main extends Application {
     //총 2개의 스레드를 사용하고 있습니다.
     Socket socket;
     TextArea textArea;
+
+    public static String response;
+
+    public String getResponse(){
+        return response;
+    }
 
     //클라이언트 프로그램 동작 메서드
     public void startClient(String IP, int PORT){
@@ -71,9 +70,10 @@ public class Main extends Application {
                 int length = in.read(buffer);
                 if(length == -1) throw new IOException();
                 String message = new String(buffer, 0, length, "UTF-8");
-                Platform.runLater(() -> {
-                    textArea.appendText(message);
-                });
+                response = message;
+                //                Platform.runLater(() -> {
+//                    textArea.appendText(message);
+//                });
             } catch(Exception e) {
                 stopClient();
                 break;

@@ -64,6 +64,8 @@ public class SetNicknameModalController extends Main {
         if(!enableNickname) return;
         main.startClient("127.0.0.1", 5005);
         main.send("#Nickname:" + ftNickname.getText());
+        System.out.println("getRes >> " + main.getResponse());
+//        main.receive();
         //        Node node = (Node)(e.getSource());
 //        Stage stage = (Stage)(node.getScene().getWindow());
 //        Parent root = FXMLLoader.load(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
