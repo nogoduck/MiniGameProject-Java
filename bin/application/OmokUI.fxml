@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="814.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OmokController">
+<AnchorPane prefHeight="814.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OmokController">
    <children>
       <GridPane fx:id="omokBoard" prefHeight="750.0" prefWidth="750.0" style="-fx-background-color: C69D30;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="70.0">
          <columnConstraints>
@@ -472,5 +473,6 @@
             </ImageView>
          </children>
       </Pane>
+      <ProgressBar fx:id="progressBarTimeLimited" layoutY="65.0" prefHeight="10.0" prefWidth="750.0" progress="1.0" scaleShape="false" style="-fx-background-color: white;" />
    </children>
 </AnchorPane>

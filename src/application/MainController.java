@@ -1,69 +1,52 @@
 package application;
 
-import application.Bluemarble.Client.ConnectModal.ConnectModalController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+//import application.Bluemarble.testController;
 
 public class MainController {
     private Stage stage;
 
-    @FXML
-    void onClick2048Button(MouseEvent e) throws IOException {
-    	Node node = (Node)(e.getSource());
-        stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("Play2048UI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("2048");
-        stage.setScene(scene);
-        stage.show();
+    void stageChange(Node node, String fxmlUrl, String title) throws IOException {
+    	stage = (Stage)(node.getScene().getWindow());
+    	Parent root = FXMLLoader.load(getClass().getResource(fxmlUrl));
+    	Scene scene = new Scene(root);
+    	stage.setTitle(title);
+    	stage.setScene(scene);
+    	stage.show();
     }
     @FXML
     void onClickOmokButton(MouseEvent e) throws IOException {
-        Node node = (Node)(e.getSource());
-        stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("OmokUI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("오목");
-        stage.setScene(scene);
-        stage.show();
+    	Node node = (Node)(e.getSource());
+    	stageChange(node,"OmokUI.fxml", "오목");
     }
     @FXML
     void onClickWorkChainGameButton(MouseEvent e) throws IOException {
-        Node node = (Node)(e.getSource());
-        stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("WordChainGameUI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("끝말잇기");
-        stage.setScene(scene);
-        stage.show();
+    	Node node = (Node)(e.getSource());
+    	stageChange(node,"WordChainGameUI.fxml", "끝말잇기");
     }
     @FXML
     void onClickWorkChainGameComputerButton(MouseEvent e) throws IOException {
-        Node node = (Node)(e.getSource());
-        stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(getClass().getResource("WordChainGameComputerUI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("컴퓨터와 함께하는 끝말잇기");
-        stage.setScene(scene);
-        stage.show();
+    	Node node = (Node)(e.getSource());
+    	stageChange(node,"WordChainGameComputerUI.fxml", "컴퓨터와 함께하는 끝말잇기");
+    }
+    @FXML
+    void onClick2048Button(MouseEvent e) throws IOException {
+    	Node node = (Node)(e.getSource());
+    	stageChange(node,"Play2048UI.fxml", "2048");
     }
     @FXML
     void onClickBluemarbleButton(MouseEvent e) throws IOException {
-        Node node = (Node)(e.getSource());
-        stage = (Stage)(node.getScene().getWindow());
-//        Parent root = FXMLLoader.load(ConnectModalController.class.getResource("ConnectModalUI.fxml"));
-        Parent root = FXMLLoader.load(ConnectModalController.class.getResource("ConnectModalUI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("부루마블");
-        stage.setScene(scene);
-        stage.show();
+    	Node node = (Node)(e.getSource());
+//    	stageChange(node,"Bluemarble/testUI.fxml", "부루마블");
+    	stageChange(node,"Bluemarble/Client/GameLobby/GameLobbyUI.fxml", "부루마블");
     }
     @FXML
     void onHoverEnter(MouseEvent e) {
