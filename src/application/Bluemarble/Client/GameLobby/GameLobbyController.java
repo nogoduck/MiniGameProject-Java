@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Bluemarble.Client.Client;
 import application.MainController;
 import application.Bluemarble.Client.GameRoom.GameRoomController;
 import javafx.event.ActionEvent;
@@ -32,7 +33,9 @@ public class GameLobbyController implements Initializable {
     @FXML private AnchorPane serverConnectTryWindow;
     private boolean enableNickname = false;
     @FXML private Label lbMessage;
-//    Client client = new Client();
+
+
+    Client client = new Client();
     
     // 게임 로비 방만들기 버튼 클릭
     @FXML
@@ -99,28 +102,30 @@ public class GameLobbyController implements Initializable {
     }
     // 닉네임 설정창에서 접속 버튼
     @FXML
-    void onClickGameLobbyConnect(ActionEvent event) {
-    	 final String NICKNAME = tfUserInputNickName.getText();
+    void onClickGameLobbyConnect(ActionEvent e) {
+    	 final String nickname = tfUserInputNickName.getText();
+
     	 // 닉네임 설정창에서 서버가 열려있지 않은경우 체크
 //    	 if(!client.isConnect) {
 //    		 connectFileWindows.setVisible(true);    	// 서버 접속실패 창 활성화				
 //    	 }
-//         if(NICKNAME.equals("")) {
+//         if(nickname.equals("")) {
 //             setMessage("닉네임을 입력해주세요.", false);
 //             return;
 //         }
-//         if(isNickname(NICKNAME)){
+//         if(isNickname(nickname)){
 //             setMessage("사용 가능한 닉네임입니다.", true);
 //             setEnableNickname(true);
 ////             return;
 //         }
 //         // 서버로 닉네임 전달
-//         client.send(NICKNAME,"SETNICK");
+//         client.send(nickname,"SETNICK");
 //         nicSetWindow.setVisible(false);    			    		
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     	// 서버에 접속 시도
+//        client
 //		client.startClient("127.0.0.1", 5005);
     	nicSetWindow.setVisible(true);    			// 닉네임 설정창 활성화
     		
