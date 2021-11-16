@@ -1,7 +1,5 @@
 package application.Bluemarble.Server;
 
-import application.Bluemarble.Client.GameLobby.GameLobbyController;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -40,13 +38,8 @@ public class Client {
                         System.out.println("message >> " + message);
 
                         if(message.contains("##nickname")){
-                            System.out.println("Nickname parsing...");
-                            System.out.println("message >> " + message);
                             message = message.replace("##nickname", "");
-                            System.out.println("message >> " + message);
 
-//                            GameLobbyController.set
-s
                             if(userList.contains(message)){
                                 System.out.println("이미 등록되어 있는 닉네임 입니다.");
                                 send("##nickname" +"FALSE");
@@ -54,14 +47,13 @@ s
                                 userList.add(message);
                                 send("##nickname" + "TRUE");
                             }
-
                         }
                         System.out.println("userList >> " + userList);
 
                         //1:n의 통신을 위해 다른 클라이언트에도 정보를 전송해 주는 반복문
-                        for(Client client: Main.clients){
-                            client.send(message);
-                        }
+//                        for(Client client: Main.clients){
+//                            client.send(message);
+//                        }
 
                     }
                 } catch(Exception e){

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import application.Bluemarble.Client.Main;
 import application.MainController;
 import application.Bluemarble.Client.GameRoom.GameRoomController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,8 +37,16 @@ public class GameLobbyController extends Main implements Initializable{
     @FXML private Label lbMessage;
 
 
-    public void setData(String str){
+    public void setResMsg(String str){
         System.out.println("setData() str >> " + str);
+        lbMessage.setText(str);
+        nicSetWindow.setVisible(false);
+
+//        if(str.contains("##nickname")){
+        Platform.runLater(() -> {
+//                lbMessage.setText(str);
+//                nicSetWindow.setVisible(false);    			// 닉네임 설정창 활성화
+        });
     }
 
     // 게임 로비 방만들기 버튼 클릭
@@ -116,7 +125,10 @@ public class GameLobbyController extends Main implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startClient("localhost", 5005);
-    	nicSetWindow.setVisible(true);
+        nicSetWindow.setVisible(true);
+//        if(enableNickname) nicSetWindow.setVisible(false);
+//        else nicSetWindow.setVisible(true);
+
     }
 
 }

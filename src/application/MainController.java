@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
-    private Stage stage;
+    public Stage stage;
 
     void stageChange(Node node, String fxmlUrl, String title) throws IOException {
     	stage = (Stage)(node.getScene().getWindow());
