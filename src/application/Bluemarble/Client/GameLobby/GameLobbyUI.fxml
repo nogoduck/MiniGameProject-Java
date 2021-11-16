@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="550.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Bluemarble.Client.GameLobby.GameLobbyController">
    <children>
@@ -17,7 +18,14 @@
             <ScrollPane fx:id="GameRoomContainer" layoutX="-5.0" layoutY="4.0" prefHeight="520.0" prefWidth="365.0" />
          </children>
       </AnchorPane>
-      <Pane layoutX="393.0" layoutY="14.0" prefHeight="205.0" prefWidth="350.0" style="-fx-border-color: #000000;" />
+      <Pane layoutX="393.0" layoutY="14.0" prefHeight="205.0" prefWidth="350.0" style="-fx-border-color: #000000;">
+         <children>
+            <Text fx:id="tUserNickname" layoutX="174.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Text>
+         </children></Pane>
       <Button layoutX="393.0" layoutY="471.0" mnemonicParsing="false" onAction="#onClickCreateRoom" prefHeight="63.0" prefWidth="350.0" text="방만들기">
          <font>
             <Font name="NanumGothicBold" size="24.0" />

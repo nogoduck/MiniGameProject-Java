@@ -3,7 +3,6 @@ package application.Bluemarble.Client.GameLobby;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import application.Bluemarble.Client.Main;
 import application.MainController;
 import application.Bluemarble.Client.GameRoom.GameRoomController;
@@ -21,8 +20,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 
 public class GameLobbyController extends Main implements Initializable{
 
@@ -36,12 +35,24 @@ public class GameLobbyController extends Main implements Initializable{
     @FXML private AnchorPane serverConnectTryWindow;
     private boolean enableNickname = false;
     @FXML private Label lbMessage;
+    @FXML private Text tUserNickname;
 
 
     public void setResMsg(String str){
         System.out.println("setData() str >> " + str);
-        lbMessage.setText(str);
-        nicSetWindow.setVisible(false);
+
+        if(str.contains("##nickname")){
+            System.out.println("닉네임 맞음");
+            str = str.replace("##nickname", "");
+        }
+
+        System.out.println("str = " + str);
+        if(str.equals("TRUE")){
+            nicSetWindow.setVisible(false);
+            tUserNickname.setText(str);
+        } else {
+            setMessage("동일한 닉네임이 존재합니다.", false);
+        }
 
 //        if(str.contains("##nickname")){
         Platform.runLater(() -> {
@@ -116,12 +127,10 @@ public class GameLobbyController extends Main implements Initializable{
     // 닉네임 설정창에서 접속 버튼
     @FXML
     void onClickGameLobbyConnect(MouseEvent e) {
-        System.out.println("GameLobby Mouse Event >> " + e);
-        mouseEvent = e;
+//        System.out.println("GameLobby Mouse Event >> " + e);
+        setMouseEvent(e);
         final String nickname = tfUserInputNickName.getText();
-        send("##nickname" + nickname);
-
-//        System.out.println("reqMessage >> " + reqMessage);
+        send("@@payload:" + "##nickname" + nickname);
 
     }
 

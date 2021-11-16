@@ -37,15 +37,21 @@ public class Client {
 
                         System.out.println("message >> " + message);
 
-                        if(message.contains("##nickname")){
-                            message = message.replace("##nickname", "");
+                        if(message.contains("@@payload:")){
+                            String payload[] = message.replace("@@payload:", "").split("##");
 
-                            if(userList.contains(message)){
+                            System.out.printf("payload >> ");
+                            for(String s:payload){
+                                System.out.printf("%s ", s);
+                            }
+                            System.out.println();
+
+                            if(userList.contains(payload[0])){
                                 System.out.println("이미 등록되어 있는 닉네임 입니다.");
-                                send("##nickname" +"FALSE");
+                                send("@@payload:" + "##checkNickname" + "true");
                             } else {
                                 userList.add(message);
-                                send("##nickname" + "TRUE");
+                                send("@@payload:" + "##checkNickname" + "false");
                             }
                         }
                         System.out.println("userList >> " + userList);
@@ -54,7 +60,6 @@ public class Client {
 //                        for(Client client: Main.clients){
 //                            client.send(message);
 //                        }
-
                     }
                 } catch(Exception e){
                     //예외를 구체적으로 처리하기 위해 중첩해서 사용

@@ -20,7 +20,10 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class Main extends Application {
-    public MouseEvent mouseEvent;
+    //현재 클릭 이벤트가 발생한 아이템(지점)
+    private MouseEvent me;
+
+    public void setMouseEvent(MouseEvent e){ me = e; }
 
     Socket socket;
     TextArea textArea;
@@ -67,18 +70,9 @@ public class Main extends Application {
                 System.out.println("[receive] message >> " + message);
                 Platform.runLater(() -> {
 
-//                    Stage stage = new Stage();
-//                    MainController mc = new MainController();
-//                    Stage
-//                    mc.stage
-
-//                    Stage stage;
-                    System.out.println("Main mouse event >> " + mouseEvent);
-                    Node node = (Node)mouseEvent.getSource();
-                    Stage stage = (Stage)(node.getScene().getWindow());
-//                    Stage stage = (Stage)(mouseEvent.getSource().getScene().getWindow());
+//                    System.out.println("Main mouse event >> " + me);
+                    Stage stage = (Stage)(((Node)me.getSource()).getScene().getWindow());
                     FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
-
                     Parent root = null;
                     try {
                         root = (Parent)loader.load();
@@ -86,16 +80,15 @@ public class Main extends Application {
                         e.printStackTrace();
                     }
                     GameLobbyController controller = loader.<GameLobbyController>getController();
+
+                    if(message.contains("@@payload:")) {
+                        String payload[] = message.replace("@@payload:", "").split("##");
+                    }
                     controller.setResMsg(message);
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
 
-                    if(message.contains("##nickname")){
-                        String str = message.replace("##nickname", "");
-//                        GameLobbyController.push(str);
-//                        GameLobbyController glc = new GameLobbyController(str);
-                    }
                 });
 
 
