@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Bluemarble.Client.Client;
+import application.Bluemarble.Client.Main;
 import application.MainController;
 import application.Bluemarble.Client.GameRoom.GameRoomController;
 import javafx.event.ActionEvent;
@@ -21,7 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class GameLobbyController implements Initializable {
+
+public class GameLobbyController extends Main implements Initializable{
 
     @FXML private ScrollPane GameRoomContainer;
     @FXML private ScrollPane PlayerListContainer;
@@ -35,8 +36,10 @@ public class GameLobbyController implements Initializable {
     @FXML private Label lbMessage;
 
 
-    Client client = new Client();
-    
+    public void setData(String str){
+        System.out.println("setData() str >> " + str);
+    }
+
     // 게임 로비 방만들기 버튼 클릭
     @FXML
     void onClickCreateRoom(ActionEvent event) {
@@ -82,14 +85,14 @@ public class GameLobbyController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     void setEnableNickname(boolean bool){ enableNickname = bool; }
-    
-    boolean isNickname(String nickname){
-        //Server로 DB조회 요청 로직 작성
-        return true;
+
+    @FXML
+    void onClickSetNicknameModal(ActionEvent e) {
+    	nicSetWindow.setVisible(true);    			// 닉네임 설정창 활성화
     }
-    
+
     void setMessage(String message, boolean type){
         //message: 메세지 / type: true(정상), false(불량)
         if (type){
@@ -103,31 +106,17 @@ public class GameLobbyController implements Initializable {
     // 닉네임 설정창에서 접속 버튼
     @FXML
     void onClickGameLobbyConnect(ActionEvent e) {
-    	 final String nickname = tfUserInputNickName.getText();
+        final String nickname = tfUserInputNickName.getText();
+        send("##nickname" + nickname);
 
-    	 // 닉네임 설정창에서 서버가 열려있지 않은경우 체크
-//    	 if(!client.isConnect) {
-//    		 connectFileWindows.setVisible(true);    	// 서버 접속실패 창 활성화				
-//    	 }
-//         if(nickname.equals("")) {
-//             setMessage("닉네임을 입력해주세요.", false);
-//             return;
-//         }
-//         if(isNickname(nickname)){
-//             setMessage("사용 가능한 닉네임입니다.", true);
-//             setEnableNickname(true);
-////             return;
-//         }
-//         // 서버로 닉네임 전달
-//         client.send(nickname,"SETNICK");
-//         nicSetWindow.setVisible(false);    			    		
+//        System.out.println("reqMessage >> " + reqMessage);
+
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-    	// 서버에 접속 시도
-//        client
-//		client.startClient("127.0.0.1", 5005);
-    	nicSetWindow.setVisible(true);    			// 닉네임 설정창 활성화
-    		
+        startClient("localhost", 5005);
+    	nicSetWindow.setVisible(true);
     }
+
 }
