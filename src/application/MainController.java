@@ -24,6 +24,7 @@ public class MainController {
     @FXML
     void onClickOmokButton(MouseEvent e) throws IOException {
     	Node node = (Node)(e.getSource());
+        System.out.println("node = " + node);
     	stageChange(node,"OmokUI.fxml", "오목");
     }
     @FXML

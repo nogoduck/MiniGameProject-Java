@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -114,7 +115,9 @@ public class GameLobbyController extends Main implements Initializable{
     }
     // 닉네임 설정창에서 접속 버튼
     @FXML
-    void onClickGameLobbyConnect(ActionEvent e) {
+    void onClickGameLobbyConnect(MouseEvent e) {
+        System.out.println("GameLobby Mouse Event >> " + e);
+        mouseEvent = e;
         final String nickname = tfUserInputNickName.getText();
         send("##nickname" + nickname);
 

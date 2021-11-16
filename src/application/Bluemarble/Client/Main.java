@@ -2,13 +2,16 @@ package application.Bluemarble.Client;
 
 import application.Bluemarble.Client.GameLobby.GameLobbyController;
 import application.Bluemarble.Client.GameRoom.GameRoomController;
+import application.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +20,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class Main extends Application {
-
+    public MouseEvent mouseEvent;
 
     Socket socket;
     TextArea textArea;
@@ -64,7 +67,16 @@ public class Main extends Application {
                 System.out.println("[receive] message >> " + message);
                 Platform.runLater(() -> {
 
-                    Stage stage = new Stage();
+//                    Stage stage = new Stage();
+//                    MainController mc = new MainController();
+//                    Stage
+//                    mc.stage
+
+//                    Stage stage;
+                    System.out.println("Main mouse event >> " + mouseEvent);
+                    Node node = (Node)mouseEvent.getSource();
+                    Stage stage = (Stage)(node.getScene().getWindow());
+//                    Stage stage = (Stage)(mouseEvent.getSource().getScene().getWindow());
                     FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
 
                     Parent root = null;
