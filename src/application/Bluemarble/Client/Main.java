@@ -28,6 +28,14 @@ public class Main extends Application {
     Socket socket;
     TextArea textArea;
 
+    void printPayload(String str[]){
+        System.out.printf("payload >> ");
+        for(String s:str){
+            System.out.printf("%s ", s);
+        }
+        System.out.println();
+    }
+
     //클라이언트 프로그램 동작 메서드
     public void startClient(String IP, int PORT){
         Thread thread = new Thread(() -> {
@@ -71,7 +79,9 @@ public class Main extends Application {
                 Platform.runLater(() -> {
 
 //                    System.out.println("Main mouse event >> " + me);
-                    Stage stage = (Stage)(((Node)me.getSource()).getScene().getWindow());
+//                    Stage stage = (Stage)(((Node)me.getSource()).getScene().getWindow());
+                    Node node = (Node)me.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
                     Parent root = null;
                     try {
@@ -82,9 +92,10 @@ public class Main extends Application {
                     GameLobbyController controller = loader.<GameLobbyController>getController();
 
                     if(message.contains("@@payload:")) {
-                        String payload[] = message.replace("@@payload:", "").split("##");
+                        String payload[] = message.replace("@@payload:##", "").split("##");
+                        printPayload(payload);
+                        controller.setResMsg(payload);
                     }
-                    controller.setResMsg(message);
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
@@ -124,5 +135,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 //        startClient("localhost", 5005);
     }
+
+
+
+
     public static void main(String[] args) { launch(args); }
 }

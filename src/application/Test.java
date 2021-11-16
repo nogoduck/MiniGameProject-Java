@@ -5,20 +5,27 @@ public class Test {
 
     String str = "@@payload:##nickname##angryduck22";
     String str2 = "@@payload:##nickname##angryduck22##true";
+    String str3 = "@@payload:##checkNickname##Foxconn";
 
 
-    if(str2.contains("@@payload:")) {
-        String payload[] = str2.replace("@@payload:", "").split("##");
+    if(str3.contains("@@payload:")) {
+        String payload[] = str3.replace("@@payload:##", "").split("##");
 
-        System.out.printf("payload >> ");
-        for(String s:payload){
-            System.out.printf("%s ", s);
+        System.out.println("payload >> ");
+        for(int i = 0; i < payload.length; i++){
+//            System.out.printf("%s ", s);
+            System.out.println(i + ": " + payload[i]);
         }
         System.out.println();
 
     }
 
-
+    String phoneNum = "010-8888-2231-00321";
+    String removeFirst = phoneNum.replace("010-", "");
+    String splitPhoneNum[] = removeFirst.split("-");
+    for(int i = 0; i < splitPhoneNum.length; i++){
+        System.out.println(i + ": " + splitPhoneNum[i]);
+    }
 
 
 

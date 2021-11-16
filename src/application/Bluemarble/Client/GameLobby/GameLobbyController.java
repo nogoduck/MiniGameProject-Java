@@ -38,27 +38,15 @@ public class GameLobbyController extends Main implements Initializable{
     @FXML private Text tUserNickname;
 
 
-    public void setResMsg(String str){
-        System.out.println("setData() str >> " + str);
+    public void setResMsg(String str[]){
 
-        if(str.contains("##nickname")){
-            System.out.println("닉네임 맞음");
-            str = str.replace("##nickname", "");
-        }
-
-        System.out.println("str = " + str);
-        if(str.equals("TRUE")){
-            nicSetWindow.setVisible(false);
-            tUserNickname.setText(str);
-        } else {
+        //ex) payload[] >> [0]checkNickname, [1]true OR false, [2]"nickname"
+        if(str[1].contains("true")){
             setMessage("동일한 닉네임이 존재합니다.", false);
+        } else {
+            nicSetWindow.setVisible(false);
+            tUserNickname.setText(str[2]);
         }
-
-//        if(str.contains("##nickname")){
-        Platform.runLater(() -> {
-//                lbMessage.setText(str);
-//                nicSetWindow.setVisible(false);    			// 닉네임 설정창 활성화
-        });
     }
 
     // 게임 로비 방만들기 버튼 클릭
@@ -130,7 +118,8 @@ public class GameLobbyController extends Main implements Initializable{
 //        System.out.println("GameLobby Mouse Event >> " + e);
         setMouseEvent(e);
         final String nickname = tfUserInputNickName.getText();
-        send("@@payload:" + "##nickname" + nickname);
+//        .format 적용예정
+        send("@@payload:" + "##checkNickname" + "##" + nickname);
 
     }
 
@@ -138,9 +127,5 @@ public class GameLobbyController extends Main implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startClient("localhost", 5005);
         nicSetWindow.setVisible(true);
-//        if(enableNickname) nicSetWindow.setVisible(false);
-//        else nicSetWindow.setVisible(true);
-
     }
-
 }
