@@ -3,6 +3,13 @@ package application;
 public class Test {
     public static void main(String[] args) {
 
+
+        String[] strArr = {"123", "321", "889"};
+        int[] intARr = {1, 2, 3, 4, 5};
+
+        System.out.println("strArr.length >> " + strArr.length);
+        System.out.println("intARr.length >> " + intARr.length);
+
         String tc = "TestClass";
         final String TestCaseTag = "TestClass";
         final String TestCaseTag2 = "TestClass2";

@@ -2,8 +2,10 @@ package application.Bluemarble.Client.GameLobby;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import application.Bluemarble.Client.Client;
+import application.Bluemarble.Client.GameRoom.GameRoomController;
 import application.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -34,16 +37,25 @@ public class GameLobbyController extends Client implements Initializable{
     private boolean enableNickname = false;
     @FXML private Label lbMessage;
     @FXML private Text tUserNickname;
+    private VBox roomBox = new VBox(5);
 
 
     public void setResMsg(String str[]){
 
         //ex) payload[] >> [0]checkNickname, [1]true OR false, [2]"nickname"
-        if(str[1].contains("true")){
-            setMessage("동일한 닉네임이 존재합니다.", false);
-        } else {
-            nicSetWindow.setVisible(false);
-            tUserNickname.setText(str[2]);
+        if(str[0].contains("checkNickname")){
+            if(str[1].contains("true")){
+                setMessage("동일한 닉네임이 존재합니다.", false);
+            } else {
+                nicSetWindow.setVisible(false);
+                tUserNickname.setText(str[2]);
+            }
+        } else if(str[0].contains("createRoom")){
+            for(int i = 1; i < str.length - 1; i += 2){
+
+                System.out.println("createRoom[] >> " + str[i]);
+                roomBox.getChildren().add(new Label(str[i] + "   [인원] " + str[i + 1] + "/4"));
+            }
         }
     }
 
@@ -125,8 +137,10 @@ public class GameLobbyController extends Client implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        GameRoomContainer.setContent(roomBox);
 
         startClient("localhost", 5005);
         nicSetWindow.setVisible(true);
+
     }
 }

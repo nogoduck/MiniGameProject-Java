@@ -69,20 +69,17 @@ class ConnectUser extends Thread {
                     switch (payload[0]) {
                         case checkNicknameTag:
                             System.out.println("닉네임");
-                            //                            payload[] >> [0]checkNickname, [1]nickname
+                            //payload[] >> [0]checkNickname, [1]nickname
                             checkNickname(payload);
                             break;
                         case createRoomTag:
                             System.out.println("방 생성");
-//                            payload[] >> [0]createRoom, [1]roomTitle
+                            //payload[] >> [0]createRoom, [1]roomTitle
                             createRoom(payload);
                             break;
 
                     }
-
                 }
-
-                System.out.println("[ END ]");
             }
         } catch (IOException e) {
             System.out.println("[ Receive ] Failed >> " + e.toString());
@@ -111,11 +108,16 @@ class ConnectUser extends Thread {
     }
 
     String checkRoomList(){
-        String str = "";
+        String str = "@@payload:##" + createRoomTag;
         for(int i = 0; i < room.size(); i ++) {
-            str += "##roomTitle" + room.get(i).title + "##userCnt" + room.get(i).userCnt;
+            str += "##" + room.get(i).title + "##" + room.get(i).userCnt;
         }
         return str;
+    }
+    
+    void disconnectClient(){
+        allUser.remove(this);
+        waitUser.remove(this);
     }
 
     void createRoom(String payload[]){
@@ -137,13 +139,10 @@ class ConnectUser extends Thread {
 
         if (!flag) {
             nickname = payload[1];
-
             allUser.add(this);
             waitUser.add(this);
-
             System.out.println("checkRoomList >> " + checkRoomList());
             sendWaitRoom(checkRoomList());
-
             System.out.println("닉네임 사용가능");
             send("@@payload:" + "##checkNickname" + "##false" + "##" + payload[1]);
         } else {

@@ -22,8 +22,14 @@ import java.nio.charset.StandardCharsets;
 public class Client extends Application {
     //현재 클릭 이벤트가 발생한 아이템(지점)
     private MouseEvent me;
+    public void setMouseEvent(MouseEvent e){ me = e;
+        node = (Node)me.getSource();
+        stage = (Stage) node.getScene().getWindow();
 
-    public void setMouseEvent(MouseEvent e){ me = e; }
+    }
+    Node node;
+    Stage stage;
+
 
     Socket socket;
     TextArea textArea;
@@ -79,9 +85,9 @@ public class Client extends Application {
                 Platform.runLater(() -> {
 
 
-                    Node node = (Node)me.getSource();
-                    Stage stage = (Stage) node.getScene().getWindow();
-                    System.out.println("node, stage >> " + node + ", " + stage);
+//                    Node node = (Node)me.getSource();
+//                    Stage stage = (Stage) node.getScene().getWindow();
+//                    System.out.println("node, stage >> " + node + ", " + stage);
 
                     FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
                     Parent root = null;
