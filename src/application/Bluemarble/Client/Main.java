@@ -78,8 +78,7 @@ public class Main extends Application {
                 System.out.println("[receive] message >> " + message);
                 Platform.runLater(() -> {
 
-//                    System.out.println("Main mouse event >> " + me);
-//                    Stage stage = (Stage)(((Node)me.getSource()).getScene().getWindow());
+
                     Node node = (Node)me.getSource();
                     Stage stage = (Stage) node.getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));

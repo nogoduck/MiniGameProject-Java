@@ -10,6 +10,9 @@ import java.util.ArrayList;
 public class Client {
 
     final String checkNicknameTag = "checkNickname";
+    final String createRoom = "createRoom";
+    final String listRoom = "listRoom";
+    final String enterRoom = "enterRoom";
 
     Socket socket;
     public static ArrayList userList = new ArrayList();
@@ -49,14 +52,17 @@ public class Client {
                         if(message.contains("@@payload:")){
                             String payload[] = message.replace("@@payload:##", "").split("##");
                             printPayload(payload);
-                            //ex) payload[] >> [0]checkNickname, [1]"nickname"
                             System.out.println("checkNicknameTag >> " + checkNicknameTag);
                             System.out.println("contains >> " + payload[0].contains(checkNicknameTag));
                             System.out.println("equals >> " + payload[0].equals(checkNicknameTag));
                             System.out.println("payload[0], checkNicknameTag >> " + payload[0] + ", " + checkNicknameTag);
                             System.out.println("payload[0], payload[1], payload[2] >> " + payload[0] + ", " + payload[1] + ", ");
                             if(payload[0].contains(checkNicknameTag)) {
+                                //payload[] >> [0]checkNickname, [1]nickname
                                 checkNickname(payload);
+                            } else if(payload[0].contains(createRoom)){
+                                //payload[] >> [0]createRoom, [1]RoomTitle, [2]
+
                             }
                         }
 
@@ -84,18 +90,6 @@ public class Client {
 
         //threadPool에 스레드를 등록해서 안정적으로 관리하게 해준다.
         Main.threadPool.submit(thread);
-    }
-
-    void checkNickname(String payload[]){
-        if(userList.contains(payload[1])){
-            System.out.println("동일한 닉네임이 존재합니다.");
-            send("@@payload:" + "##checkNickname" + "##true" + "##" + payload[1]);
-        } else {
-            System.out.println("닉네임 사용가능");
-            userList.add(payload[1]);
-//            format 적용 예정
-            send("@@payload:" + "##checkNickname" + "##false" + "##" + payload[1]);
-        }
     }
 
     //클라이언트로부터 메시지를 전송하는 메소드
@@ -129,7 +123,17 @@ public class Client {
         Main.threadPool.submit(thread);
     }
 
-
+    void checkNickname(String payload[]){
+        if(userList.contains(payload[1])){
+            System.out.println("동일한 닉네임이 존재합니다.");
+            send("@@payload:" + "##checkNickname" + "##true" + "##" + payload[1]);
+        } else {
+            System.out.println("닉네임 사용가능");
+            userList.add(payload[1]);
+//            format 적용 예정
+            send("@@payload:" + "##checkNickname" + "##false" + "##" + payload[1]);
+        }
+    }
 
 
 

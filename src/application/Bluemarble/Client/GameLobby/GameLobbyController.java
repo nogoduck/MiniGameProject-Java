@@ -119,6 +119,7 @@ public class GameLobbyController extends Main implements Initializable{
         setMouseEvent(e);
         final String nickname = tfUserInputNickName.getText();
 //        .format 적용예정
+//        send(String.format("%s%s%s", "@@payload", "##checkNickname", "##" + nickname));
         send("@@payload:" + "##checkNickname" + "##" + nickname);
 
     }
