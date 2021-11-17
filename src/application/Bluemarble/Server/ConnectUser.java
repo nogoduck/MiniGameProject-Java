@@ -16,7 +16,6 @@ class ConnectUser extends Thread {
     Vector<ConnectUser> allUser;    //연결된 모든 클라이언트
     Vector<ConnectUser> waitUser;    //대기실에 있는 클라이언트
     Vector<Room> room;        //생성된 Room
-    ArrayList userList = new ArrayList();
 
     /* 메시지 송수신을 위한 필드 */
     InputStream in;
@@ -69,10 +68,12 @@ class ConnectUser extends Thread {
 
                     switch (payload[0]) {
                         case checkNicknameTag:
-//                            payload[] >> [0]checkNickname, [1]nickname
+                            System.out.println("닉네임");
+                            //                            payload[] >> [0]checkNickname, [1]nickname
                             checkNickname(payload);
                             break;
                         case createRoomTag:
+                            System.out.println("방 생성");
 //                            payload[] >> [0]createRoom, [1]roomTitle
                             createRoom(payload);
                             break;
@@ -81,7 +82,7 @@ class ConnectUser extends Thread {
 
                 }
 
-                System.out.println("userList >> " + userList);
+                System.out.println("[ END ]");
             }
         } catch (IOException e) {
             System.out.println("[ Receive ] Failed >> " + e.toString());
@@ -92,18 +93,27 @@ class ConnectUser extends Thread {
     void sendWaitRoom(String str){
         for(int i = 0; i < waitUser.size(); i++){
             try{
-
+                waitUser.get(i).out.write(str.getBytes(StandardCharsets.UTF_8));
             } catch(Exception e){
-
+                waitUser.remove(i--);
             }
         }
     }
 
+    void sendGameRoom(String str){
+        for(int i = 0; i < myRoom.connectUsers.size(); i++){
+            try{
+                myRoom.connectUsers.get(i).out.write(str.getBytes(StandardCharsets.UTF_8));
+            } catch(Exception e){
+                myRoom.connectUsers.remove(i--);
+            }
+        }
+    }
 
     String checkRoomList(){
         String str = "";
         for(int i = 0; i < room.size(); i ++) {
-            str += room.get(i).title + "##" + room.get(i).userCnt;
+            str += "##roomTitle" + room.get(i).title + "##userCnt" + room.get(i).userCnt;
         }
         return str;
     }
@@ -118,15 +128,23 @@ class ConnectUser extends Thread {
     }
 
     void checkNickname(String payload[]) {
-        if (true) {
+        boolean flag = false;
+        for(int i = 0; i < allUser.size(); i++){
+            if(payload[1].equals(allUser.get(i).nickname)) {
+                flag = true;
+            }
+        }
+
+        if (!flag) {
+            nickname = payload[1];
+
             allUser.add(this);
             waitUser.add(this);
 
-
-
+            System.out.println("checkRoomList >> " + checkRoomList());
+            sendWaitRoom(checkRoomList());
 
             System.out.println("닉네임 사용가능");
-            userList.add(payload[1]);
             send("@@payload:" + "##checkNickname" + "##false" + "##" + payload[1]);
         } else {
             System.out.println("동일한 닉네임이 존재합니다.");

@@ -3,10 +3,8 @@ package application.Bluemarble.Client.GameLobby;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import application.Bluemarble.Client.Main;
+import application.Bluemarble.Client.Client;
 import application.MainController;
-import application.Bluemarble.Client.GameRoom.GameRoomController;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class GameLobbyController extends Main implements Initializable{
+public class GameLobbyController extends Client implements Initializable{
 
     @FXML private ScrollPane GameRoomContainer;
     @FXML private ScrollPane PlayerListContainer;
@@ -58,23 +56,24 @@ public class GameLobbyController extends Main implements Initializable{
     // 방만들기 창 방만들기 버튼 클릭
     @FXML
     void onClickGameRoomCreateMake(ActionEvent e) throws IOException {
-    	// 방 이름을 서버로 전송
-    	String gameRoomName;
-    	try {
-    		gameRoomName = tfGameRoomCreateName.getText();
-    	} catch (Exception err) {
-    		gameRoomName = "부루마블 한판하실분";
-		}
-//    	client.send(gameRoomName, "CreateRoom");
-    	
-    	// 게임룸으로 화면 이동
-    	Node node = (Node)(e.getSource());
-        Stage stage = (Stage)(node.getScene().getWindow());
-        Parent root = FXMLLoader.load(GameRoomController.class.getResource("GameRoomUI.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("부루마블");
-        stage.setScene(scene);
-        stage.show();
+        send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
+        //    	// 방 이름을 서버로 전송
+//    	String gameRoomName;
+//    	try {
+//    		gameRoomName = tfGameRoomCreateName.getText();
+//    	} catch (Exception err) {
+//    		gameRoomName = "부루마블 한판하실분";
+//		}
+////    	client.send(gameRoomName, "CreateRoom");
+//
+//    	// 게임룸으로 화면 이동
+//    	Node node = (Node)(e.getSource());
+//        Stage stage = (Stage)(node.getScene().getWindow());
+//        Parent root = FXMLLoader.load(GameRoomController.class.getResource("GameRoomUI.fxml"));
+//        Scene scene = new Scene(root);
+//        stage.setTitle("부루마블");
+//        stage.setScene(scene);
+//        stage.show();
     }
     // 방만들기창 취소버튼 클릭
     @FXML
@@ -126,6 +125,7 @@ public class GameLobbyController extends Main implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         startClient("localhost", 5005);
         nicSetWindow.setVisible(true);
     }

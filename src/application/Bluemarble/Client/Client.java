@@ -19,7 +19,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class Main extends Application {
+public class Client extends Application {
     //현재 클릭 이벤트가 발생한 아이템(지점)
     private MouseEvent me;
 
@@ -75,12 +75,14 @@ public class Main extends Application {
                 int length = in.read(buffer);
                 if(length == -1) throw new IOException();
                 String message = new String(buffer, 0, length, "UTF-8");
-                System.out.println("[receive] message >> " + message);
+                System.out.println("[ Receive ] message >> " + message);
                 Platform.runLater(() -> {
 
 
                     Node node = (Node)me.getSource();
                     Stage stage = (Stage) node.getScene().getWindow();
+                    System.out.println("node, stage >> " + node + ", " + stage);
+
                     FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
                     Parent root = null;
                     try {
@@ -117,7 +119,7 @@ public class Main extends Application {
                 //보내고자 하는 정보를 UTF-8로 인코딩해서 보내준다
                 //서버도 UTF-8로 받을 수 있게 되있음
                 byte[] buffer = message.getBytes(StandardCharsets.UTF_8);
-                System.out.println("[send] message >> " + message);
+                System.out.println("[ Send ] message >> " + message);
                 out.write(buffer);
                 //메시지 전송의 끝을 알림
                 out.flush();
@@ -128,15 +130,7 @@ public class Main extends Application {
         thread.start();
     }
 
-
-    //클라이언트 프로그램을 동작시키는 메서드
     @Override
-    public void start(Stage primaryStage) throws IOException {
-//        startClient("localhost", 5005);
-    }
-
-
-
-
+    public void start(Stage primaryStage) {}
     public static void main(String[] args) { launch(args); }
 }
