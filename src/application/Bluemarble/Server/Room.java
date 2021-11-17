@@ -3,12 +3,12 @@ package application.Bluemarble.Server;
 import java.util.Vector;
 
 public class Room {
-//    Vector<ConnectClientUser> connectClientUser;
-    private String title;
+    Vector<ConnectUser> connectUsers;
+    String title;
     int userCnt;
 
     Room(){
-//        connectClientUser = new Vector<>();
+        connectUsers = new Vector<>();
     }
 
 }

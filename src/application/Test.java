@@ -2,6 +2,25 @@ package application;
 
 public class Test {
     public static void main(String[] args) {
+
+        String tc = "TestClass";
+        final String TestCaseTag = "TestClass";
+        final String TestCaseTag2 = "TestClass2";
+        final String TestCaseTag3 = "TestClass3";
+
+        switch(tc){
+            case TestCaseTag3:
+                System.out.println("3");
+            case TestCaseTag:
+                System.out.println("1");
+                break;
+            case TestCaseTag2:
+                System.out.println("2");
+        }
+
+
+
+
         String str = "@@payload:##nickname##angryduck22";
         String str2 = "@@payload:##nickname##angryduck22##true";
         String str3 = "@@payload:##checkNickname##Foxconn";

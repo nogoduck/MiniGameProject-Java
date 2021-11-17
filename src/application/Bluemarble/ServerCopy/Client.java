@@ -1,4 +1,4 @@
-package application.Bluemarble.Server;
+package application.Bluemarble.ServerCopy;
 
 import java.io.IOException;
 import java.io.InputStream;
