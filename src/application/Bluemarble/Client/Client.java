@@ -1,142 +1,164 @@
 package application.Bluemarble.Client;
 
 import application.Bluemarble.Client.GameLobby.GameLobbyController;
-import application.Bluemarble.Client.GameRoom.GameRoomController;
-import application.MainController;
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
+
+import java.net.*;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class Client extends Application {
-    //현재 클릭 이벤트가 발생한 아이템(지점)
+public class Client {
+
     private MouseEvent me;
-    public void setMouseEvent(MouseEvent e){ me = e;
+    public void setMouseEvent(MouseEvent e){
+        me = e;
         node = (Node)me.getSource();
         stage = (Stage) node.getScene().getWindow();
-
     }
+
     Node node;
     Stage stage;
+    Socket socket;
+    OutputStream out;
+    DataOutputStream dout;
+
+    public static void main(String[] args) {
+        Client client = new Client();
+        try {
+            client.socket = new Socket("localhost", 5005);
+
+            System.out.println("[ Client ] Running...");
+
+            client.out = client.socket.getOutputStream();
+            client.dout = new DataOutputStream(client.out);
+
+            System.out.println("client.out >> " + client.out);
+
+
+            MessageListener msgListener = new MessageListener(client, client.socket);
+            msgListener.start();
+
+        } catch(SocketException e) {
+            System.out.println("[ Client ] Client socket error >> " + e.toString());
+        } catch(IOException e) {
+            System.out.println("[ Client ] Input/Output error >> " + e.toString());
+        }
+    }
+
+
+    public void send(String str) {
+        try {
+//            byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
+//            out.write(buffer);
+//            dout.write(str.getBytes(StandardCharsets.UTF_8));
+
+
+            System.out.println("[ Send ] Succeed >> " + str);
+        } catch (Exception e) {
+            System.out.println("[ Send ] Failed >> " + e.toString());
+        }
+    }
+}
+
+class MessageListener extends Thread{
 
 
     Socket socket;
-    TextArea textArea;
+    Client client;
 
-    void printPayload(String str[]){
-        System.out.printf("payload >> ");
-        for(String s:str){
+    InputStream in;
+
+    String message;	//수신 메시지 저장
+
+    /* 각 메시지를 구분하기 위한 태그 */
+    final String checkNicknameTag = "checkNickname";
+    final String createRoomTag = "createRoom";
+    final String enterRoomTag = "enterRoom";
+    final String leaveRoomTag = "leaveRoom";
+
+    MessageListener(Client client, Socket socket) {
+        this.client = client;
+        this.socket = socket;
+    }
+
+    public void run() {
+        try {
+            in = this.socket.getInputStream();
+
+            while(true) {
+                byte[] buffer = new byte[512];
+                int length = in.read(buffer);
+                while (length == -1) throw new IOException();
+                message = new String(buffer, 0, length, "UTF-8");
+                System.out.println("[ Receive ] Succeed >> " + message);
+
+                if (message.contains("@@payload:")) {
+                    String payload[] = message.replace("@@payload:##", "").split("##");
+                    printPayload(payload);
+
+                    switch (payload[0]) {
+                        case checkNicknameTag:
+                            System.out.println("[ Server ] 닉네임 중복 체크");
+                            //payload[] >> [0]checkNickname, [1]nickname
+                            checkNickname(payload);
+                            break;
+                        case createRoomTag:
+                            System.out.println("[ Server ] 방 생성");
+                            //payload[] >> [0]createRoom, [1]roomTitle
+//                            createRoom(payload);
+                            break;
+                        case enterRoomTag:
+                            System.out.println("[ Server ] 방 입장");
+                            //payload[] >> [0]enterRoom, [1]roomTitle
+//                            enterRoom(payload);
+                            break;
+                        case leaveRoomTag:
+                            System.out.println("[ Server ] 방 퇴장");
+                            //payload[] >> [0]leaveRoom, [1]roomTitle
+//                            leaveRoom(payload);
+                            break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("[ Receive ] Failed >> " + e.toString());
+        }
+    }
+
+
+
+    void checkNickname(String payload[]){
+        System.out.println("닉네임 확인 ");
+//        Platform.runLater(() -> {
+//            Stage stage = new Stage();
+//            FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
+//            Parent root = null;
+//            try {
+//                root = (Parent)loader.load();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            GameLobbyController controller = loader.<GameLobbyController>getController();
+//            controller.setResMsg(payload);
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.show();
+//        });
+    }
+
+    void printPayload(String str[]) {
+        System.out.printf("[ Receive ] Payload[] >> ");
+        for (String s : str) {
             System.out.printf("%s ", s);
         }
         System.out.println();
     }
 
-    //클라이언트 프로그램 동작 메서드
-    public void startClient(String IP, int PORT){
-        Thread thread = new Thread(() -> {
-            try {
-                socket = new Socket(IP, PORT);
-                //서버로부터 메시지를 전달받기 위한 메서드
-                receive();
-            } catch(Exception e) {
-                if(!socket.isClosed()){
-                    stopClient();
-                    System.out.println("[서버 접속 실패]");
-                    //프로그램 종료
-                    Platform.exit();
-                }
-            }
-        });
-        thread.start();
-    }
 
-    //클라이언트 프로그램 종료 메서드
-    public void stopClient(){
-        try {
-            if(socket != null && !socket.isClosed()){
-                socket.close();
-            }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    //서버로부터 메시지를 전달받는 메서드
-    public void receive(){
-        while(true){
-            try {
-                InputStream in = socket.getInputStream();
-                byte[] buffer = new byte[512];
-                int length = in.read(buffer);
-                if(length == -1) throw new IOException();
-                String message = new String(buffer, 0, length, "UTF-8");
-                System.out.println("[ Receive ] message >> " + message);
-                Platform.runLater(() -> {
-
-
-//                    Node node = (Node)me.getSource();
-//                    Stage stage = (Stage) node.getScene().getWindow();
-//                    System.out.println("node, stage >> " + node + ", " + stage);
-
-                    FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
-                    Parent root = null;
-                    try {
-                        root = (Parent)loader.load();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    GameLobbyController controller = loader.<GameLobbyController>getController();
-
-                    if(message.contains("@@payload:")) {
-                        String payload[] = message.replace("@@payload:##", "").split("##");
-                        printPayload(payload);
-                        controller.setResMsg(payload);
-                    }
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-
-                });
-
-
-            } catch(Exception e) {
-                stopClient();
-                break;
-            }
-        }
-    }
-
-    //서버로 메시지를 전송하는 메서드
-    public void send(String message){
-        Thread thread = new Thread(() -> {
-            try {
-                OutputStream out = socket.getOutputStream();
-                //보내고자 하는 정보를 UTF-8로 인코딩해서 보내준다
-                //서버도 UTF-8로 받을 수 있게 되있음
-                byte[] buffer = message.getBytes(StandardCharsets.UTF_8);
-                System.out.println("[ Send ] message >> " + message);
-                out.write(buffer);
-                //메시지 전송의 끝을 알림
-                out.flush();
-            } catch(Exception e){
-                stopClient();
-            }
-        });
-        thread.start();
-    }
-
-    @Override
-    public void start(Stage primaryStage) {}
-    public static void main(String[] args) { launch(args); }
 }

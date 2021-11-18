@@ -12,20 +12,17 @@ class ConnectUser extends Thread {
     Server server;
     Socket socket;
 
-    /* 각 객체를 Vector로 관리 */
-    Vector<ConnectUser> allUser;    //연결된 모든 클라이언트
-    Vector<ConnectUser> waitUser;    //대기실에 있는 클라이언트
-    Vector<Room> room;        //생성된 Room
+    Vector<ConnectUser> allUser;
+    Vector<ConnectUser> waitUser;
+    Vector<Room> room;
 
-    /* 메시지 송수신을 위한 필드 */
     InputStream in;
     OutputStream out;
 
-    String message;            //수신 메시지를 저장할 필드
-    String nickname;    //클라이언트의 닉네임을 저장할 필드
-    Room myRoom;        //입장한 방 객체를 저장할 필드
+    String message;
+    String nickname;
+    Room myRoom;
 
-    /* 각 메시지를 구분하기 위한 태그 */
     final String checkNicknameTag = "checkNickname";
     final String createRoomTag = "createRoom";
     final String enterRoomTag = "enterRoom";
@@ -59,7 +56,6 @@ class ConnectUser extends Thread {
                 int length = in.read(buffer);
                 while (length == -1) throw new IOException();
                 message = new String(buffer, 0, length, "UTF-8");
-
                 System.out.println("[ Receive ] Succeed >> " + message);
 
                 if (message.contains("@@payload:")) {
@@ -225,9 +221,9 @@ class ConnectUser extends Thread {
 
     void send(String str) {
         try {
-            System.out.println("[ Send ] Succeed >> " + str);
             byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
             out.write(buffer);
+            System.out.println("[ Send ] Succeed >> " + str);
         } catch (Exception e) {
             System.out.println("[ Send ] Failed >> " + e.toString());
         }

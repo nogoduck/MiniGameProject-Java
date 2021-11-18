@@ -139,7 +139,9 @@ public class GameLobbyController extends Client implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         GameRoomContainer.setContent(roomBox);
 
-        startClient("localhost", 5005);
+//        startClient("localhost", 5005);
+        String str[] = {"NULL"};
+        Client.main(str);
         nicSetWindow.setVisible(true);
 
     }
