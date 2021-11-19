@@ -1,7 +1,15 @@
 package application;
 
+import java.util.Scanner;
+
 public class Test {
     public static void main(String[] args) {
+
+
+
+
+
+
 
 
         String[] strArr = {"123", "321", "889"};

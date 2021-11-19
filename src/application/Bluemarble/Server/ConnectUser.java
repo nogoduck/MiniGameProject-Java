@@ -1,8 +1,6 @@
 package application.Bluemarble.Server;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -18,6 +16,8 @@ class ConnectUser extends Thread {
 
     InputStream in;
     OutputStream out;
+    DataInputStream din;
+    DataOutputStream dout;
 
     String message;
     String nickname;
@@ -45,17 +45,15 @@ class ConnectUser extends Thread {
 
             in = this.socket.getInputStream();
             out = this.socket.getOutputStream();
-
+            din = new DataInputStream(in);
+            dout = new DataOutputStream(out);
             System.out.println("this >> " + this);
             System.out.println("allUser >> " + allUser);
 
 
 
             while (true) {
-                byte[] buffer = new byte[512];
-                int length = in.read(buffer);
-                while (length == -1) throw new IOException();
-                message = new String(buffer, 0, length, "UTF-8");
+                message = din.readUTF();
                 System.out.println("[ Receive ] Succeed >> " + message);
 
                 if (message.contains("@@payload:")) {
@@ -221,8 +219,11 @@ class ConnectUser extends Thread {
 
     void send(String str) {
         try {
-            byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
-            out.write(buffer);
+//            byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
+//            out.write(buffer);
+
+            dout.writeUTF(str);
+
             System.out.println("[ Send ] Succeed >> " + str);
         } catch (Exception e) {
             System.out.println("[ Send ] Failed >> " + e.toString());
