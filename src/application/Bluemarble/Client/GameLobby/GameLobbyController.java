@@ -24,20 +24,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class GameLobbyController extends Client implements Initializable{
+//public class GameLobbyController extends Client implements Initializable{
+public class GameLobbyController  implements Initializable{
 
-    @FXML private ScrollPane GameRoomContainer;
-    @FXML private ScrollPane PlayerListContainer;
-    @FXML private AnchorPane GameRoomCreateWindow;
-    @FXML private AnchorPane connectFileWindows;
-    @FXML private AnchorPane nicSetWindow;
-    @FXML private TextField tfGameRoomCreateName;
-    @FXML private TextField tfUserInputNickName;
-    @FXML private AnchorPane serverConnectTryWindow;
-    private boolean enableNickname = false;
-    @FXML private Label lbMessage;
-    @FXML private Text tUserNickname;
-    private VBox roomBox = new VBox(5);
+    @FXML public ScrollPane GameRoomContainer;
+    @FXML public ScrollPane PlayerListContainer;
+    @FXML public AnchorPane GameRoomCreateWindow;
+    @FXML public AnchorPane connectFileWindows;
+    @FXML public AnchorPane nicSetWindow;
+    @FXML public TextField tfGameRoomCreateName;
+    @FXML public TextField tfUserInputNickName;
+    @FXML public AnchorPane serverConnectTryWindow;
+    public boolean enableNickname = false;
+    @FXML public Label lbMessage;
+    @FXML public Text tUserNickname;
+    public VBox roomBox = new VBox(5);
 
 
     public void setResMsg(String str[]){
@@ -68,24 +69,9 @@ public class GameLobbyController extends Client implements Initializable{
     // 방만들기 창 방만들기 버튼 클릭
     @FXML
     void onClickGameRoomCreateMake(ActionEvent e) throws IOException {
-        send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
-        //    	// 방 이름을 서버로 전송
-//    	String gameRoomName;
-//    	try {
-//    		gameRoomName = tfGameRoomCreateName.getText();
-//    	} catch (Exception err) {
-//    		gameRoomName = "부루마블 한판하실분";
-//		}
-////    	client.send(gameRoomName, "CreateRoom");
-//
-//    	// 게임룸으로 화면 이동
-//    	Node node = (Node)(e.getSource());
-//        Stage stage = (Stage)(node.getScene().getWindow());
-//        Parent root = FXMLLoader.load(GameRoomController.class.getResource("GameRoomUI.fxml"));
-//        Scene scene = new Scene(root);
-//        stage.setTitle("부루마블");
-//        stage.setScene(scene);
-//        stage.show();
+        Client clent = new Client();
+        clent.send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
+
     }
     // 방만들기창 취소버튼 클릭
     @FXML
@@ -126,19 +112,20 @@ public class GameLobbyController extends Client implements Initializable{
     // 닉네임 설정창에서 접속 버튼
     @FXML
     void onClickGameLobbyConnect(MouseEvent e) {
+        Client clent = new Client();
+
 //        System.out.println("GameLobby Mouse Event >> " + e);
-        setMouseEvent(e);
+//        setMouseEvent(e);
         final String nickname = tfUserInputNickName.getText();
-//        .format 적용예정
-//        send(String.format("%s%s%s", "@@payload", "##checkNickname", "##" + nickname));
-        send("@@payload:" + "##checkNickname" + "##" + nickname);
+        clent.send("@@payload:" + "##checkNickname" + "##" + nickname);
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Client clent = new Client();
         GameRoomContainer.setContent(roomBox);
-        startClient();
+        clent.startClient();
         nicSetWindow.setVisible(true);
     }
 }

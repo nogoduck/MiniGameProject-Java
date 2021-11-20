@@ -1,5 +1,6 @@
 package application.Bluemarble.Client;
 
+import application.Bluemarble.Client.GameLobby.GameLobbyController;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -20,9 +21,15 @@ public class Client {
     OutputStream out = null;
     DataOutputStream dout = null;
 
+    GameLobbyController glb = null;
+
+
 //    public static void main(String[] args) {
     public void startClient(){
         Client client = new Client();
+        glb = new GameLobbyController();
+
+//        glb.lbMessage.setText("나다");
 
         try {
             client.mySocket = new Socket("localhost", 5005);
@@ -45,6 +52,7 @@ public class Client {
             clientManager.start();
 
             System.out.println("[ Client ] Thread info >> " + Thread.currentThread().getName());
+            System.out.println("[ Client ] Socket info >> " + mySocket.getInetAddress());
 
         } catch(SocketException e) {
             System.out.println("[ Client ] Client socket error >> " + e.toString());
@@ -55,7 +63,7 @@ public class Client {
 
 
     public void send(String str) {
-        System.out.println("socket >> " + mySocket.getInetAddress());
+//        System.out.println("socket >> " + mySocket.getInetAddress());
         try {
 //            byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
 //            out.write(buffer);

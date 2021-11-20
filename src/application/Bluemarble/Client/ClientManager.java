@@ -31,7 +31,8 @@ class ClientManager extends Thread{
     @Override
     public void run() {
         System.out.println("메세지 도착");
-        
+        System.out.println("[ Client Manager ] Thread info >> " + Thread.currentThread().getName());
+        System.out.println("[ Client Manager ] Socket info >> " + socket.getInetAddress());
         
         try {
             in = this.socket.getInputStream();
