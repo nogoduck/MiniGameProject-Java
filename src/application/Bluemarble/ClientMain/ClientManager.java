@@ -1,4 +1,4 @@
-package application.Bluemarble.Client;
+package application.Bluemarble.ClientMain;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -24,15 +24,10 @@ class ClientManager extends Thread{
         this.client = client;
         this.socket = socket;
     }
-//    ClientManager(Socket socket){
-//        this.socket = socket;
-//    }
 
-    @Override
     public void run() {
-        System.out.println("메세지 도착");
-        
-        
+        System.out.println("메시지 대기중");
+
         try {
             in = this.socket.getInputStream();
             din = new DataInputStream(in);
@@ -40,11 +35,7 @@ class ClientManager extends Thread{
             while(true) {
                 message = din.readUTF();
                 System.out.println("[ Receive ] Succeed >> " + message);
-
                 System.out.println("in, din = " + in +" ," + din);
-
-
-
 
                 if (message.contains("@@payload:")) {
                     String payload[] = message.replace("@@payload:##", "").split("##");
@@ -78,6 +69,9 @@ class ClientManager extends Thread{
             System.out.println("[ Receive ] Failed >> " + e.toString());
         }
     }
+
+
+
 
     void checkNickname(String payload[]){
         System.out.println("닉네임 확인 ");

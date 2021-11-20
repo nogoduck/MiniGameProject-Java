@@ -6,11 +6,10 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Vector;
 
-
 public class Server {
     ServerSocket serverSocket = null;
-    Vector<ConnectUser> userAllList;
-    Vector<ConnectUser> userWaitList;
+    Vector<ServerManager> userAllList;
+    Vector<ServerManager> userWaitList;
     Vector<Room> roomList;
 
     public static void main(String[] args) {
@@ -25,7 +24,7 @@ public class Server {
 
             while(true) {
                 Socket socket = server.serverSocket.accept();
-                ConnectUser connectUser = new ConnectUser(socket, server);
+                ServerManager connectUser = new ServerManager(socket, server);
                 connectUser.start();
             }
         } catch(SocketException e) {

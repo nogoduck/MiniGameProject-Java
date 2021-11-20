@@ -3,15 +3,14 @@ package application.Bluemarble.Server;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Vector;
 
-class ConnectUser extends Thread {
+class ServerManager extends Thread {
     Server server;
     Socket socket;
 
-    Vector<ConnectUser> allUser;
-    Vector<ConnectUser> waitUser;
+    Vector<ServerManager> allUser;
+    Vector<ServerManager> waitUser;
     Vector<Room> room;
 
     InputStream in;
@@ -28,7 +27,7 @@ class ConnectUser extends Thread {
     final String enterRoomTag = "enterRoom";
     final String leaveRoomTag = "leaveRoom";
 
-    ConnectUser(Socket socket, Server server) {
+    ServerManager(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
 
@@ -48,14 +47,15 @@ class ConnectUser extends Thread {
             din = new DataInputStream(in);
             dout = new DataOutputStream(out);
             System.out.println("this >> " + this);
-            System.out.println("allUser >> " + allUser);
+
 
 
 
             while (true) {
                 message = din.readUTF();
                 System.out.println("[ Receive ] Succeed >> " + message);
-
+                printAllUser();
+                System.out.println("allUser >> " + allUser);
                 if (message.contains("@@payload:")) {
                     String payload[] = message.replace("@@payload:##", "").split("##");
                     printPayload(payload);
@@ -190,6 +190,12 @@ class ConnectUser extends Thread {
             System.out.println("[ Server ] 닉네임 중복 체크 >> 동일한 닉네임 존재");
             send("@@payload:" + "##checkNickname" + "##true" + "##" + payload[1]);
         }
+
+        System.out.printf("[ Server ] allUSer[] >> ");
+        for(int i = 0; i < allUser.size(); i++){
+            System.out.printf("%s ", allUser.get(i).nickname);
+        }
+        System.out.printf("\n");
     }
 
     void printPayload(String str[]) {
@@ -216,6 +222,16 @@ class ConnectUser extends Thread {
         }
         return str;
     }
+
+    void printAllUser(){
+        System.out.println("[ Server ] allUSer[] >> ");
+        for(int i = 0; i < allUser.size(); i++){
+            System.out.printf("%s ", allUser.get(i).nickname);
+        }
+        System.out.printf("\n");
+    }
+
+
 
     void send(String str) {
         try {

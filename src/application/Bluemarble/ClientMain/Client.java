@@ -1,10 +1,14 @@
-package application.Bluemarble.Client;
+package application.Bluemarble.ClientMain;
 
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import java.net.*;
-import java.io.*;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.SocketException;
 
 public class Client {
     private MouseEvent me;
@@ -20,28 +24,29 @@ public class Client {
     OutputStream out = null;
     DataOutputStream dout = null;
 
-//    public static void main(String[] args) {
-    public void startClient(){
+    LobbyController lb = null;
+
+
+    public static void main(String[] args) {
         Client client = new Client();
 
         try {
             client.mySocket = new Socket("localhost", 5005);
-            mySocket = new Socket("localhost", 5005);
 
-//            out = client.mySocket.getOutputStream();
-//            dout = new DataOutputStream(client.out);
-            out = mySocket.getOutputStream();
-            dout = new DataOutputStream(out);
+            client.out = client.mySocket.getOutputStream();
+            client.dout = new DataOutputStream(client.out);
+
+
+
+            client.lb = new LobbyController();
+            client.lb.lbMessage.setText("닉네임 뭐냐?");
+
             System.out.println("[ Client ] Running...");
-
-//            send("Good Game, GG");
-
-            System.out.println("client.out >> " + out);
-            System.out.println("client.dout >> " + dout);
+            System.out.println("client.out >> " + client.out);
+            System.out.println("client.dout >> " + client.dout);
 
 
             ClientManager clientManager = new ClientManager(client, client.mySocket);
-//            ClientManager clientManager = new ClientManager(mySocket);
             clientManager.start();
 
             System.out.println("[ Client ] Thread info >> " + Thread.currentThread().getName());
@@ -51,16 +56,14 @@ public class Client {
         } catch(IOException e) {
             System.out.println("[ Client ] Input/Output error >> " + e.toString());
         }
+
+
     }
 
 
     public void send(String str) {
         System.out.println("socket >> " + mySocket.getInetAddress());
         try {
-//            byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
-//            out.write(buffer);
-//            dout.write(str.getBytes(StandardCharsets.UTF_8));
-
             dout.writeUTF(str);
             System.out.println("[ Send ] Succeed >> " + str);
         } catch (Exception e) {

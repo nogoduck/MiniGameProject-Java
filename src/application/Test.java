@@ -7,7 +7,10 @@ public class Test {
 
 
 
-
+        MainController mc = null;
+        System.out.println("mc >> " + mc);
+        mc = new MainController();
+        System.out.println("mc new() >> " + mc);
 
 
 

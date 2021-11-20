@@ -83,7 +83,7 @@ public class ClientCopy extends Application {
 //                    Node node = (Node)me.getSource();
 //                    Stage stage = (Stage) node.getScene().getWindow();
 //                    System.out.println("node, stage >> " + node + ", " + stage);
-                    FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("GameLobbyUI.fxml"));
+                    FXMLLoader loader = new FXMLLoader(GameLobbyController.class.getResource("Lobby.fxml"));
                     Parent root = null;
                     try {
                         root = (Parent)loader.load();
