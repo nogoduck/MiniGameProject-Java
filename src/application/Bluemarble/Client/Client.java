@@ -27,9 +27,8 @@ public class Client {
 //    public static void main(String[] args) {
     public void startClient(){
         Client client = new Client();
-        glb = new GameLobbyController();
 
-//        glb.lbMessage.setText("나다");
+
 
         try {
             client.mySocket = new Socket("localhost", 5005);

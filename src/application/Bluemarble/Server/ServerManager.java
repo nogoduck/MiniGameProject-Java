@@ -214,7 +214,6 @@ class ServerManager extends Thread {
         return str;
     }
 
-
     String checkRoomList(){
         String str = "@@payload:##" + createRoomTag;
         for(int i = 0; i < room.size(); i ++) {
@@ -231,15 +230,12 @@ class ServerManager extends Thread {
         System.out.printf("\n");
     }
 
-
-
     void send(String str) {
         try {
 //            byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
 //            out.write(buffer);
 
             dout.writeUTF(str);
-
             System.out.println("[ Send ] Succeed >> " + str);
         } catch (Exception e) {
             System.out.println("[ Send ] Failed >> " + e.toString());

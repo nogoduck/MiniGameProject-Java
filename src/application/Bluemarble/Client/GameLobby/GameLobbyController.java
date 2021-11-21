@@ -2,6 +2,7 @@ package application.Bluemarble.Client.GameLobby;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import application.Bluemarble.Client.Client;
@@ -25,7 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 //public class GameLobbyController extends Client implements Initializable{
-public class GameLobbyController  implements Initializable{
+public class GameLobbyController extends Client implements Initializable{
 
     @FXML public ScrollPane GameRoomContainer;
     @FXML public ScrollPane PlayerListContainer;
@@ -39,7 +40,7 @@ public class GameLobbyController  implements Initializable{
     @FXML public Label lbMessage;
     @FXML public Text tUserNickname;
     public VBox roomBox = new VBox(5);
-
+    private ArrayList<String> userList = new ArrayList<String>();
 
     public void setResMsg(String str[]){
 
@@ -69,8 +70,8 @@ public class GameLobbyController  implements Initializable{
     // 방만들기 창 방만들기 버튼 클릭
     @FXML
     void onClickGameRoomCreateMake(ActionEvent e) throws IOException {
-        Client clent = new Client();
-        clent.send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
+//        Client clent = new Client();
+//        clent.send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
 
     }
     // 방만들기창 취소버튼 클릭
@@ -112,20 +113,33 @@ public class GameLobbyController  implements Initializable{
     // 닉네임 설정창에서 접속 버튼
     @FXML
     void onClickGameLobbyConnect(MouseEvent e) {
-        Client clent = new Client();
+//        Client clent = new Client();
+
+
 
 //        System.out.println("GameLobby Mouse Event >> " + e);
 //        setMouseEvent(e);
         final String nickname = tfUserInputNickName.getText();
-        clent.send("@@payload:" + "##checkNickname" + "##" + nickname);
+        userList.add(nickname);
+        System.out.println("nickname >>  " + nickname);
+        printUserList();
+        send("@@payload:" + "##checkNickname" + "##" + nickname);
 
+    }
+
+    void printUserList(){
+        System.out.printf("user >> ");
+        for(int i = 0; i < userList.size(); i++){
+            System.out.printf(userList.get(i) + " ");
+        }
+        System.out.println();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Client clent = new Client();
+//        Client clent = new Client();
         GameRoomContainer.setContent(roomBox);
-        clent.startClient();
+        startClient();
         nicSetWindow.setVisible(true);
     }
 }

@@ -1,5 +1,7 @@
 package application.Bluemarble.Client;
 
+import application.Bluemarble.Client.GameLobby.GameLobbyController;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +47,8 @@ class ClientManager extends Thread{
                 System.out.println("in, din = " + in +" ," + din);
 
 
-
+                GameLobbyController glb = null;
+                glb.lbMessage.setText("check data");
 
                 if (message.contains("@@payload:")) {
                     String payload[] = message.replace("@@payload:##", "").split("##");
