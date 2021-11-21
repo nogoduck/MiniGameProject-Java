@@ -3,10 +3,8 @@ package application.Bluemarble.Client.GameLobby;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
-import application.Bluemarble.Client.Client;
-import application.Bluemarble.Client.GameRoom.GameRoomController;
+
 import application.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,21 +23,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-//public class GameLobbyController extends Client implements Initializable{
-public class GameLobbyController extends Client implements Initializable{
+public class GameLobbyController implements Initializable{
 
-    @FXML public ScrollPane GameRoomContainer;
-    @FXML public ScrollPane PlayerListContainer;
-    @FXML public AnchorPane GameRoomCreateWindow;
-    @FXML public AnchorPane connectFileWindows;
-    @FXML public AnchorPane nicSetWindow;
-    @FXML public TextField tfGameRoomCreateName;
-    @FXML public TextField tfUserInputNickName;
-    @FXML public AnchorPane serverConnectTryWindow;
-    public boolean enableNickname = false;
-    @FXML public Label lbMessage;
-    @FXML public Text tUserNickname;
-    public VBox roomBox = new VBox(5);
+    @FXML private ScrollPane GameRoomContainer;
+    @FXML private ScrollPane PlayerListContainer;
+    @FXML private AnchorPane GameRoomCreateWindow;
+    @FXML private AnchorPane connectFileWindows;
+    @FXML private AnchorPane nicSetWindow;
+    @FXML private TextField tfGameRoomCreateName;
+    @FXML private TextField tfUserInputNickName;
+    @FXML private AnchorPane serverConnectTryWindow;
+    private boolean enableNickname = false;
+    @FXML private Label lbMessage;
+    @FXML private Text tUserNickname;
+    private VBox roomBox = new VBox(5);
     private ArrayList<String> userList = new ArrayList<String>();
 
     public void setResMsg(String str[]){
@@ -70,8 +67,7 @@ public class GameLobbyController extends Client implements Initializable{
     // 방만들기 창 방만들기 버튼 클릭
     @FXML
     void onClickGameRoomCreateMake(ActionEvent e) throws IOException {
-//        Client clent = new Client();
-//        clent.send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
+        send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
 
     }
     // 방만들기창 취소버튼 클릭
