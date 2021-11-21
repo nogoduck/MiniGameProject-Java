@@ -1,15 +1,9 @@
-package application.Bluemarble.Client.GameRoom;
+package application.Bluemarble.GameRoom;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import application.Main;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -23,13 +17,13 @@ import javafx.scene.transform.Transform;
 
 public class Dice{
     SmartGroup group = new SmartGroup();
-    
+
 	public void diceMake(AnchorPane diceRolling,int x, int y, int z) {
 		Image diffuseMap = new Image(Main.class.getResourceAsStream("texture/dice.png"));
 		Material diceSurface = new PhongMaterial(Color.WHITE, diffuseMap, null, null, null);
-	
+
 		TriangleMesh mesh = new TriangleMesh();
-		float points[] = {				
+		float points[] = {
 				0, 0, 50, 		// P0
 				50, 0, 50, 		// P1
 				0, 50, 50, 		// P2
@@ -42,7 +36,7 @@ public class Dice{
 
 		float[] tex = {
 				0.25f, 0, 					// T0
-				0.5f, 0, 					// T1 
+				0.5f, 0, 					// T1
 				0, 0.33f, 					// T2
 				0.25f, 0.33f, 				// T3
 				0.5f, 0.33f, 				// T4
@@ -78,18 +72,18 @@ public class Dice{
 		mesh.getPoints().addAll(points);
 		mesh.getTexCoords().addAll(tex);
 		mesh.getFaces().addAll(faces);
-	
+
 		MeshView meshView = new MeshView(mesh);
 		meshView.setMaterial(diceSurface);
 
-		
+
 		group.getChildren().add(meshView);
 //		PerspectiveCamera camera = new PerspectiveCamera();
 		diceRolling.getChildren().add(group);
 //		diceRolling.getScene().setCamera(camera);
 		group.translateXProperty().set(x);
 		group.translateYProperty().set(y);
-		group.translateZProperty().set(z);		
+		group.translateZProperty().set(z);
 	}
 	@FXML
     void diceMove(KeyEvent e){

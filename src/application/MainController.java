@@ -1,5 +1,7 @@
 package application;
 
+import application.Bluemarble.GameLobby.GameLobbyController;
+import application.Bluemarble.GameRoom.GameRoomController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -44,9 +46,16 @@ public class MainController {
     }
     @FXML
     void onClickBluemarbleButton(MouseEvent e) throws IOException {
-    	Node node = (Node)(e.getSource());
-//    	stageChange(node,"Bluemarble/testUI.fxml", "부루마블");
-    	stageChange(node,"Bluemarble/Client/GameLobby/GameLobbyUI.fxml", "부루마블");
+//    	Node node = (Node)(e.getSource());
+//    	stageChange(node,"Bluemarble/Client/GameLobby/GameLobbyUI.fxml", "부루마블");
+
+        Node node = (Node)(e.getSource());
+        Stage stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(GameRoomController.class.getResource("GameRoomUI.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("부루마블");
+        stage.setScene(scene);
+        stage.show();
     }
     @FXML
     void onHoverEnter(MouseEvent e) {

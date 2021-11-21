@@ -1,4 +1,4 @@
-package application.Bluemarble.Client.GameLobby;
+package application.Bluemarble.GameLobby;
 
 import java.io.IOException;
 import java.net.URL;
@@ -67,7 +67,6 @@ public class GameLobbyController implements Initializable{
     // 방만들기 창 방만들기 버튼 클릭
     @FXML
     void onClickGameRoomCreateMake(ActionEvent e) throws IOException {
-        send("@@payload:" + "##createRoom" + "##" + tfGameRoomCreateName.getText());
 
     }
     // 방만들기창 취소버튼 클릭
@@ -119,7 +118,6 @@ public class GameLobbyController implements Initializable{
         userList.add(nickname);
         System.out.println("nickname >>  " + nickname);
         printUserList();
-        send("@@payload:" + "##checkNickname" + "##" + nickname);
 
     }
 
@@ -135,7 +133,6 @@ public class GameLobbyController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        Client clent = new Client();
         GameRoomContainer.setContent(roomBox);
-        startClient();
         nicSetWindow.setVisible(true);
     }
 }
