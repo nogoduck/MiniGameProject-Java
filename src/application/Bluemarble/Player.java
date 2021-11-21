@@ -1,12 +1,13 @@
 package application.Bluemarble;
 
 public class Player {
-    // 플레이어 닉네임, 자산, 현금, 도시 개수
+    // 플레이어 닉네임, 자산, 현금, 도시 개수, 차례
     private String nickname;
     private long asset;
     private long money;
     private int cityCnt;
-
+    private int turn;
+    
     Player(){}
     Player(String nickaname, long money){
         //유저 생성 시 가지고 있는 자산은 현금밖에 없기 때문에 자산과 현금에 같은 값 삽입

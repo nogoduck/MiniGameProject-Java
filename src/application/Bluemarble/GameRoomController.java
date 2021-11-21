@@ -1,6 +1,7 @@
 package application.Bluemarble;
 
 import application.MainController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -63,7 +65,28 @@ public class GameRoomController implements Initializable {
     @FXML private RadioButton rbCustomDistMoney;
     @FXML private TextField tfStartDiskMoney;
     @FXML void onChangeStartDistMoney(KeyEvent e) {
-
+        //숫자, 지우기 키만 허용 46 - 57
+       switch(e.getCode()){
+           case BACK_SPACE: break;
+           case DELETE: break;
+           case DIGIT0: break;
+           case DIGIT1: break;
+           case DIGIT2: break;
+           case DIGIT3: break;
+           case DIGIT4: break;
+           case DIGIT5: break;
+           case DIGIT6: break;
+           case DIGIT7: break;
+           case DIGIT8: break;
+           case DIGIT9: break;
+           default:
+               String str = tfStartDiskMoney.getText().replace(e.getCode().toString(), "");
+               System.out.println("str = " + str);
+//
+               Platform.runLater(() -> tfStartDiskMoney.setText(str)) ;
+               System.out.println("[ Bluemarble ] 숫자만 입력할 수 있습니다.");
+               break;
+       }
     }
     @FXML void onClick2PlayerButton(ActionEvent e) {
         if(!rbDefaultDistMoney.isSelected()) return;
@@ -79,6 +102,7 @@ public class GameRoomController implements Initializable {
     }
     @FXML void onClickCustomDistMoneyButton(ActionEvent e) {
         tfStartDiskMoney.setDisable(false);
+        tfStartDiskMoney.requestFocus();
     }
     @FXML void onClickDefaultDistMoneyButton(ActionEvent e) {
         if(rb2Player.isSelected()) setStartDistMoney(5860000);
