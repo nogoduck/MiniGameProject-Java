@@ -1,4 +1,4 @@
-package application.Bluemarble.GameRoom;
+package application.Bluemarble;
 
 import application.Main;
 import javafx.fxml.FXML;

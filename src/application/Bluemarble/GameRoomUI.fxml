@@ -11,19 +11,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="80.0" prefWidth="1000.0" stylesheets="@../../application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Bluemarble.GameRoom.GameRoomController">
+<AnchorPane prefHeight="80.0" prefWidth="1000.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Bluemarble.GameRoomController">
    <children>
       <ImageView fitHeight="750.0" fitWidth="750.0" layoutX="132.0" layoutY="36.0">
          <image>
-            <Image url="@../../texture/GameBoard.png" />
+            <Image url="@../texture/GameBoard.png" />
          </image>
       </ImageView>
       <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
-      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="217.0" prefHeight="352.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0;" visible="false">
+      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="217.0" prefHeight="352.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0;">
          <children>
             <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="50.0" prefWidth="50.0" stylesheets="@../../application.css">
+                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="50.0" prefWidth="50.0" stylesheets="@../application.css">
                      <children>
                         <Text fill="#a5a6a6" layoutX="7.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="×" textAlignment="CENTER" wrappingWidth="35.572265625">
                            <font>
@@ -39,14 +39,14 @@
                   </Text>
                   <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="14.0" layoutY="11.0">
                      <image>
-                        <Image url="@../../texture/settings.png" />
+                        <Image url="@../texture/settings.png" />
                      </image>
                   </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane id="createRoomModal_container" layoutX="14.0" layoutY="64.0" prefHeight="222.0" prefWidth="671.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <RadioButton fx:id="rb2Player" layoutX="194.0" layoutY="128.0" mnemonicParsing="false" text="2인">
+                  <RadioButton fx:id="rb2Player" layoutX="194.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClick2PlayerButton" text="2인">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -54,12 +54,12 @@
                         <ToggleGroup fx:id="PlayerCntGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rb3Player" layoutX="356.0" layoutY="128.0" mnemonicParsing="false" text="3인" toggleGroup="$PlayerCntGroup">
+                  <RadioButton fx:id="rb3Player" layoutX="356.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClick3PlayerButton" text="3인" toggleGroup="$PlayerCntGroup">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rb4Player" layoutX="510.0" layoutY="128.0" mnemonicParsing="false" text="4인" toggleGroup="$PlayerCntGroup">
+                  <RadioButton fx:id="rb4Player" layoutX="510.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClick4PlayerButton" text="4인" toggleGroup="$PlayerCntGroup">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -74,7 +74,7 @@
                         <Font size="32.0" />
                      </font>
                   </Text>
-                  <TextField alignment="CENTER_RIGHT" layoutX="190.0" layoutY="47.0" prefHeight="51.0" prefWidth="200.0" text="2,930,000">
+                  <TextField fx:id="tfStartDiskMoney" alignment="CENTER_RIGHT" layoutX="190.0" layoutY="47.0" onKeyPressed="#onChangeStartDistMoney" prefHeight="51.0" prefWidth="200.0" text="2,930,000">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -89,15 +89,15 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <RadioButton fx:id="rbDefaultDistMoney" layoutX="484.0" layoutY="49.0" mnemonicParsing="false" text="기본 금액">
+                  <RadioButton fx:id="rbDefaultDistMoney" layoutX="484.0" layoutY="49.0" mnemonicParsing="false" onAction="#onClickDefaultDistMoneyButton" text="기본 금액">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <toggleGroup>
-                        <ToggleGroup fx:id="distMoneyGroup" />
+                        <ToggleGroup fx:id="startDistMoneyGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbCustomDistMoney" layoutX="484.0" layoutY="76.0" mnemonicParsing="false" text="사용자 지정 금액" toggleGroup="$distMoneyGroup">
+                  <RadioButton fx:id="rbCustomDistMoney" layoutX="484.0" layoutY="76.0" mnemonicParsing="false" onAction="#onClickCustomDistMoneyButton" text="사용자 지정 금액" toggleGroup="$startDistMoneyGroup">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -105,12 +105,12 @@
                   <Line endX="503.0" layoutX="134.0" layoutY="115.0" startX="-103.0" stroke="#a5a6a6" />
                </children>
             </AnchorPane>
-            <Button id="create_room_submit" layoutX="568.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#onSubmitCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../../application.css" text="확인">
+            <Button id="create_room_submit" layoutX="568.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#onSubmitCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="확인">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button id="create_room_cancel" layoutX="439.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../../application.css" text="취소">
+            <Button id="create_room_cancel" layoutX="439.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="취소">
                <font>
                   <Font size="16.0" />
                </font>

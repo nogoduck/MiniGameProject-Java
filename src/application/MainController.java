@@ -1,13 +1,11 @@
 package application;
 
-import application.Bluemarble.GameLobby.GameLobbyController;
-import application.Bluemarble.GameRoom.GameRoomController;
+import application.Bluemarble.GameRoomController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
