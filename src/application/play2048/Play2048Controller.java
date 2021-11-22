@@ -21,9 +21,9 @@ import java.util.Optional;
 
 public class Play2048Controller {
 
-	@FXML	private GridPane board2048;
-	@FXML   private Label lblScore;
-	@FXML   private Label lblBestScore;
+	@FXML private GridPane board2048;
+	@FXML private Label lblScore;
+	@FXML private Label lblBestScore;
 	private Stage stage;
 	private ArrayList<Integer> boardZeroCheckX = new ArrayList<Integer>();
 	private ArrayList<Integer> boardZeroCheckY = new ArrayList<Integer>();

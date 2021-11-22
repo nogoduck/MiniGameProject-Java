@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -19,7 +20,7 @@
          </image>
       </ImageView>
       <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
-      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="217.0" prefHeight="352.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0;">
+      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="91.0" prefHeight="567.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0;">
          <children>
             <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff;">
                <children>
@@ -32,19 +33,19 @@
                         </Text>
                      </children>
                   </AnchorPane>
-                  <Text layoutX="54.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="부루마블 시작">
+                  <Text layoutX="54.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nanum_font" text="부루마블 시작">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Text>
                   <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="14.0" layoutY="11.0">
                      <image>
-                        <Image url="@../texture/black.png" />
+                        <Image url="@../texture/settings.png" />
                      </image>
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane id="createRoomModal_container" layoutX="14.0" layoutY="64.0" prefHeight="222.0" prefWidth="671.0" style="-fx-background-color: #ffffff;">
+            <AnchorPane id="createRoomModal_container" layoutX="15.0" layoutY="65.0" prefHeight="434.0" prefWidth="671.0" style="-fx-background-color: #ffffff;">
                <children>
                   <RadioButton fx:id="rb2Player" layoutX="194.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClick2PlayerButton" text="2인">
                      <font>
@@ -69,22 +70,22 @@
                         <Font size="32.0" />
                      </font>
                   </Text>
-                  <Text layoutX="33.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시작 금액">
+                  <Text layoutX="33.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nanum_font" text="시작 금액">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="tfStartDiskMoney" alignment="CENTER_RIGHT" layoutX="190.0" layoutY="47.0" onKeyTyped="#onType" prefHeight="51.0" prefWidth="200.0" text="2,930,000">
+                  <TextField fx:id="tfStartDistMoney" alignment="CENTER_RIGHT" layoutX="190.0" layoutY="47.0" onKeyTyped="#onType" prefHeight="51.0" prefWidth="200.0" text="293">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <Text layoutX="399.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="만원">
+                  <Text layoutX="399.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nanum_font" text="만원">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Text>
-                  <Text layoutX="37.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="※ 3~4 인 기준 293만원, 2인은 586만원이 적당합니다.  ">
+                  <Text layoutX="37.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nanum_font" text="※ 3~4 인 기준 293만원, 2인은 586만원이 적당합니다.  ">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -103,14 +104,79 @@
                      </font>
                   </RadioButton>
                   <Line endX="503.0" layoutX="134.0" layoutY="115.0" startX="-103.0" stroke="#a5a6a6" />
+                  <TextField fx:id="tf1PlayerNickname" alignment="CENTER" layoutX="27.0" layoutY="345.0" prefWidth="140.0" text="병아리">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="tf2PlayerNickname" alignment="CENTER" layoutX="184.0" layoutY="345.0" prefWidth="140.0" text="익룡">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="tf3PlayerNickname" alignment="CENTER" layoutX="344.0" layoutY="345.0" prefWidth="140.0" text="요정">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="tf4PlayerNickname" alignment="CENTER" layoutX="504.0" layoutY="345.0" prefWidth="140.0" text="유령">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Pane layoutX="27.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
+                     <children>
+                        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="5.0" layoutY="11.0">
+                           <image>
+                              <Image url="@../texture/horse_bird.png" />
+                           </image>
+                        </ImageView>
+                        <Pane fx:id="pPlayer1" onMouseClicked="#onClickCharacter1" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="184.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
+                     <children>
+                        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="5.0" layoutY="11.0">
+                           <image>
+                              <Image url="@../texture/horse_dinosaur.png" />
+                           </image>
+                        </ImageView>
+                        <Pane fx:id="pPlayer2" onMouseClicked="#onClickCharacter2" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="344.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
+                     <children>
+                        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="5.0" layoutY="11.0">
+                           <image>
+                              <Image url="@../texture/horse_fairy.png" />
+                           </image>
+                        </ImageView>
+                        <Pane fx:id="pPlayer3" onMouseClicked="#onClickCharacter3" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="504.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
+                     <children>
+                        <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="5.0" layoutY="11.0">
+                           <image>
+                              <Image url="@../texture/horse_ghost.png" />
+                           </image>
+                        </ImageView>
+                        <Pane fx:id="pPlayer4" onMouseClicked="#onClickCharacter4" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                     </children>
+                  </Pane>
+                  <Text layoutX="27.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="게임을 진행할 캐릭터를 선택해주세요." textAlignment="CENTER" wrappingWidth="617.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
-            <Button id="create_room_submit" layoutX="568.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#onSubmitCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="확인">
+            <Button id="create_room_submit" layoutX="569.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#onSubmitCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="확인">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button id="create_room_cancel" layoutX="439.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="취소">
+            <Button id="create_room_cancel" layoutX="442.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="취소">
                <font>
                   <Font size="16.0" />
                </font>

@@ -12,10 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,27 +46,80 @@ public class BluemarbleGameController implements Initializable{
 //  ==================================================
 //               Start Bluemarble Modal
 //  ==================================================
-  DecimalFormat df =  new DecimalFormat("###,###");
-  @FXML private AnchorPane apStartBluemarbleModal;
-  @FXML private ToggleGroup PlayerCntGroup;
-  @FXML private ToggleGroup startDistMoneyGroup;
-  @FXML private RadioButton rb2Player;
-  @FXML private RadioButton rb3Player;
-  @FXML private RadioButton rb4Player;
-  @FXML private RadioButton rbDefaultDistMoney;
-  @FXML private RadioButton rbCustomDistMoney;
-  @FXML private TextField tfStartDiskMoney;
+    DecimalFormat df =  new DecimalFormat("###,###");
+    @FXML private AnchorPane apStartBluemarbleModal;
+    @FXML private ToggleGroup startDistMoneyGroup;
+    @FXML private ToggleGroup PlayerCntGroup;
+    @FXML private RadioButton rb2Player;
+    @FXML private RadioButton rb3Player;
+    @FXML private RadioButton rb4Player;
+    @FXML private RadioButton rbDefaultDistMoney;
+    @FXML private RadioButton rbCustomDistMoney;
+    @FXML private TextField tfStartDistMoney;
+    @FXML private TextField tf1PlayerNickname;
+    @FXML private TextField tf2PlayerNickname;
+    @FXML private TextField tf3PlayerNickname;
+    @FXML private TextField tf4PlayerNickname;
+    @FXML private Pane pPlayer1;
+    @FXML private Pane pPlayer2;
+    @FXML private Pane pPlayer3;
+    @FXML private Pane pPlayer4;
+    private boolean[] selectPlayer = new boolean[5];
+    private int selectCharacterCnt;
+    private int selectedCharacterCnt;
+
+    @FXML void onClickCharacter1(MouseEvent e) {
+//        for(boolean b:selectPlayer){
+//            System.out.println("bool >> " + b);
+//        }
+
+        Node source = (Node)e.getSource();
+        if(selectedCharacterCnt < selectCharacterCnt) System.out.println("초과");
+
+        if(!selectPlayer[1]){
+            //1번 플레이어 선택
+            System.out.println("1번 선택");
+            source.setStyle("-fx-opacity: 0.8");
+            selectedCharacterCnt++;
+            selectPlayer[1] = true;
+        } else {
+            //1번 플레이어 선택 해제
+            System.out.println("1번 선택 해제");
+            source.setStyle("-fx-opacity: 0.3");
+            selectedCharacterCnt--;
+            selectPlayer[1] = false;
+        }
+        System.out.println("selectCharacterCnt >> " + selectCharacterCnt);
+        System.out.println("selectedCharacterCnt >> " + selectedCharacterCnt);
+    }
+
+    @FXML void onClickCharacter2(MouseEvent e) {
+        selectedCharacterCnt++;
+        Node source = (Node)e.getSource();
+        source.setStyle("-fx-opacity: 0");
+    }
+
+    @FXML void onClickCharacter3(MouseEvent e) {
+        selectedCharacterCnt++;
+        Node source = (Node)e.getSource();
+        source.setStyle("-fx-opacity: 0");
+    }
+
+    @FXML void onClickCharacter4(MouseEvent e) {
+        selectedCharacterCnt++;
+        Node source = (Node)e.getSource();
+        source.setStyle("-fx-opacity: 0");
+    }
 
 
-    @FXML
-    void onType(KeyEvent e) {
+    @FXML void onType(KeyEvent e) {
         try{
-            int position = tfStartDiskMoney.getCaretPosition();
-            String str = tfStartDiskMoney.getText();
+            int position = tfStartDistMoney.getCaretPosition();
+            String str = tfStartDistMoney.getText();
             String replaceStr = str.replaceAll("[^0-9]", "");
             Platform.runLater(() -> {
-                        tfStartDiskMoney.setText(replaceStr);
-                        tfStartDiskMoney.positionCaret(position);
+                        tfStartDistMoney.setText(replaceStr);
+                        tfStartDistMoney.positionCaret(position);
                     }
             );
         } catch(Exception err) {
@@ -74,27 +127,26 @@ public class BluemarbleGameController implements Initializable{
         }
     }
 
-
     @FXML void onClick2PlayerButton(ActionEvent e) {
-        if(!rbDefaultDistMoney.isSelected()) return;
-        setStartDistMoney(586);
+        if(rbDefaultDistMoney.isSelected()) setStartDistMoney(586);
+        selectCharacterCnt = 2;
     }
     @FXML void onClick3PlayerButton(ActionEvent e) {
-        if(!rbDefaultDistMoney.isSelected()) return;
-        setStartDistMoney(293);
+        if(rbDefaultDistMoney.isSelected()) setStartDistMoney(293);
+        selectCharacterCnt = 3;
     }
     @FXML void onClick4PlayerButton(ActionEvent e) {
-        if(!rbDefaultDistMoney.isSelected()) return;
-        setStartDistMoney(293);
+        if(rbDefaultDistMoney.isSelected()) setStartDistMoney(293);
+        selectCharacterCnt = 4;
     }
     @FXML void onClickCustomDistMoneyButton(ActionEvent e) {
-        tfStartDiskMoney.setDisable(false);
-        tfStartDiskMoney.requestFocus();
+        tfStartDistMoney.setDisable(false);
+        tfStartDistMoney.requestFocus();
     }
     @FXML void onClickDefaultDistMoneyButton(ActionEvent e) {
         if(rb2Player.isSelected()) setStartDistMoney(586);
         else setStartDistMoney(293);
-        tfStartDiskMoney.setDisable(true);
+        tfStartDistMoney.setDisable(true);
     }
     @FXML void onCloseCreateRoomModal(MouseEvent e) throws IOException {
         Node node = (Node)(e.getSource());
@@ -108,10 +160,10 @@ public class BluemarbleGameController implements Initializable{
     @FXML void onSubmitCreateRoomModal(MouseEvent e) {
         System.out.println("확인");
     }
-    void setStartDistMoney(long v){ tfStartDiskMoney.setText(df.format(v)); }
+    void setStartDistMoney(long v){ tfStartDistMoney.setText(df.format(v)); }
     void initStartBluemarbleModal() {
         setStartDistMoney(586);
-        tfStartDiskMoney.setDisable(true);
+        tfStartDistMoney.setDisable(true);
         rbDefaultDistMoney.setSelected(true);
         rb2Player.setSelected(true);
         apStartBluemarbleModal.setVisible(true);
