@@ -1,4 +1,4 @@
-package application.Bluemarble;
+package application.bluemarble;
 
 import application.MainController;
 import javafx.application.Platform;
@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,41 +21,41 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
-public class GameRoomController implements Initializable {
-
-    @FXML void onClickRunDice(ActionEvent e) {
-    }
-
-
-//     마우스 호버 액션
-    @FXML
-    void onHoverEnter(MouseEvent e) {
-        Node source = (Node)e.getSource();
-        source.setStyle("-fx-cursor:hand;");
-    }
-    @FXML
-    void onHoverExit(MouseEvent e) {
-        Node source = (Node)e.getSource();
-        source.setStyle("-fx-cursor:default;");
-    }
-
-//    ==================================================
-//                 Start Bluemarble Modal
-//    ==================================================
-//    시작 금액은 만원 단위입니다.
-    DecimalFormat df =  new DecimalFormat("###,###");
-    @FXML public AnchorPane apStartBluemarbleModal;
-    @FXML public ToggleGroup PlayerCntGroup;
-    @FXML public ToggleGroup startDistMoneyGroup;
-    @FXML public RadioButton rb2Player;
-    @FXML public RadioButton rb3Player;
-    @FXML public RadioButton rb4Player;
-    @FXML public RadioButton rbDefaultDistMoney;
-    @FXML public RadioButton rbCustomDistMoney;
-    @FXML public TextField tfStartDiskMoney;
+public class BluemarbleGameController implements Initializable{
+	final private byte goldCardNum = 10;	// 황금카드 갯수
+	
+	 @FXML void onClickRunDice(ActionEvent e) {
+	  }
+	 
+	//   마우스 호버 액션
+	  @FXML
+	  void onHoverEnter(MouseEvent e) {
+	      Node source = (Node)e.getSource();
+	      source.setStyle("-fx-cursor:hand;");
+	  }
+	  @FXML
+	  void onHoverExit(MouseEvent e) {
+	      Node source = (Node)e.getSource();
+	      source.setStyle("-fx-cursor:default;");
+	  }
+  
+	
+//  ==================================================
+//               Start Bluemarble Modal
+//  ==================================================
+  DecimalFormat df =  new DecimalFormat("###,###");
+  @FXML private AnchorPane apStartBluemarbleModal;
+  @FXML private ToggleGroup PlayerCntGroup;
+  @FXML private ToggleGroup startDistMoneyGroup;
+  @FXML private RadioButton rb2Player;
+  @FXML private RadioButton rb3Player;
+  @FXML private RadioButton rb4Player;
+  @FXML private RadioButton rbDefaultDistMoney;
+  @FXML private RadioButton rbCustomDistMoney;
+  @FXML private TextField tfStartDiskMoney;
 
 
     @FXML
@@ -74,6 +73,7 @@ public class GameRoomController implements Initializable {
             System.out.println("[ Bluemarble ] 입력 에러 >> " + err.toString());
         }
     }
+
 
     @FXML void onClick2PlayerButton(ActionEvent e) {
         if(!rbDefaultDistMoney.isSelected()) return;
@@ -121,3 +121,5 @@ public class GameRoomController implements Initializable {
         initStartBluemarbleModal();
     }
 }
+
+	

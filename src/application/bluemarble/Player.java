@@ -1,4 +1,4 @@
-package application.Bluemarble;
+package application.bluemarble;
 
 public class Player {
     // 플레이어 닉네임, 자산, 현금, 도시 개수, 차례
