@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,18 +23,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class GameRoomController implements Initializable {
-
-
-
-
-
-
-
-
-
-
 
     @FXML void onClickRunDice(ActionEvent e) {
     }
@@ -54,59 +46,54 @@ public class GameRoomController implements Initializable {
 //    ==================================================
 //                 Start Bluemarble Modal
 //    ==================================================
+//    시작 금액은 만원 단위입니다.
     DecimalFormat df =  new DecimalFormat("###,###");
-    @FXML private AnchorPane apStartBluemarbleModal;
-    @FXML private ToggleGroup PlayerCntGroup;
-    @FXML private ToggleGroup startDistMoneyGroup;
-    @FXML private RadioButton rb2Player;
-    @FXML private RadioButton rb3Player;
-    @FXML private RadioButton rb4Player;
-    @FXML private RadioButton rbDefaultDistMoney;
-    @FXML private RadioButton rbCustomDistMoney;
-    @FXML private TextField tfStartDiskMoney;
-    @FXML void onChangeStartDistMoney(KeyEvent e) {
-        //숫자, 지우기 키만 허용 46 - 57
-       switch(e.getCode()){
-           case BACK_SPACE: break;
-           case DELETE: break;
-           case DIGIT0: break;
-           case DIGIT1: break;
-           case DIGIT2: break;
-           case DIGIT3: break;
-           case DIGIT4: break;
-           case DIGIT5: break;
-           case DIGIT6: break;
-           case DIGIT7: break;
-           case DIGIT8: break;
-           case DIGIT9: break;
-           default:
-               String str = tfStartDiskMoney.getText().replace(e.getCode().toString(), "");
-               System.out.println("str = " + str);
-//
-               Platform.runLater(() -> tfStartDiskMoney.setText(str)) ;
-               System.out.println("[ Bluemarble ] 숫자만 입력할 수 있습니다.");
-               break;
-       }
+    @FXML public AnchorPane apStartBluemarbleModal;
+    @FXML public ToggleGroup PlayerCntGroup;
+    @FXML public ToggleGroup startDistMoneyGroup;
+    @FXML public RadioButton rb2Player;
+    @FXML public RadioButton rb3Player;
+    @FXML public RadioButton rb4Player;
+    @FXML public RadioButton rbDefaultDistMoney;
+    @FXML public RadioButton rbCustomDistMoney;
+    @FXML public TextField tfStartDiskMoney;
+
+
+    @FXML
+    void onType(KeyEvent e) {
+        try{
+            int position = tfStartDiskMoney.getCaretPosition();
+            String str = tfStartDiskMoney.getText();
+            String replaceStr = str.replaceAll("[^0-9]", "");
+            Platform.runLater(() -> {
+                        tfStartDiskMoney.setText(replaceStr);
+                        tfStartDiskMoney.positionCaret(position);
+                    }
+            );
+        } catch(Exception err) {
+            System.out.println("[ Bluemarble ] 입력 에러 >> " + err.toString());
+        }
     }
+
     @FXML void onClick2PlayerButton(ActionEvent e) {
         if(!rbDefaultDistMoney.isSelected()) return;
-        setStartDistMoney(5860000);
+        setStartDistMoney(586);
     }
     @FXML void onClick3PlayerButton(ActionEvent e) {
         if(!rbDefaultDistMoney.isSelected()) return;
-        setStartDistMoney(2930000);
+        setStartDistMoney(293);
     }
     @FXML void onClick4PlayerButton(ActionEvent e) {
         if(!rbDefaultDistMoney.isSelected()) return;
-        setStartDistMoney(2930000);
+        setStartDistMoney(293);
     }
     @FXML void onClickCustomDistMoneyButton(ActionEvent e) {
         tfStartDiskMoney.setDisable(false);
         tfStartDiskMoney.requestFocus();
     }
     @FXML void onClickDefaultDistMoneyButton(ActionEvent e) {
-        if(rb2Player.isSelected()) setStartDistMoney(5860000);
-        else setStartDistMoney(2930000);
+        if(rb2Player.isSelected()) setStartDistMoney(586);
+        else setStartDistMoney(293);
         tfStartDiskMoney.setDisable(true);
     }
     @FXML void onCloseCreateRoomModal(MouseEvent e) throws IOException {
@@ -123,7 +110,7 @@ public class GameRoomController implements Initializable {
     }
     void setStartDistMoney(long v){ tfStartDiskMoney.setText(df.format(v)); }
     void initStartBluemarbleModal() {
-        setStartDistMoney(5860000);
+        setStartDistMoney(586);
         tfStartDiskMoney.setDisable(true);
         rbDefaultDistMoney.setSelected(true);
         rb2Player.setSelected(true);
