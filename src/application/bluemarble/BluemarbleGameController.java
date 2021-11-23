@@ -68,47 +68,50 @@ public class BluemarbleGameController implements Initializable{
     private int selectCharacterCnt;
     private int selectedCharacterCnt;
 
-    @FXML void onClickCharacter1(MouseEvent e) {
-//        for(boolean b:selectPlayer){
-//            System.out.println("bool >> " + b);
-//        }
 
+
+    void onToggleCharacterCard(MouseEvent e, int i){
         Node source = (Node)e.getSource();
+        String cardId = source.idProperty().getValue();
+        System.out.println("toggleCard >> " + cardId.charAt(cardId.length() - 1));
+
+
         if(selectedCharacterCnt < selectCharacterCnt) System.out.println("초과");
 
-        if(!selectPlayer[1]){
+        if(!selectPlayer[i]){
             //1번 플레이어 선택
             System.out.println("1번 선택");
-            source.setStyle("-fx-opacity: 0.8");
+            source.setStyle("-fx-opacity: 0;-fx-background-color: #000000");
             selectedCharacterCnt++;
-            selectPlayer[1] = true;
+            selectPlayer[i] = true;
         } else {
             //1번 플레이어 선택 해제
             System.out.println("1번 선택 해제");
-            source.setStyle("-fx-opacity: 0.3");
+            source.setStyle("-fx-opacity: 0.5;-fx-background-color: #000000");
             selectedCharacterCnt--;
-            selectPlayer[1] = false;
+            selectPlayer[i] = false;
         }
         System.out.println("selectCharacterCnt >> " + selectCharacterCnt);
         System.out.println("selectedCharacterCnt >> " + selectedCharacterCnt);
     }
 
+
+    @FXML void onClickCharacter1(MouseEvent e) {
+        onToggleCharacterCard(e, 1);
+    }
+
     @FXML void onClickCharacter2(MouseEvent e) {
-        selectedCharacterCnt++;
-        Node source = (Node)e.getSource();
-        source.setStyle("-fx-opacity: 0");
+        onToggleCharacterCard(e, 2);
+
     }
 
     @FXML void onClickCharacter3(MouseEvent e) {
-        selectedCharacterCnt++;
-        Node source = (Node)e.getSource();
-        source.setStyle("-fx-opacity: 0");
+        onToggleCharacterCard(e, 3);
     }
 
     @FXML void onClickCharacter4(MouseEvent e) {
-        selectedCharacterCnt++;
-        Node source = (Node)e.getSource();
-        source.setStyle("-fx-opacity: 0");
+        onToggleCharacterCard(e, 4);
+
     }
 
 
@@ -160,6 +163,39 @@ public class BluemarbleGameController implements Initializable{
     @FXML void onSubmitCreateRoomModal(MouseEvent e) {
         System.out.println("확인");
     }
+    @FXML	// 마우스 호버 이벤트
+    void onHoverEnterCard(MouseEvent e) {
+        Node source = (Node)e.getSource();
+        switch (source.idProperty().getValue()){
+            case "pPlayer1":
+                if (selectPlayer[1]) return;
+            case "pPlayer2":
+                if (selectPlayer[2]) return;
+            case "pPlayer3":
+                if (selectPlayer[3]) return;
+            case "pPlayer4":
+                if (selectPlayer[4]) return;
+            default:
+                source.setStyle("-fx-cursor:hand;-fx-background-color: #000000;-fx-opacity: 0.1");
+        }
+    }
+    @FXML	// 마우스 호버 끝난경우
+    void onHoverExitCard(MouseEvent e) {
+        Node source = (Node)e.getSource();
+        switch (source.idProperty().getValue()){
+            case "pPlayer1":
+                if (selectPlayer[1]) return;
+            case "pPlayer2":
+                if (selectPlayer[2]) return;
+            case "pPlayer3":
+                if (selectPlayer[3]) return;
+            case "pPlayer4":
+                if (selectPlayer[4]) return;
+            default:
+                source.setStyle("-fx-cursor:hand;-fx-background-color: #000000;-fx-opacity: 0.5");
+        }
+    }
+
     void setStartDistMoney(long v){ tfStartDistMoney.setText(df.format(v)); }
     void initStartBluemarbleModal() {
         setStartDistMoney(586);

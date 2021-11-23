@@ -131,7 +131,7 @@
                               <Image url="@../texture/horse_bird.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer1" onMouseClicked="#onClickCharacter1" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer1" onMouseClicked="#onClickCharacter1" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
                   <Pane layoutX="184.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
@@ -141,7 +141,7 @@
                               <Image url="@../texture/horse_dinosaur.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer2" onMouseClicked="#onClickCharacter2" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer2" onMouseClicked="#onClickCharacter2" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
                   <Pane layoutX="344.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
@@ -151,7 +151,7 @@
                               <Image url="@../texture/horse_fairy.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer3" onMouseClicked="#onClickCharacter3" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer3" onMouseClicked="#onClickCharacter3" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
                   <Pane layoutX="504.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
@@ -161,7 +161,7 @@
                               <Image url="@../texture/horse_ghost.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer4" onMouseClicked="#onClickCharacter4" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer4" onMouseClicked="#onClickCharacter4" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
                   <Text layoutX="27.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="게임을 진행할 캐릭터를 선택해주세요." textAlignment="CENTER" wrappingWidth="617.0">
