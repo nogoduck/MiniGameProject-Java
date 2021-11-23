@@ -53,7 +53,7 @@ public class Player {
         this.cityCnt = cityCnt;
     }
 
-    public Image getProfileImgURI() {
+    public Image profileImgURI() {
         return profileImgURI;
     }
 

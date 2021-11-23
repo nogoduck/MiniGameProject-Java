@@ -29,12 +29,56 @@ import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class BluemarbleGameController implements Initializable{
-	final private byte goldCardNum = 10;	// 황금카드 갯수
+
+    @FXML private Pane pPlayer1Profile;
+    @FXML private Pane pPlayer2Profile;
+    @FXML private Pane pPlayer3Profile;
+    @FXML private Pane pPlayer4Profile;
+    @FXML private Text tPlayer1Asset;
+    @FXML private Text tPlayer1Money;
+    @FXML private Text tPlayer1Nickname;
+    @FXML private Text tPlayer2Asset;
+    @FXML private Text tPlayer2Money;
+    @FXML private Text tPlayer2Nickname;
+    @FXML private Text tPlayer3Asset;
+    @FXML private Text tPlayer3Money;
+    @FXML private Text tPlayer3Nickname;
+    @FXML private Text tPlayer4Asset;
+    @FXML private Text tPlayer4Money;
+    @FXML private Text tPlayer4Nickname;
+
+    final private byte goldCardNum = 10;	// 황금카드 갯수
 	Player[] player = new Player[5];        // 플레이어는 1 ~ 4번으로 0번 인덱스는 사용하지 않습니다.
     Image birdImage = new Image(Main.class.getResourceAsStream("texture/horse_bird.png"));
     Image dinosaurImage = new Image(Main.class.getResourceAsStream("texture/horse_dinosaur.png"));
     Image fairyImage = new Image(Main.class.getResourceAsStream("texture/horse_fairy.png"));
     Image ghostImage = new Image(Main.class.getResourceAsStream("texture/horse_ghost.png"));
+
+    //생성된 플레이어 객체 FX로 연결
+    void connectObjectToFX(){
+        for(int i = 1; i < playerCnt; i++){
+            switch(i){
+                case 1:
+                    ImageView iv = new ImageView();
+                    pPlayer1Profile.getChildren().add(iv);
+                    iv.setImage(player[i].profileImgURI());
+                    iv.prefHeight(120);
+                    iv.prefWidth(120);
+
+                    tPlayer1Nickname.setText(player[i].nickname());
+                    tPlayer1Asset.setText(Long.toString(player[i].asset()));
+                    tPlayer1Money.setText(Long.toString(player[i].money()));
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default: break;
+            }
+        }
+    }
 
     void printPlayerObject(){
         System.out.println("playerCnt >> " + playerCnt);
@@ -42,10 +86,9 @@ public class BluemarbleGameController implements Initializable{
             System.out.println("player " + i +" nickname >> " + player[i].nickname());
             System.out.println("player " + i +" money >> " + player[i].money());
             System.out.println("player " + i +" asset >> " + player[i].asset());
-            System.out.println("player " + i +" imageURI >> " + player[i].getProfileImgURI());
+            System.out.println("player " + i +" imageURI >> " + player[i].profileImgURI());
         }
     }
-    @FXML private Pane pPlayer1Profile;
     @FXML void onClickRunDice(ActionEvent e) {
         printPlayerObject();
 	  }
@@ -193,6 +236,7 @@ public class BluemarbleGameController implements Initializable{
         else setStartDistMoney(293);
         tfStartDistMoney.setDisable(true);
     }
+    //모달 하단 메세지 설정 (미완성)
     void setStartModalMessage(String str, Color color){
         tStartModalMessage.setText(str);
         tStartModalMessage.setStyle("-fx-text-fill: green");
@@ -243,12 +287,13 @@ public class BluemarbleGameController implements Initializable{
             try {
             //인원 수에 맞춰 객체 생성
                 player[i] = new Player(nickname, money, imageURI);
-                System.out.println("[ Bluemarble ] 유저 객체 생성 완료 " + 1);
+                System.out.println("[ Bluemarble ] 유저 객체 생성 완료 " + i);
             } catch(Exception err) {
                 System.out.println("[ Bluemarble ] 유저 객체 생성 에러 >> " + err.toString());
                 return;
             }
             apStartBluemarbleModal.setVisible(false);
+            connectObjectToFX();
         }
     }
 //    캐릭터 카드 호버 시작
