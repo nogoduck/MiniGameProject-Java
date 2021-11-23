@@ -1,5 +1,7 @@
 package application.bluemarble;
 
+import javafx.scene.image.Image;
+
 public class Player {
     // 플레이어 닉네임, 자산, 현금, 도시 개수, 차례
     private String nickname;
@@ -7,15 +9,19 @@ public class Player {
     private long money;
     private int cityCnt;
     private int turn;
+    private Image profileImgURI;
 
-    Player(String nickaname, long money){
+
+
+    Player(String nickaname, long money, Image profileImgURI){
         //유저 생성 시 가지고 있는 자산은 현금밖에 없기 때문에 자산과 현금에 같은 값 삽입
         this.nickname = nickaname;
         this.asset = money;
         this.money = money;
+        this.profileImgURI = profileImgURI;
     }
 
-    public String Nickname() {
+    public String nickname() {
         return nickname;
     }
 
@@ -23,7 +29,7 @@ public class Player {
         this.nickname = nickname;
     }
 
-    public long Asset() {
+    public long asset() {
         return asset;
     }
 
@@ -31,7 +37,7 @@ public class Player {
         this.asset = asset;
     }
 
-    public long Money() {
+    public long money() {
         return money;
     }
 
@@ -39,11 +45,19 @@ public class Player {
         this.money = money;
     }
 
-    public int CityCnt() {
+    public int cityCnt() {
         return cityCnt;
     }
 
     public void setCityCnt(int cityCnt) {
         this.cityCnt = cityCnt;
+    }
+
+    public Image getProfileImgURI() {
+        return profileImgURI;
+    }
+
+    public void setProfileImgURI(Image profileImgURI) {
+        this.profileImgURI = profileImgURI;
     }
 }

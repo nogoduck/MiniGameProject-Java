@@ -4,10 +4,12 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -20,11 +22,27 @@
          </image>
       </ImageView>
       <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
-      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="91.0" prefHeight="567.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0;">
+      <AnchorPane prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 32px 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 32px 0;">
          <children>
-            <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" stylesheets="@../application.css">
+            <Pane opacity="0.3" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #f1c40f;" />
+            <Pane layoutY="14.0" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0 8px 0 0;">
                <children>
-                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="50.0" prefWidth="50.0" stylesheets="@../application.css">
+                  <Pane fx:id="pPlayer1Profile" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8;" />
+               </children>
+            </Pane>
+         </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.2943722903728485" />
+               </color>
+            </DropShadow>
+         </effect></AnchorPane>
+      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="91.0" prefHeight="567.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;">
+         <children>
+            <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
+               <children>
+                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCloseCreateRoomModal" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 0px 12px 0px 0px;" stylesheets="@../application.css">
                      <children>
                         <Text fill="#a5a6a6" layoutX="7.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="×" textAlignment="CENTER" wrappingWidth="35.572265625">
                            <font>
@@ -45,7 +63,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane id="createRoomModal_container" layoutX="15.0" layoutY="65.0" prefHeight="434.0" prefWidth="671.0" style="-fx-background-color: #ffffff;">
+            <AnchorPane id="createRoomModal_container" layoutX="15.0" layoutY="65.0" prefHeight="434.0" prefWidth="671.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-border-radius: 8;">
                <children>
                   <RadioButton fx:id="rb2Player" layoutX="194.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#onClickPlayerCntButton" text="2인">
                      <font>
@@ -171,17 +189,27 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button id="create_room_submit" layoutX="569.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#onSubmitCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="확인">
+            <Button id="create_room_submit" layoutX="569.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#onSubmitCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="확인">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button id="create_room_cancel" layoutX="442.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" stylesheets="@../application.css" text="취소">
+            <Button id="create_room_cancel" layoutX="442.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="취소">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
          </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.38528138399124146" />
+               </color>
+            </DropShadow>
+         </effect>
       </AnchorPane>
    </children>
+   <effect>
+      <DropShadow height="28.3275" radius="12.564375" width="23.93" />
+   </effect>
 </AnchorPane>

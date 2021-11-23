@@ -1,5 +1,6 @@
 package application.bluemarble;
 
+import application.Main;
 import application.MainController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -12,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -28,25 +31,37 @@ import java.util.ResourceBundle;
 public class BluemarbleGameController implements Initializable{
 	final private byte goldCardNum = 10;	// 황금카드 갯수
 	Player[] player = new Player[5];        // 플레이어는 1 ~ 4번으로 0번 인덱스는 사용하지 않습니다.
-	 @FXML void onClickRunDice(ActionEvent e) {
+    Image birdImage = new Image(Main.class.getResourceAsStream("texture/horse_bird.png"));
+    Image dinosaurImage = new Image(Main.class.getResourceAsStream("texture/horse_dinosaur.png"));
+    Image fairyImage = new Image(Main.class.getResourceAsStream("texture/horse_fairy.png"));
+    Image ghostImage = new Image(Main.class.getResourceAsStream("texture/horse_ghost.png"));
+
+    void printPlayerObject(){
+        System.out.println("playerCnt >> " + playerCnt);
+        for(int i = 1; i < playerCnt; i++){
+            System.out.println("player " + i +" nickname >> " + player[i].nickname());
+            System.out.println("player " + i +" money >> " + player[i].money());
+            System.out.println("player " + i +" asset >> " + player[i].asset());
+            System.out.println("player " + i +" imageURI >> " + player[i].getProfileImgURI());
+        }
+    }
+    @FXML private Pane pPlayer1Profile;
+    @FXML void onClickRunDice(ActionEvent e) {
+        printPlayerObject();
 	  }
 	 
 	//   마우스 호버 액션
-	  @FXML
-	  void onHoverEnter(MouseEvent e) {
+	  @FXML void onHoverEnter(MouseEvent e) {
 	      Node source = (Node)e.getSource();
 	      source.setStyle("-fx-cursor:hand;");
-
-          System.out.println(player[2].Nickname());
-
-
+//          System.out.println(player[2].Nickname());
 	  }
-	  @FXML
-	  void onHoverExit(MouseEvent e) {
+	  @FXML void onHoverExit(MouseEvent e) {
 	      Node source = (Node)e.getSource();
 	      source.setStyle("-fx-cursor:default;");
 	  }
-  
+
+
 
 
 
@@ -73,17 +88,16 @@ public class BluemarbleGameController implements Initializable{
     @FXML private Pane pPlayer3;
     @FXML private Pane pPlayer4;
     private boolean[] selectPlayer = new boolean[5];
-    private int selectCharacterCnt; //선택 해야할 카드 개수
+    private int playerCnt; //선택 해야할 카드 개수 (총 플레이 인원 수)
     private int selectedCharacterCnt; //선택된 카드 개수
 
 //    캐릭터 선택 카드 토글
     @FXML void onToggleCharacterCard(MouseEvent e){
         Node source = (Node)e.getSource();
-        System.out.println(source);
         int i = getIndexFromSource(e);
         //카드 선택시 상태 확인
         if(!selectPlayer[i]){
-            if(selectedCharacterCnt < selectCharacterCnt) {
+            if(selectedCharacterCnt < playerCnt) {
                 source.setStyle("-fx-opacity: 0;-fx-background-color: #000000");
                 selectedCharacterCnt++;
                 selectPlayer[i] = true;
@@ -156,17 +170,17 @@ public class BluemarbleGameController implements Initializable{
         switch (i){
             case 2:
                 setStartDistMoney(586);
-                selectCharacterCnt = 2;
+                playerCnt = 2;
                 setCard(2);
                 break;
             case 3:
                 setStartDistMoney(293);
-                selectCharacterCnt = 3;
+                playerCnt = 3;
                 setCard(3);
                 break;
             case 4:
                 setStartDistMoney(293);
-                selectCharacterCnt = 4;
+                playerCnt = 4;
                 setCard(4);
                 break;
             default: break;
@@ -203,34 +217,50 @@ public class BluemarbleGameController implements Initializable{
             setStartModalMessage("시작시 분배할 금액을 입력해주세요.", Color.BLUE);
             return;
         }
-        if(selectedCharacterCnt != selectCharacterCnt) {
+        if(selectedCharacterCnt != playerCnt) {
             setStartModalMessage("인원수와 선택된 캐릭터 수가 같지 않습니다.", Color.BLUE);
             return;
         }
-        for(int i = 1; i < selectCharacterCnt + 1; i++){
+        for(int i = 1; i < playerCnt + 1; i++){
             String nickname = "";
+            Image imageURI = null;
             int money = Integer.parseInt(tfStartDistMoney.getText() + "0000");
             switch(i){
                 case 1:
                     nickname = tf1PlayerNickname.getText();
+                    imageURI = birdImage;
                     break;
                 case 2:
                     nickname = tf2PlayerNickname.getText();
+                    imageURI = dinosaurImage;
                     break;
                 case 3:
                     nickname = tf3PlayerNickname.getText();
+                    imageURI = fairyImage;
                     break;
                 case 4:
                     nickname = tf4PlayerNickname.getText();
+                    imageURI = ghostImage;
                     break;
                 default: break;
             }
-            System.out.println("nicknames = " + nickname);
-            System.out.println("money = " + money);
-        //인원 수에 맞춰 객체 생성
-            player[i] = new Player(nickname, money);
+            try {
+            //인원 수에 맞춰 객체 생성
+                player[i] = new Player(nickname, money, imageURI);
+                System.out.println("[ Bluemarble ] 유저 객체 생성 완료");
+            } catch(Exception err) {
+                System.out.println("[ Bluemarble ] 유저 객체 생성 에러 >> " + err.toString());
+                return;
+            }
+
+
+            apStartBluemarbleModal.setVisible(false);
         }
 
+//        ImageView iv = new ImageView();
+//        pPlayer1Profile.getChildren().add(iv);
+//        Image image = new Image(Main.class.getResourceAsStream("texture/dice.png"));
+//        iv.setImage(image);
 
     }
 //    캐릭터 카드 호버 시작
@@ -240,7 +270,6 @@ public class BluemarbleGameController implements Initializable{
         int i  = Integer.parseInt(cardId.replaceAll("[^0-9]", ""));
         if((0 < i || i < 5) && (selectPlayer[i])) return;
         else source.setStyle("-fx-cursor:hand;-fx-background-color: #000000;-fx-opacity: 0.1");
-
     }
 //    캐릭터 카드 호버 종료
     @FXML void onHoverExitCard(MouseEvent e) {
@@ -250,17 +279,16 @@ public class BluemarbleGameController implements Initializable{
         if((0 < i || i < 5) && (selectPlayer[i])) return;
         else source.setStyle("-fx-cursor:hand;-fx-background-color: #000000;-fx-opacity: 0.5");
     }
-
+//    코드에서 숫자만 추출
     int getIndexFromSource(MouseEvent e){
         Node source = (Node)e.getSource();
         String cardId = source.idProperty().getValue();
         return Integer.parseInt(cardId.replaceAll("[^0-9]", ""));
     }
-
     void setStartDistMoney(long v){ tfStartDistMoney.setText(df.format(v)); }
     void initStartBluemarbleModal() {
         setCard(2);
-        selectCharacterCnt = 2;
+        playerCnt = 2;
         setStartDistMoney(586);
         tfStartDistMoney.setDisable(true);
         rbDefaultDistMoney.setSelected(true);
@@ -269,7 +297,7 @@ public class BluemarbleGameController implements Initializable{
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initStartBluemarbleModal();
+        initStartBluemarbleModal(); // 부루마블 시작 모달 초기화
     }
 }
 
