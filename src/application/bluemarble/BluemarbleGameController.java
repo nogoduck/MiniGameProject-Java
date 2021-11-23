@@ -54,15 +54,11 @@ public class BluemarbleGameController implements Initializable{
 	  @FXML void onHoverEnter(MouseEvent e) {
 	      Node source = (Node)e.getSource();
 	      source.setStyle("-fx-cursor:hand;");
-//          System.out.println(player[2].Nickname());
 	  }
 	  @FXML void onHoverExit(MouseEvent e) {
 	      Node source = (Node)e.getSource();
 	      source.setStyle("-fx-cursor:default;");
 	  }
-
-
-
 
 
 //  ==================================================
@@ -199,7 +195,7 @@ public class BluemarbleGameController implements Initializable{
     }
     void setStartModalMessage(String str, Color color){
         tStartModalMessage.setText(str);
-        tStartModalMessage.setStyle("-fx-text-fill: red");
+        tStartModalMessage.setStyle("-fx-text-fill: green");
     }
 //    모달 취소 버튼
     @FXML void onCloseCreateRoomModal(MouseEvent e) throws IOException {
@@ -247,21 +243,13 @@ public class BluemarbleGameController implements Initializable{
             try {
             //인원 수에 맞춰 객체 생성
                 player[i] = new Player(nickname, money, imageURI);
-                System.out.println("[ Bluemarble ] 유저 객체 생성 완료");
+                System.out.println("[ Bluemarble ] 유저 객체 생성 완료 " + 1);
             } catch(Exception err) {
                 System.out.println("[ Bluemarble ] 유저 객체 생성 에러 >> " + err.toString());
                 return;
             }
-
-
             apStartBluemarbleModal.setVisible(false);
         }
-
-//        ImageView iv = new ImageView();
-//        pPlayer1Profile.getChildren().add(iv);
-//        Image image = new Image(Main.class.getResourceAsStream("texture/dice.png"));
-//        iv.setImage(image);
-
     }
 //    캐릭터 카드 호버 시작
     @FXML void onHoverEnterCard(MouseEvent e) {
