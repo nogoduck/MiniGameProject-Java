@@ -22,7 +22,7 @@
       <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
       <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="91.0" prefHeight="567.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0;">
          <children>
-            <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff;">
+            <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" stylesheets="@../application.css">
                <children>
                   <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCloseCreateRoomModal" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="50.0" prefWidth="50.0" stylesheets="@../application.css">
                      <children>
@@ -47,7 +47,7 @@
             </AnchorPane>
             <AnchorPane id="createRoomModal_container" layoutX="15.0" layoutY="65.0" prefHeight="434.0" prefWidth="671.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <RadioButton fx:id="rb2Player" layoutX="194.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClick2PlayerButton" text="2인">
+                  <RadioButton fx:id="rb2Player" layoutX="194.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#onClickPlayerCntButton" text="2인">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -55,12 +55,12 @@
                         <ToggleGroup fx:id="PlayerCntGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rb3Player" layoutX="356.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClick3PlayerButton" text="3인" toggleGroup="$PlayerCntGroup">
+                  <RadioButton fx:id="rb3Player" layoutX="361.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#onClickPlayerCntButton" text="3인" toggleGroup="$PlayerCntGroup">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rb4Player" layoutX="510.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClick4PlayerButton" text="4인" toggleGroup="$PlayerCntGroup">
+                  <RadioButton fx:id="rb4Player" layoutX="510.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#onClickPlayerCntButton" text="4인" toggleGroup="$PlayerCntGroup">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -75,7 +75,7 @@
                         <Font size="32.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="tfStartDistMoney" alignment="CENTER_RIGHT" layoutX="190.0" layoutY="47.0" onKeyTyped="#onType" prefHeight="51.0" prefWidth="200.0" text="293">
+                  <TextField fx:id="tfStartDistMoney" alignment="CENTER_RIGHT" layoutX="190.0" layoutY="47.0" onKeyTyped="#onType" prefHeight="51.0" prefWidth="200.0" stylesheets="@../application.css" text="293">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -90,7 +90,7 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <RadioButton fx:id="rbDefaultDistMoney" layoutX="484.0" layoutY="49.0" mnemonicParsing="false" onAction="#onClickDefaultDistMoneyButton" text="기본 금액">
+                  <RadioButton fx:id="rbDefaultDistMoney" layoutX="484.0" layoutY="49.0" mnemonicParsing="false" onMouseClicked="#onClickDefaultDistMoneyButton" text="기본 금액">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -98,7 +98,7 @@
                         <ToggleGroup fx:id="startDistMoneyGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbCustomDistMoney" layoutX="484.0" layoutY="76.0" mnemonicParsing="false" onAction="#onClickCustomDistMoneyButton" text="사용자 지정 금액" toggleGroup="$startDistMoneyGroup">
+                  <RadioButton fx:id="rbCustomDistMoney" layoutX="484.0" layoutY="76.0" mnemonicParsing="false" onMouseClicked="#onClickCustomDistMoneyButton" text="사용자 지정 금액" toggleGroup="$startDistMoneyGroup">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -131,7 +131,7 @@
                               <Image url="@../texture/horse_bird.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer1" onMouseClicked="#onClickCharacter1" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer1" onMouseClicked="#onToggleCharacterCard" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
                   <Pane layoutX="184.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
@@ -141,7 +141,7 @@
                               <Image url="@../texture/horse_dinosaur.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer2" onMouseClicked="#onClickCharacter2" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer2" onMouseClicked="#onToggleCharacterCard" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
                   <Pane layoutX="344.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
@@ -151,7 +151,7 @@
                               <Image url="@../texture/horse_fairy.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer3" onMouseClicked="#onClickCharacter3" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer3" onMouseClicked="#onToggleCharacterCard" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
                   <Pane layoutX="504.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
@@ -161,10 +161,10 @@
                               <Image url="@../texture/horse_ghost.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="pPlayer4" onMouseClicked="#onClickCharacter4" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
+                        <Pane fx:id="pPlayer4" onMouseClicked="#onToggleCharacterCard" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
-                  <Text layoutX="27.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="게임을 진행할 캐릭터를 선택해주세요." textAlignment="CENTER" wrappingWidth="617.0">
+                  <Text fx:id="tStartModalMessage" layoutX="27.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nanum_font" text="게임을 진행할 캐릭터를 선택해주세요." textAlignment="CENTER" wrappingWidth="617.0">
                      <font>
                         <Font size="20.0" />
                      </font>

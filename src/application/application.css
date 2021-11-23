@@ -30,6 +30,7 @@ AnchorPane{
 }
 .nanum_font{
     -fx-font-family: NanumGothicOTF;
+    /*-fx-font-family: 나눔고딕OTF;*/
 }
 #nanum_font{
     -fx-font-family: NanumGothicOTF;
