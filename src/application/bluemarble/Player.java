@@ -7,8 +7,7 @@ public class Player {
     private long money;
     private int cityCnt;
     private int turn;
-    
-    Player(){}
+
     Player(String nickaname, long money){
         //유저 생성 시 가지고 있는 자산은 현금밖에 없기 때문에 자산과 현금에 같은 값 삽입
         this.nickname = nickaname;
@@ -16,7 +15,7 @@ public class Player {
         this.money = money;
     }
 
-    public String getNickname() {
+    public String Nickname() {
         return nickname;
     }
 
@@ -24,7 +23,7 @@ public class Player {
         this.nickname = nickname;
     }
 
-    public long getAsset() {
+    public long Asset() {
         return asset;
     }
 
@@ -32,7 +31,7 @@ public class Player {
         this.asset = asset;
     }
 
-    public long getMoney() {
+    public long Money() {
         return money;
     }
 
@@ -40,7 +39,7 @@ public class Player {
         this.money = money;
     }
 
-    public int getCityCnt() {
+    public int CityCnt() {
         return cityCnt;
     }
 

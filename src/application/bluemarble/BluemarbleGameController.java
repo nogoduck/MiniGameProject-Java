@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class BluemarbleGameController implements Initializable{
 	final private byte goldCardNum = 10;	// 황금카드 갯수
-	Player[] player = new Player[5];
+	Player[] player = new Player[5];        // 플레이어는 1 ~ 4번으로 0번 인덱스는 사용하지 않습니다.
 	 @FXML void onClickRunDice(ActionEvent e) {
 	  }
 	 
@@ -36,6 +36,10 @@ public class BluemarbleGameController implements Initializable{
 	  void onHoverEnter(MouseEvent e) {
 	      Node source = (Node)e.getSource();
 	      source.setStyle("-fx-cursor:hand;");
+
+          System.out.println(player[2].Nickname());
+
+
 	  }
 	  @FXML
 	  void onHoverExit(MouseEvent e) {
@@ -180,7 +184,6 @@ public class BluemarbleGameController implements Initializable{
         tfStartDistMoney.setDisable(true);
     }
     void setStartModalMessage(String str, Color color){
-//        tStartModalMessage.setStyle("-fx-text-fill: red");
         tStartModalMessage.setText(str);
         tStartModalMessage.setStyle("-fx-text-fill: red");
     }
@@ -204,8 +207,30 @@ public class BluemarbleGameController implements Initializable{
             setStartModalMessage("인원수와 선택된 캐릭터 수가 같지 않습니다.", Color.BLUE);
             return;
         }
-            System.out.println("확인");
+        for(int i = 1; i < selectCharacterCnt + 1; i++){
+            String nickname = "";
+            int money = Integer.parseInt(tfStartDistMoney.getText() + "0000");
+            switch(i){
+                case 1:
+                    nickname = tf1PlayerNickname.getText();
+                    break;
+                case 2:
+                    nickname = tf2PlayerNickname.getText();
+                    break;
+                case 3:
+                    nickname = tf3PlayerNickname.getText();
+                    break;
+                case 4:
+                    nickname = tf4PlayerNickname.getText();
+                    break;
+                default: break;
+            }
+            System.out.println("nicknames = " + nickname);
+            System.out.println("money = " + money);
         //인원 수에 맞춰 객체 생성
+            player[i] = new Player(nickname, money);
+        }
+
 
     }
 //    캐릭터 카드 호버 시작
