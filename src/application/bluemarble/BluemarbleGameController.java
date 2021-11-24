@@ -58,78 +58,71 @@ public class BluemarbleGameController implements Initializable{
     Image fairyImage = new Image(Main.class.getResourceAsStream("texture/horse_fairy.png"));
     Image ghostImage = new Image(Main.class.getResourceAsStream("texture/horse_ghost.png"));
 
+    //숫자 통화단위로 변환
+    String convertNumberToCurrency(long num){
+        return df.format(num);
+    }
     //생성된 플레이어 객체 FX로 연결
     void connectObjectToFX(){
-        int objectCnt = 1;
-        for(int i = 1; i < player.length; i++){
-            if(selectPlayer[i] == false) continue;
-                switch(objectCnt){
+        for(int i = 1; i < playerCnt + 1; i++){
+                switch(i){
                     case 1:
-                        System.out.println("objectCnt = " + objectCnt);
-                        System.out.println("i = " + i);
                         ImageView iv = new ImageView();
                         pPlayer1Profile.getChildren().add(iv);
                         iv.setFitHeight(120);
                         iv.setFitWidth(120);
                         iv.setImage(player[i].profileImgURI());
                         tPlayer1Nickname.setText(player[i].nickname());
-                        tPlayer1Asset.setText(Long.toString(player[i].asset()));
-                        tPlayer1Money.setText(Long.toString(player[i].money()));
+                        tPlayer1Asset.setText(convertNumberToCurrency(player[i].asset()));
+                        tPlayer1Money.setText(convertNumberToCurrency(player[i].money()));
                         apPlayer1Container.setVisible(true);
                         break;
                     case 2:
-                        System.out.println("objectCnt = " + objectCnt);
-                        System.out.println("i = " + i);
                         ImageView iv2 = new ImageView();
                         pPlayer2Profile.getChildren().add(iv2);
                         iv2.setFitHeight(120);
                         iv2.setFitWidth(120);
                         iv2.setImage(player[i].profileImgURI());
                         tPlayer2Nickname.setText(player[i].nickname());
-                        tPlayer2Asset.setText(Long.toString(player[i].asset()));
-                        tPlayer2Money.setText(Long.toString(player[i].money()));
+                        tPlayer2Asset.setText(convertNumberToCurrency(player[i].asset()));
+                        tPlayer2Money.setText(convertNumberToCurrency(player[i].money()));
                         apPlayer2Container.setVisible(true);
                         break;
                     case 3:
-                        System.out.println("objectCnt = " + objectCnt);
-                        System.out.println("i = " + i);
                         ImageView iv3 = new ImageView();
                         pPlayer3Profile.getChildren().add(iv3);
                         iv3.setFitHeight(120);
                         iv3.setFitWidth(120);
                         iv3.setImage(player[i].profileImgURI());
                         tPlayer3Nickname.setText(player[i].nickname());
-                        tPlayer3Asset.setText(Long.toString(player[i].asset()));
-                        tPlayer3Money.setText(Long.toString(player[i].money()));
+                        tPlayer3Asset.setText(convertNumberToCurrency(player[i].asset()));
+                        tPlayer3Money.setText(convertNumberToCurrency(player[i].money()));
                         apPlayer3Container.setVisible(true);
                         break;
                     case 4:
-                        System.out.println("objectCnt = " + objectCnt);
-                        System.out.println("i = " + i);
                         ImageView iv4 = new ImageView();
                         pPlayer4Profile.getChildren().add(iv4);
                         iv4.setFitHeight(120);
                         iv4.setFitWidth(120);
                         iv4.setImage(player[i].profileImgURI());
                         tPlayer4Nickname.setText(player[i].nickname());
-                        tPlayer4Asset.setText(Long.toString(player[i].asset()));
-                        tPlayer4Money.setText(Long.toString(player[i].money()));
+                        tPlayer4Asset.setText(convertNumberToCurrency(player[i].asset()));
+                        tPlayer4Money.setText(convertNumberToCurrency(player[i].money()));
                         apPlayer4Container.setVisible(true);
                         break;
                     default: break;
                 }
-                objectCnt++;
         }
     }
 
     void printPlayerObject(){
-        System.out.println("player.length >> " + player.length);
-        for(int i = 1; i < player.length; i++){
+        for(int i = 1; i < selectPlayer.length; i++){
             System.out.println("player " + i + " nickname >> " + player[i].nickname());
             System.out.println("player " + i + " money >> " + player[i].money());
             System.out.println("player " + i + " asset >> " + player[i].asset());
             System.out.println("player " + i + " imageURI >> " + player[i].profileImgURI());
         }
+        System.out.println();
     }
     @FXML void onClickRunDice(ActionEvent e) {
         printPlayerObject();
@@ -303,9 +296,12 @@ public class BluemarbleGameController implements Initializable{
             setStartModalMessage("인원수와 선택된 캐릭터 수가 같지 않습니다.", Color.BLUE);
             return;
         }
-        for(int i = 1; i < playerCnt + 1; i++){
+        int objectCnt = 1;
+        for(int i = 1; i < selectPlayer.length; i++){
+            if(selectPlayer[i] == false) continue;
             String nickname = "";
             Image imageURI = null;
+            System.out.println("submit i >> " + i);
             int money = Integer.parseInt(tfStartDistMoney.getText() + "0000");
             switch(i){
                 case 1:
@@ -328,14 +324,16 @@ public class BluemarbleGameController implements Initializable{
             }
             try {
             //인원 수에 맞춰 객체 생성
-                player[i] = new Player(nickname, money, imageURI);
-                System.out.println("[ Bluemarble ] 유저 객체 생성 완료 " + i);
+                player[objectCnt] = new Player(nickname, money, imageURI);
+                System.out.println("[ Bluemarble ] 유저 객체 생성 완료 " + objectCnt);
+                System.out.println("[ Bluemarble ] 선택된 카드 번호 [" + i + "]");
             } catch(Exception err) {
                 System.out.println("[ Bluemarble ] 유저 객체 생성 에러 >> " + err.toString());
                 return;
             }
-            apStartBluemarbleModal.setVisible(false);
+            objectCnt++;
         }
+        apStartBluemarbleModal.setVisible(false);
         connectObjectToFX();
     }
 //    캐릭터 카드 호버 시작

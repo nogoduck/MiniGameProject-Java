@@ -76,12 +76,12 @@
             </Pane>
             <Label alignment="CENTER" layoutX="155.0" layoutY="54.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #d35400; -fx-padding: 2px 5px;" text="총 자산" textAlignment="CENTER" textFill="WHITE" />
             <Label alignment="CENTER" layoutX="155.0" layoutY="92.0" style="-fx-background-color: #d35400; -fx-padding: 2px 5px;" text="보유현금" textAlignment="CENTER" textFill="WHITE" />
-            <Text fx:id="tPlayer2Asset" fill="#f39c12" layoutX="8.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+            <Text fx:id="tPlayer2Asset" fill="#d35400" layoutX="8.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text fx:id="tPlayer2Money" fill="#f39c12" layoutX="8.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+            <Text fx:id="tPlayer2Money" fill="#d35400" layoutX="8.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -113,12 +113,12 @@
             </Pane>
             <Label alignment="CENTER" layoutX="137.0" layoutY="37.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #2ecc71; -fx-padding: 2px 5px;" text="총 자산" textAlignment="CENTER" textFill="WHITE" />
             <Label alignment="CENTER" layoutX="137.0" layoutY="76.0" style="-fx-background-color: #2ecc71; -fx-padding: 2px 5px;" text="보유현금" textAlignment="CENTER" textFill="WHITE" />
-            <Text fx:id="tPlayer3Asset" fill="#f39c12" layoutX="199.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+            <Text fx:id="tPlayer3Asset" fill="#2ecc71" layoutX="199.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text fx:id="tPlayer3Money" fill="#f39c12" layoutX="199.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+            <Text fx:id="tPlayer3Money" fill="#2ecc71" layoutX="199.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -150,12 +150,12 @@
             </Pane>
             <Label alignment="CENTER" layoutX="155.0" layoutY="38.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #3498db; -fx-padding: 2px 5px;" text="총 자산" textAlignment="CENTER" textFill="WHITE" />
             <Label alignment="CENTER" layoutX="155.0" layoutY="76.0" style="-fx-background-color: #3498db; -fx-padding: 2px 5px;" text="보유현금" textAlignment="CENTER" textFill="WHITE" />
-            <Text fx:id="tPlayer4Asset" fill="#f39c12" layoutX="8.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+            <Text fx:id="tPlayer4Asset" fill="#3498db" layoutX="8.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text fx:id="tPlayer4Money" fill="#f39c12" layoutX="8.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+            <Text fx:id="tPlayer4Money" fill="#3498db" layoutX="8.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
                <font>
                   <Font size="24.0" />
                </font>
