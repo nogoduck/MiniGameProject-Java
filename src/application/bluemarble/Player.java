@@ -5,9 +5,10 @@ import javafx.scene.image.Image;
 public class Player {
     // 플레이어 닉네임, 자산, 현금, 도시 개수, 차례
     private String nickname;
+    private int x, y;
     private long asset;
     private long money;
-    private int cityCnt;
+    private int[] cityNum;
     private int turn;
     private Image profileImgURI;
 
@@ -19,6 +20,17 @@ public class Player {
         this.asset = money;
         this.money = money;
         this.profileImgURI = profileImgURI;
+    }
+
+
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    int arr[] = new int[2];
+
+    public int[] position(){
+        return arr;
     }
 
     public String nickname() {
@@ -45,13 +57,13 @@ public class Player {
         this.money = money;
     }
 
-    public int cityCnt() {
-        return cityCnt;
-    }
+//    public int cityCnt() {
+//        return cityCnt;
+//    }
 
-    public void setCityCnt(int cityCnt) {
-        this.cityCnt = cityCnt;
-    }
+//    public void setCityCnt(int cityCnt) {
+//        this.cityCnt = cityCnt;
+//    }
 
     public Image profileImgURI() {
         return profileImgURI;

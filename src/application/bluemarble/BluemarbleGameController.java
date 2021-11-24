@@ -30,6 +30,10 @@ import java.util.ResourceBundle;
 
 public class BluemarbleGameController implements Initializable{
 
+    @FXML private AnchorPane apPlayer1Container;
+    @FXML private AnchorPane apPlayer2Container;
+    @FXML private AnchorPane apPlayer3Container;
+    @FXML private AnchorPane apPlayer4Container;
     @FXML private Pane pPlayer1Profile;
     @FXML private Pane pPlayer2Profile;
     @FXML private Pane pPlayer3Profile;
@@ -56,37 +60,75 @@ public class BluemarbleGameController implements Initializable{
 
     //생성된 플레이어 객체 FX로 연결
     void connectObjectToFX(){
-        for(int i = 1; i < playerCnt; i++){
-            switch(i){
-                case 1:
-                    ImageView iv = new ImageView();
-                    pPlayer1Profile.getChildren().add(iv);
-                    iv.setImage(player[i].profileImgURI());
-                    iv.prefHeight(120);
-                    iv.prefWidth(120);
-
-                    tPlayer1Nickname.setText(player[i].nickname());
-                    tPlayer1Asset.setText(Long.toString(player[i].asset()));
-                    tPlayer1Money.setText(Long.toString(player[i].money()));
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default: break;
-            }
+        int objectCnt = 1;
+        for(int i = 1; i < player.length; i++){
+            if(selectPlayer[i] == false) continue;
+                switch(objectCnt){
+                    case 1:
+                        System.out.println("objectCnt = " + objectCnt);
+                        System.out.println("i = " + i);
+                        ImageView iv = new ImageView();
+                        pPlayer1Profile.getChildren().add(iv);
+                        iv.setFitHeight(120);
+                        iv.setFitWidth(120);
+                        iv.setImage(player[i].profileImgURI());
+                        tPlayer1Nickname.setText(player[i].nickname());
+                        tPlayer1Asset.setText(Long.toString(player[i].asset()));
+                        tPlayer1Money.setText(Long.toString(player[i].money()));
+                        apPlayer1Container.setVisible(true);
+                        break;
+                    case 2:
+                        System.out.println("objectCnt = " + objectCnt);
+                        System.out.println("i = " + i);
+                        ImageView iv2 = new ImageView();
+                        pPlayer2Profile.getChildren().add(iv2);
+                        iv2.setFitHeight(120);
+                        iv2.setFitWidth(120);
+                        iv2.setImage(player[i].profileImgURI());
+                        tPlayer2Nickname.setText(player[i].nickname());
+                        tPlayer2Asset.setText(Long.toString(player[i].asset()));
+                        tPlayer2Money.setText(Long.toString(player[i].money()));
+                        apPlayer2Container.setVisible(true);
+                        break;
+                    case 3:
+                        System.out.println("objectCnt = " + objectCnt);
+                        System.out.println("i = " + i);
+                        ImageView iv3 = new ImageView();
+                        pPlayer3Profile.getChildren().add(iv3);
+                        iv3.setFitHeight(120);
+                        iv3.setFitWidth(120);
+                        iv3.setImage(player[i].profileImgURI());
+                        tPlayer3Nickname.setText(player[i].nickname());
+                        tPlayer3Asset.setText(Long.toString(player[i].asset()));
+                        tPlayer3Money.setText(Long.toString(player[i].money()));
+                        apPlayer3Container.setVisible(true);
+                        break;
+                    case 4:
+                        System.out.println("objectCnt = " + objectCnt);
+                        System.out.println("i = " + i);
+                        ImageView iv4 = new ImageView();
+                        pPlayer4Profile.getChildren().add(iv4);
+                        iv4.setFitHeight(120);
+                        iv4.setFitWidth(120);
+                        iv4.setImage(player[i].profileImgURI());
+                        tPlayer4Nickname.setText(player[i].nickname());
+                        tPlayer4Asset.setText(Long.toString(player[i].asset()));
+                        tPlayer4Money.setText(Long.toString(player[i].money()));
+                        apPlayer4Container.setVisible(true);
+                        break;
+                    default: break;
+                }
+                objectCnt++;
         }
     }
 
     void printPlayerObject(){
-        System.out.println("playerCnt >> " + playerCnt);
-        for(int i = 1; i < playerCnt; i++){
-            System.out.println("player " + i +" nickname >> " + player[i].nickname());
-            System.out.println("player " + i +" money >> " + player[i].money());
-            System.out.println("player " + i +" asset >> " + player[i].asset());
-            System.out.println("player " + i +" imageURI >> " + player[i].profileImgURI());
+        System.out.println("player.length >> " + player.length);
+        for(int i = 1; i < player.length; i++){
+            System.out.println("player " + i + " nickname >> " + player[i].nickname());
+            System.out.println("player " + i + " money >> " + player[i].money());
+            System.out.println("player " + i + " asset >> " + player[i].asset());
+            System.out.println("player " + i + " imageURI >> " + player[i].profileImgURI());
         }
     }
     @FXML void onClickRunDice(ActionEvent e) {
@@ -239,7 +281,7 @@ public class BluemarbleGameController implements Initializable{
     //모달 하단 메세지 설정 (미완성)
     void setStartModalMessage(String str, Color color){
         tStartModalMessage.setText(str);
-        tStartModalMessage.setStyle("-fx-text-fill: green");
+        tStartModalMessage.setStyle("-fx-text-fill: #4d4ffa");
     }
 //    모달 취소 버튼
     @FXML void onCloseCreateRoomModal(MouseEvent e) throws IOException {
@@ -293,8 +335,8 @@ public class BluemarbleGameController implements Initializable{
                 return;
             }
             apStartBluemarbleModal.setVisible(false);
-            connectObjectToFX();
         }
+        connectObjectToFX();
     }
 //    캐릭터 카드 호버 시작
     @FXML void onHoverEnterCard(MouseEvent e) {
@@ -327,6 +369,10 @@ public class BluemarbleGameController implements Initializable{
         rbDefaultDistMoney.setSelected(true);
         rb2Player.setSelected(true);
         apStartBluemarbleModal.setVisible(true);
+        apPlayer1Container.setVisible(false);
+        apPlayer2Container.setVisible(false);
+        apPlayer3Container.setVisible(false);
+        apPlayer4Container.setVisible(false);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

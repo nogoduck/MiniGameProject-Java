@@ -17,13 +17,13 @@
 
 <AnchorPane prefHeight="80.0" prefWidth="1000.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.bluemarble.BluemarbleGameController">
    <children>
-      <ImageView fitHeight="750.0" fitWidth="750.0" layoutX="130.0" layoutY="18.0">
+      <ImageView fitHeight="750.0" fitWidth="750.0" layoutX="138.0" layoutY="20.0">
          <image>
             <Image url="@../texture/GameBoard.png" />
          </image>
       </ImageView>
       <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
-      <AnchorPane prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 32px 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 32px 0;">
+      <AnchorPane fx:id="apPlayer1Container" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 32px 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 32px 0;">
          <children>
             <Pane prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #f1c40f;">
                <children>
@@ -58,7 +58,7 @@
                </color>
             </DropShadow>
          </effect></AnchorPane>
-      <AnchorPane layoutX="660.0" layoutY="-2.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 0 32px; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 0 32px;">
+      <AnchorPane fx:id="apPlayer2Container" layoutX="660.0" layoutY="-2.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 0 32px; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 0 32px;">
          <children>
             <Pane prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #d35400;">
                <children>
@@ -95,44 +95,7 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <AnchorPane layoutX="660.0" layoutY="637.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 32px 0 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 32px 0 0 0;">
-         <children>
-            <Pane layoutY="113.0" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #3498db;">
-               <children>
-                  <Text fx:id="tPlayer4Nickname" fill="WHITE" layoutX="148.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0">
-                     <font>
-                        <Font size="23.0" />
-                     </font>
-                  </Text>
-                  <Pane layoutX="215.0" layoutY="-113.0" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0 0 0 8px;">
-                     <children>
-                        <Pane fx:id="pPlayer4Profile" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8;" />
-                     </children>
-                  </Pane>
-               </children>
-            </Pane>
-            <Label alignment="CENTER" layoutX="155.0" layoutY="38.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #3498db; -fx-padding: 2px 5px;" text="총 자산" textAlignment="CENTER" textFill="WHITE" />
-            <Label alignment="CENTER" layoutX="155.0" layoutY="76.0" style="-fx-background-color: #3498db; -fx-padding: 2px 5px;" text="보유현금" textAlignment="CENTER" textFill="WHITE" />
-            <Text fx:id="tPlayer4Asset" fill="#f39c12" layoutX="8.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="tPlayer4Money" fill="#f39c12" layoutX="8.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-         </children>
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color opacity="0.2943722903728485" />
-               </color>
-            </DropShadow>
-         </effect>
-      </AnchorPane>
-      <AnchorPane layoutY="637.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 32px 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 32px 0 0;">
+      <AnchorPane fx:id="apPlayer3Container" layoutY="637.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 32px 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 32px 0 0;">
          <children>
             <Pane layoutY="113.0" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #2ecc71;">
                <children>
@@ -156,6 +119,43 @@
                </font>
             </Text>
             <Text fx:id="tPlayer3Money" fill="#f39c12" layoutX="199.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.2943722903728485" />
+               </color>
+            </DropShadow>
+         </effect>
+      </AnchorPane>
+      <AnchorPane fx:id="apPlayer4Container" layoutX="660.0" layoutY="637.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 32px 0 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 32px 0 0 0;">
+         <children>
+            <Pane layoutY="113.0" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #3498db;">
+               <children>
+                  <Text fx:id="tPlayer4Nickname" fill="WHITE" layoutX="148.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Text>
+                  <Pane layoutX="215.0" layoutY="-113.0" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0 0 0 8px;">
+                     <children>
+                        <Pane fx:id="pPlayer4Profile" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8;" />
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Label alignment="CENTER" layoutX="155.0" layoutY="38.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #3498db; -fx-padding: 2px 5px;" text="총 자산" textAlignment="CENTER" textFill="WHITE" />
+            <Label alignment="CENTER" layoutX="155.0" layoutY="76.0" style="-fx-background-color: #3498db; -fx-padding: 2px 5px;" text="보유현금" textAlignment="CENTER" textFill="WHITE" />
+            <Text fx:id="tPlayer4Asset" fill="#f39c12" layoutX="8.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="tPlayer4Money" fill="#f39c12" layoutX="8.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="140.0">
                <font>
                   <Font size="24.0" />
                </font>
