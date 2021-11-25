@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="80.0" prefWidth="1000.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.bluemarble.BluemarbleGameController">
+<AnchorPane prefHeight="927.0" prefWidth="1262.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.bluemarble.BluemarbleGameController">
    <children>
-      <ImageView fitHeight="750.0" fitWidth="750.0" layoutX="138.0" layoutY="20.0">
+      <ImageView fitHeight="904.0" fitWidth="906.0" layoutX="178.0" layoutY="12.0">
          <image>
             <Image url="@../texture/GameBoard.png" />
          </image>
@@ -58,7 +58,7 @@
                </color>
             </DropShadow>
          </effect></AnchorPane>
-      <AnchorPane fx:id="apPlayer2Container" layoutX="660.0" layoutY="-2.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 0 32px; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 0 32px;">
+      <AnchorPane fx:id="apPlayer2Container" layoutX="906.0" layoutY="-2.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 0 32px; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 0 32px;">
          <children>
             <Pane prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #d35400;">
                <children>
@@ -95,7 +95,7 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <AnchorPane fx:id="apPlayer3Container" layoutY="637.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 32px 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 32px 0 0;">
+      <AnchorPane fx:id="apPlayer3Container" layoutX="6.0" layoutY="774.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 32px 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 32px 0 0;">
          <children>
             <Pane layoutY="113.0" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #2ecc71;">
                <children>
@@ -132,7 +132,7 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <AnchorPane fx:id="apPlayer4Container" layoutX="660.0" layoutY="637.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 32px 0 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 32px 0 0 0;">
+      <AnchorPane fx:id="apPlayer4Container" layoutX="912.0" layoutY="774.0" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 32px 0 0 0; -fx-background-color: #F0F0F0; -fx-border-radius: 32px 0 0 0;">
          <children>
             <Pane layoutY="113.0" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #3498db;">
                <children>
@@ -169,7 +169,7 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="150.0" layoutY="91.0" prefHeight="567.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;" visible="false">
+      <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="281.0" layoutY="192.0" prefHeight="567.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;">
          <children>
             <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
                <children>
@@ -253,26 +253,6 @@
                      </font>
                   </RadioButton>
                   <Line endX="503.0" layoutX="134.0" layoutY="115.0" startX="-103.0" stroke="#a5a6a6" />
-                  <TextField fx:id="tf1PlayerNickname" alignment="CENTER" layoutX="27.0" layoutY="345.0" prefWidth="140.0" text="병아리">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="tf2PlayerNickname" alignment="CENTER" layoutX="184.0" layoutY="345.0" prefWidth="140.0" text="익룡">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="tf3PlayerNickname" alignment="CENTER" layoutX="344.0" layoutY="345.0" prefWidth="140.0" text="요정">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="tf4PlayerNickname" alignment="CENTER" layoutX="504.0" layoutY="345.0" prefWidth="140.0" text="유령">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </TextField>
                   <Pane layoutX="27.0" layoutY="194.0" prefHeight="186.0" prefWidth="140.0" style="-fx-border-color: a5a6a6;">
                      <children>
                         <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="5.0" layoutY="11.0">
@@ -313,6 +293,26 @@
                         <Pane fx:id="pPlayer4" onMouseClicked="#onToggleCharacterCard" onMouseEntered="#onHoverEnterCard" onMouseExited="#onHoverExitCard" opacity="0.5" prefHeight="151.0" prefWidth="140.0" style="-fx-background-color: #000000;" styleClass="character_card" stylesheets="@../application.css" />
                      </children>
                   </Pane>
+                  <TextField fx:id="tf1PlayerNickname" alignment="CENTER" layoutX="27.0" layoutY="345.0" prefWidth="140.0" text="병아리">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="tf2PlayerNickname" alignment="CENTER" layoutX="184.0" layoutY="345.0" prefWidth="140.0" text="익룡">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="tf3PlayerNickname" alignment="CENTER" layoutX="344.0" layoutY="345.0" prefWidth="140.0" text="요정">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="tf4PlayerNickname" alignment="CENTER" layoutX="504.0" layoutY="345.0" prefWidth="140.0" text="유령">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
                   <Text fx:id="tStartModalMessage" layoutX="27.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nanum_font" text="게임을 진행할 캐릭터를 선택해주세요." textAlignment="CENTER" wrappingWidth="617.0">
                      <font>
                         <Font size="20.0" />

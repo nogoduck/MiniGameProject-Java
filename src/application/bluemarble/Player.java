@@ -27,10 +27,10 @@ public class Player {
         this.x = x;
         this.y = y;
     }
-    int arr[] = new int[2];
 
     public int[] position(){
-        return arr;
+        //int[0] = x, int[1] = y
+        return new int[] {x, y};
     }
 
     public String nickname() {
