@@ -9,6 +9,7 @@ import java.util.Stack;
 
 import application.Main;
 import application.MainController;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,10 +29,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class BluemarbleGameController implements Initializable {
-
 
     @FXML private AnchorPane apPlayer1Container;
     @FXML private AnchorPane apPlayer2Container;
@@ -112,53 +114,114 @@ public class BluemarbleGameController implements Initializable {
     AnchorPane[] playerContainer = new AnchorPane[5];
     Pane[] profilePane = new Pane[5];
 
+
+
+
+    // ==================================================
+    //                    Test Code
+    // ==================================================
     int n = 0;
-  Stack imageAddress = new Stack();
+  Stack imageURI = new Stack();
+//    new TranslateTransition();
+
     @FXML void onClickFunc(ActionEvent e){
+        ImageView iv2 = new ImageView();
+        taibeiPane.getChildren().add(iv2);
+        iv2.setImage(ghostImage);
+        iv2.setFitWidth(50);
+        iv2.setFitHeight(50);
+
+        new TranslateTransition();
+        TranslateTransition tt = new TranslateTransition(new Duration(1000), taibeiPane);
+//        tt.setFromX(saoPauloPane.getLayoutX());
+        tt.setFromX(0);
+        tt.setFromY(0);
+        tt.setFromZ(10);
+
+        tt.setToX(200);
+        tt.setToY(200);
+        tt.setToZ(500);
+//        tt.setAutoReverse(true);
+        tt.setCycleCount(5);
+        tt.play();
+
+
+
         System.out.println("기능 버튼");
-        imageAddress.forEach(e2 -> System.out.println("e2 >> " + e2));
+        imageURI.forEach(e2 -> System.out.println("e2 >> " + e2));
         System.out.println("func >>  " + n);
-        if(n == 0) {
+        atheanaePane.getChildren().removeAll();
+
+
+
+
+//        if(n == 0) {
             System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
             ImageView iv = new ImageView();
-            if(!imageAddress.isEmpty()) atheanaePane.getChildren().remove(imageAddress.pop());
-            imageAddress.add(building111Image);
-            atheanaePane.getChildren().add(iv);
+            if(!imageURI.isEmpty()) atheanaePane.getChildren().removeAll();
+//            if(!imageURI.isEmpty()) atheanaePane.getChildren().remove(imageURI.pop());
+
+            imageURI.add(building111Image);
+            switch(n){
+                case 0:
+                    atheanaePane.getChildren().add(iv);
+                    break;
+                case 1:
+                    hongKongPane.getChildren().add(iv);
+                    break;
+                case 2:
+                    hawaiiPane.getChildren().add(iv);
+                    break;
+                case 4:
+                    tokyoPane.getChildren().add(iv);
+                    break;
+            }
+
             iv.setImage(building111Image);
             iv.setFitHeight(50);
             iv.setFitWidth(50);
-            iv.setX(30);
-            iv.setY(50);
-        } else if(n == 1){
-            System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
-            atheanaePane.getChildren().remove(imageAddress.pop());
-            ImageView iv = new ImageView();
-            imageAddress.add(building110Image);
-
-            iv.setImage(building110Image);
-
-            atheanaePane.getChildren().add(iv);
-            iv.setFitHeight(50);
-            iv.setFitWidth(50);
-            iv.setX(30);
-            iv.setY(50);
-
-        } else {
-            System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
-            atheanaePane.getChildren().remove(imageAddress.pop());
-            ImageView iv = new ImageView();
-            imageAddress.add(building100Image);
-
-            atheanaePane.getChildren().add(iv);
-            iv.setFitHeight(50);
-            iv.setImage(building100Image);
-            iv.setFitWidth(50);
-            iv.setX(30);
-            iv.setY(50);
-            n = -1;
-        }
+            iv.setX(0);
+            iv.setY(-44);
+//            atheanaePane.getChildren().remove(0);
+//            n = 1;
+//        }
         n++;
-        System.out.println();
+//        else if(n == 1){
+//            System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
+////            atheanaePane.getChildren().remove(imageURI.pop());
+////            atheanaePane.getChildren().removeAll();
+//            ImageView iv = new ImageView();
+////            imageURI.add(building110Image);
+//
+//            iv.setImage(building110Image);
+//
+//            atheanaePane.getChildren().add(iv);
+//            iv.setFitHeight(50);
+//            iv.setFitWidth(50);
+//            iv.setX(0);
+//            iv.setY(0);
+////            atheanaePane.getChildren().remove(true);
+////            atheanaePane.getChildren().remove(0);
+////            atheanaePane.
+//
+//            n = 2;
+//        } else {
+//            System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
+////            atheanaePane.getChildren().remove(imageURI.pop());
+////            atheanaePane.getChildren().removeAll();
+//            ImageView iv = new ImageView();
+////            imageURI.add(building100Image);
+//
+//            atheanaePane.getChildren().add(iv);
+//            iv.setFitHeight(50);
+//            iv.setImage(building100Image);
+//            iv.setFitWidth(50);
+//            iv.setX(0);
+//            iv.setY(0);
+//
+//            n = 0;
+//        }
+//        System.out.println();
     }
 
 
@@ -267,8 +330,8 @@ public class BluemarbleGameController implements Initializable {
     }
 
     // ==================================================
-    //    Start Bluemarble Modal
-    //==================================================
+    //              Start Bluemarble Modal
+    // ==================================================
     DecimalFormat df = new DecimalFormat("###,###");
     @FXML	private AnchorPane apStartBluemarbleModal;
     @FXML	private ToggleGroup startDistMoneyGroup;
