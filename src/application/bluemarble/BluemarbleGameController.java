@@ -107,13 +107,19 @@ public class BluemarbleGameController implements Initializable {
     Image building100Image = new Image(Main.class.getResourceAsStream("texture/building_100.png"));
     Image building110Image = new Image(Main.class.getResourceAsStream("texture/building_110.png"));
     Image building111Image = new Image(Main.class.getResourceAsStream("texture/building_111.png"));
+    Image building010Image = new Image(Main.class.getResourceAsStream("texture/building_010.png"));
+    Image building001Image = new Image(Main.class.getResourceAsStream("texture/building_001.png"));
+    Image building101Image = new Image(Main.class.getResourceAsStream("texture/building_101.png"));
+    Image building011Image = new Image(Main.class.getResourceAsStream("texture/building_011.png"));
+    Image flagImage = new Image(Main.class.getResourceAsStream("texture/building_flag.png"));
+
+
 
     Text[] profileAsset = new Text[5];
     Text[] profileMoney = new Text[5];
     Text[] profileNickname = new Text[5];
     AnchorPane[] playerContainer = new AnchorPane[5];
     Pane[] profilePane = new Pane[5];
-
 
 
 
@@ -124,6 +130,11 @@ public class BluemarbleGameController implements Initializable {
   Stack imageURI = new Stack();
 //    new TranslateTransition();
 
+    @FXML void onClickFunc2(ActionEvent e) {
+        pPlayer1Profile.setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
+    }
+
+
     @FXML void onClickFunc(ActionEvent e){
         ImageView iv2 = new ImageView();
         taibeiPane.getChildren().add(iv2);
@@ -132,42 +143,48 @@ public class BluemarbleGameController implements Initializable {
         iv2.setFitHeight(50);
 
         new TranslateTransition();
-        TranslateTransition tt = new TranslateTransition(new Duration(1000), taibeiPane);
+        TranslateTransition tt = new TranslateTransition(new Duration(1000), iv2);
 //        tt.setFromX(saoPauloPane.getLayoutX());
         tt.setFromX(0);
         tt.setFromY(0);
-        tt.setFromZ(10);
 
-        tt.setToX(200);
-        tt.setToY(200);
-        tt.setToZ(500);
-//        tt.setAutoReverse(true);
+        double moveToX = istanbulPane.getLayoutX() - startPane.getLayoutX();
+        double moveToY = istanbulPane.getLayoutY() - startPane.getLayoutY();
+        double moveToXr = startPane.getLayoutX() - istanbulPane.getLayoutX();
+        double moveToYr = startPane.getLayoutY() - istanbulPane.getLayoutY();
+//        tt.setToX(moveToXr);
+//        tt.setToY(moveToYr);
+        tt.setToX(100);
+        tt.setToY(0);
+//        tt.setToX(istanbulPane.getLayoutX());
+//        tt.setToY(istanbulPane.getLayoutY());
+        System.out.println("startPane x, y " + startPane.getLayoutX() + ", " + startPane.getLayoutY());
+        System.out.println("istanbulPane x, y " + istanbulPane.getLayoutX() + ", " + istanbulPane.getLayoutY());
+        System.out.println("moveToX, Y = " + moveToX + ", " + moveToY);
+        System.out.println("moveToXr, Yr = " + moveToXr + ", " + moveToYr);
+        tt.setAutoReverse(true);
         tt.setCycleCount(5);
         tt.play();
-
-
 
         System.out.println("기능 버튼");
         imageURI.forEach(e2 -> System.out.println("e2 >> " + e2));
         System.out.println("func >>  " + n);
         atheanaePane.getChildren().removeAll();
 
-
-
-
-//        if(n == 0) {
             System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
             ImageView iv = new ImageView();
             if(!imageURI.isEmpty()) atheanaePane.getChildren().removeAll();
 //            if(!imageURI.isEmpty()) atheanaePane.getChildren().remove(imageURI.pop());
 
             imageURI.add(building111Image);
-            switch(n){
+            switch(50){
                 case 0:
-                    atheanaePane.getChildren().add(iv);
+//                    atheanaePane.getChildren().add(iv);
+                    taibeiPane.getChildren().add(iv);
                     break;
                 case 1:
-                    hongKongPane.getChildren().add(iv);
+//                    hongKongPane.getChildren().add(iv);
+                    seoulPane.getChildren().add(iv);
                     break;
                 case 2:
                     hawaiiPane.getChildren().add(iv);
@@ -176,52 +193,12 @@ public class BluemarbleGameController implements Initializable {
                     tokyoPane.getChildren().add(iv);
                     break;
             }
-
             iv.setImage(building111Image);
             iv.setFitHeight(50);
             iv.setFitWidth(50);
             iv.setX(0);
             iv.setY(-44);
-//            atheanaePane.getChildren().remove(0);
-//            n = 1;
-//        }
         n++;
-//        else if(n == 1){
-//            System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
-////            atheanaePane.getChildren().remove(imageURI.pop());
-////            atheanaePane.getChildren().removeAll();
-//            ImageView iv = new ImageView();
-////            imageURI.add(building110Image);
-//
-//            iv.setImage(building110Image);
-//
-//            atheanaePane.getChildren().add(iv);
-//            iv.setFitHeight(50);
-//            iv.setFitWidth(50);
-//            iv.setX(0);
-//            iv.setY(0);
-////            atheanaePane.getChildren().remove(true);
-////            atheanaePane.getChildren().remove(0);
-////            atheanaePane.
-//
-//            n = 2;
-//        } else {
-//            System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
-////            atheanaePane.getChildren().remove(imageURI.pop());
-////            atheanaePane.getChildren().removeAll();
-//            ImageView iv = new ImageView();
-////            imageURI.add(building100Image);
-//
-//            atheanaePane.getChildren().add(iv);
-//            iv.setFitHeight(50);
-//            iv.setImage(building100Image);
-//            iv.setFitWidth(50);
-//            iv.setX(0);
-//            iv.setY(0);
-//
-//            n = 0;
-//        }
-//        System.out.println();
     }
 
 
@@ -309,11 +286,26 @@ public class BluemarbleGameController implements Initializable {
         if(turnCount>=player.length) turnCount = 1;
         printPlayerObject();
     }
-////////////////////////////////////
 
+////////////////////////////////////
     void playerMove(int moveNum, int playerNum) {
         // 플레이어 이동
-//		player[playerNum]
+        //		player[playerNum]
+
+        ImageView playerImg = new ImageView(player[turnCount].profileImgURI());
+        startPane.getChildren().add(playerImg);
+        playerImg.setFitWidth(45);
+        playerImg.setFitHeight(45);
+
+        new TranslateTransition();
+        TranslateTransition tt = new TranslateTransition(new Duration(1000), playerImg);
+        tt.setFromX(0);
+        tt.setFromY(0);
+        tt.setToX(-500);
+        tt.setToY(25);
+        tt.play();
+
+
     }
 
     // 마우스 호버 액션
@@ -328,6 +320,30 @@ public class BluemarbleGameController implements Initializable {
         Node source = (Node) e.getSource();
         source.setStyle("-fx-cursor:default;");
     }
+
+    // ==================================================
+    //              Ground Document Modal
+    // ==================================================
+    @FXML AnchorPane apGroundDocumentModal;
+
+    void onShowBuyModal(){
+//        Pane pane = new Pane();
+    }
+
+    @FXML void onClickBuySkip(MouseEvent e){
+        System.out.println("SkipBuy");
+    }
+
+    @FXML void onClickBuy(MouseEvent e){
+        System.out.println("Buy");
+    }
+
+
+    void initGroundDocumentModal(){
+        apGroundDocumentModal.setVisible(false);
+    }
+
+
 
     // ==================================================
     //              Start Bluemarble Modal
@@ -573,5 +589,6 @@ public class BluemarbleGameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initStartBluemarbleModal(); // 부루마블 시작 모달 초기화
+        initGroundDocumentModal(); //땅 문서 구매 모달 초기화
     }
 }

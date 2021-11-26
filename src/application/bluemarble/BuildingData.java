@@ -4,11 +4,11 @@ public class BuildingData {
 	int passLand, passVilla, passBuilding, passHotel;	// 땅 통행 비용
 	int x, y; // 땅 좌표
 	String master; // 땅 주인
-
 	/*
 	 * 1번 라인
 	 */
 	//스타트지점
+
 	void startPoint() {
 		buyLand = 0;
 		passLand = 0;
@@ -19,6 +19,7 @@ public class BuildingData {
 		passLand = 2000;	passVilla = 10000;	passBuilding = 90000;	passHotel = 250000;
 	}
 	// 황금카드1번
+
 	void goldCard1() {
 		buyLand = 0;
 		passLand = 0;
