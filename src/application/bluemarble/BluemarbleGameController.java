@@ -132,6 +132,7 @@ public class BluemarbleGameController implements Initializable {
 
     @FXML void onClickFunc2(ActionEvent e) {
         pPlayer1Profile.setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
+        onShowGroundDocumentModal("Open Modal");
     }
 
 
@@ -324,20 +325,36 @@ public class BluemarbleGameController implements Initializable {
     // ==================================================
     //              Ground Document Modal
     // ==================================================
+    // 모달은 선택항목 반환하는 역할만 수행
     @FXML AnchorPane apGroundDocumentModal;
+    @FXML Text tDocumentTitle;
+    @FXML Text tLandPrice;
+    @FXML Text tVillaPrice;
+    @FXML Text tBuildingPrice;
+    @FXML Text tHotelPrice;
+    BuildingData building = new BuildingData();
 
-    void onShowBuyModal(){
-//        Pane pane = new Pane();
+    void onShowGroundDocumentModal(String buildName){
+        buildName = "OK";
+        tDocumentTitle.setText(buildName);
+
+
+
+
+        apGroundDocumentModal.setVisible(true);
     }
 
-    @FXML void onClickBuySkip(MouseEvent e){
-        System.out.println("SkipBuy");
-    }
 
     @FXML void onClickBuy(MouseEvent e){
         System.out.println("Buy");
+
+
+
     }
 
+    @FXML void onClickBuySkip(MouseEvent e){
+        apGroundDocumentModal.setVisible(false);
+    }
 
     void initGroundDocumentModal(){
         apGroundDocumentModal.setVisible(false);
