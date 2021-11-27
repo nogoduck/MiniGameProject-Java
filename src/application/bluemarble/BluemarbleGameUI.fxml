@@ -23,7 +23,6 @@
             <Image url="@../texture/GameBoard.png" />
          </image>
       </ImageView>
-      <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
       <AnchorPane fx:id="apPlayer1Container" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 32px 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 32px 0;">
          <children>
             <Pane prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #f1c40f;">
@@ -568,6 +567,7 @@
             </DropShadow>
          </effect>
       </AnchorPane>
+      <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
       <Button layoutX="55.0" layoutY="449.0" mnemonicParsing="false" onAction="#onClickFunc3" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼3" />
    </children>
    <effect>

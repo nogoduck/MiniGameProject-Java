@@ -306,24 +306,16 @@ public class BluemarbleGameController implements Initializable {
                 busanPane, hawaiiPane, lisbonPane, queenElizabethPane, madridPane,
                 spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
                 goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane};
-        int originPosition;
-        int movePosition;
-//        if(diceNum + playerPosition[turn] < LandPaneTotalCnt) {
-//            originPosition = playerPosition[turn];
-//            movePosition = diceNum;
-//        } else {
-            originPosition = playerPosition[turn] % LandPaneTotalCnt;
-            movePosition = (originPosition + diceNum) % LandPaneTotalCnt;
-//            movePosition = playerPosition[turn] + diceNum;
-//        }
 
-        System.out.println("playerPosition[turn] = " + playerPosition[turn]);
-        System.out.println("diceNum = " + diceNum);
-        System.out.println("originPosition = " + originPosition);
-        System.out.println("movePosition = " + movePosition);
-        
+        int originPosition = playerPosition[turn] % LandPaneTotalCnt;
+        int movePosition = (originPosition + diceNum) % LandPaneTotalCnt;
         ImageView playerImg;
-        //초기 실행
+        double startX = LandPaneList[originPosition].getLayoutX() - startPane.getLayoutX();
+        double startY = LandPaneList[originPosition].getLayoutY() - startPane.getLayoutY();
+        double endX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
+        double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
+
+        //첫 턴에만 실행
         if(playerPosition[turn] == 0){
             playerImg = new ImageView(player[turnCount].profileImgURI());
             playerHorseImg[turn] = playerImg;
@@ -332,31 +324,20 @@ public class BluemarbleGameController implements Initializable {
             playerImg.setFitWidth(45);
             playerImg.setFitHeight(45);
             playerImg.setRotate(45);
-
-            double eX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
-            double eY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
-
             new TranslateTransition();
             TranslateTransition tt = new TranslateTransition(new Duration(1000), playerImg);
             tt.setFromX(0);
             tt.setFromY(0);
-            tt.setToX(eX);
-            tt.setToY(eY);
+            tt.setToX(endX);
+            tt.setToY(endY);
             tt.play();
         } else {
-
             playerImg = playerHorseImg[turn];
             playerImg.setFitWidth(45);
             playerImg.setFitHeight(45);
             playerImg.setRotate(0);
-
             new TranslateTransition();
             TranslateTransition tt = new TranslateTransition(new Duration(1000), playerImg);
-
-            double startX = LandPaneList[originPosition].getLayoutX() - startPane.getLayoutX();
-            double startY = LandPaneList[originPosition].getLayoutY() - startPane.getLayoutY();
-            double endX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
-            double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
             tt.setFromX(startX);
             tt.setFromY(startY);
             tt.setToX(endX);
