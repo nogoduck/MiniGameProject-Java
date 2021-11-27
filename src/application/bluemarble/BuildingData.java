@@ -1,13 +1,38 @@
 package application.bluemarble;
-public class BuildingData {
+public class BuildingData{
 	int buyLand, buyVilla, buyBuilding, buyHotel;		// 땅 구매 비용
 	int passLand, passVilla, passBuilding, passHotel;	// 땅 통행 비용
-	int x, y; // 땅 좌표
-	String master; // 땅 주인
-	/*
-	 * 1번 라인
-	 */
-	//스타트지점
+	public int buyLand() {
+		return buyLand;
+	}
+
+	public int buyVilla() {
+		return buyVilla;
+	}
+
+	public int buyBuilding() {
+		return buyBuilding;
+	}
+
+	public int buyHotel() {
+		return buyHotel;
+	}
+
+	public int passLand() {
+		return passLand;
+	}
+
+	public int passVilla() {
+		return passVilla;
+	}
+
+	public int passBuilding() {
+		return passBuilding;
+	}
+
+	public int passHotel() {
+		return passHotel;
+	}
 
 	void startPoint() {
 		buyLand = 0;
@@ -212,6 +237,489 @@ public class BuildingData {
 	void Seoul() {
 		buyLand = 700000;
 		passLand = 800000;
+	}
+
+
+	// ==================================================
+	//                 땅 주인, 땅 구매 여부
+	// ==================================================
+
+	String TaibeiOwner, HongKongOwner, ManilaOwner, JejuOwner,	SingaporeOwner,
+			CairoOwner, IstanbulOwner,	AthenaeOwner, CopenhagenOwner, StockholmOwner,
+			ConcordeOwner,	ZurichOwner, BerlinOwner, MontrealOwner, BuenosAiresOwner,
+			SaoPauloOwner, SydneyOwner, BusanOwner, HawaiiOwner, LisbonOwner,
+			QueenElizabethOwner, MadridOwner, TokyoOwner, ColombiaOwner, ParisOwner,
+			RomaOwner, LondonOwner, NewYorkOwner, SeoulOwner;
+
+	int TaibeiNum, HongKongNum, ManilaNum, JejuNum,	SingaporeNum,
+			CairoNum, IstanbulNum,	AthenaeNum, CopenhagenNum, StockholmNum,
+			ConcordeNum, ZurichNum, BerlinNum, MontrealNum, BuenosAiresNum,
+			SaoPauloNum, SydneyNum, BusanNum, HawaiiNum, LisbonNum,
+			QueenElizabethNum, MadridNum, TokyoNum, ColombiaNum, ParisNum,
+			RomaNum, LondonNum, NewYorkNum, SeoulNum;
+
+	public String TaibeiOwner() {
+		return TaibeiOwner;
+	}
+
+	public void setTaibeiOwner(String taibeiOwner) {
+		TaibeiOwner = taibeiOwner;
+	}
+
+	public String HongKongOwner() {
+		return HongKongOwner;
+	}
+
+	public void setHongKongOwner(String hongKongOwner) {
+		HongKongOwner = hongKongOwner;
+	}
+
+	public String ManilaOwner() {
+		return ManilaOwner;
+	}
+
+	public void setManilaOwner(String manilaOwner) {
+		ManilaOwner = manilaOwner;
+	}
+
+	public String JejuOwner() {
+		return JejuOwner;
+	}
+
+	public void setJejuOwner(String jejuOwner) {
+		JejuOwner = jejuOwner;
+	}
+
+	public String SingaporeOwner() {
+		return SingaporeOwner;
+	}
+
+	public void setSingaporeOwner(String singaporeOwner) {
+		SingaporeOwner = singaporeOwner;
+	}
+
+	public String CairoOwner() {
+		return CairoOwner;
+	}
+
+	public void setCairoOwner(String cairoOwner) {
+		CairoOwner = cairoOwner;
+	}
+
+	public String IstanbulOwner() {
+		return IstanbulOwner;
+	}
+
+	public void setIstanbulOwner(String istanbulOwner) {
+		IstanbulOwner = istanbulOwner;
+	}
+
+	public String AthenaeOwner() {
+		return AthenaeOwner;
+	}
+
+	public void setAthenaeOwner(String athenaeOwner) {
+		AthenaeOwner = athenaeOwner;
+	}
+
+	public String CopenhagenOwner() {
+		return CopenhagenOwner;
+	}
+
+	public void setCopenhagenOwner(String copenhagenOwner) {
+		CopenhagenOwner = copenhagenOwner;
+	}
+
+	public String StockholmOwner() {
+		return StockholmOwner;
+	}
+
+	public void setStockholmOwner(String stockholmOwner) {
+		StockholmOwner = stockholmOwner;
+	}
+
+	public String ConcordeOwner() {
+		return ConcordeOwner;
+	}
+
+	public void setConcordeOwner(String concordeOwner) {
+		ConcordeOwner = concordeOwner;
+	}
+
+	public String ZurichOwner() {
+		return ZurichOwner;
+	}
+
+	public void setZurichOwner(String zurichOwner) {
+		ZurichOwner = zurichOwner;
+	}
+
+	public String BerlinOwner() {
+		return BerlinOwner;
+	}
+
+	public void setBerlinOwner(String berlinOwner) {
+		BerlinOwner = berlinOwner;
+	}
+
+	public String MontrealOwner() {
+		return MontrealOwner;
+	}
+
+	public void setMontrealOwner(String montrealOwner) {
+		MontrealOwner = montrealOwner;
+	}
+
+	public String BuenosAiresOwner() {
+		return BuenosAiresOwner;
+	}
+
+	public void setBuenosAiresOwner(String buenosAiresOwner) {
+		BuenosAiresOwner = buenosAiresOwner;
+	}
+
+	public String SaoPauloOwner() {
+		return SaoPauloOwner;
+	}
+
+	public void setSaoPauloOwner(String saoPauloOwner) {
+		SaoPauloOwner = saoPauloOwner;
+	}
+
+	public String SydneyOwner() {
+		return SydneyOwner;
+	}
+
+	public void setSydneyOwner(String sydneyOwner) {
+		SydneyOwner = sydneyOwner;
+	}
+
+	public String BusanOwner() {
+		return BusanOwner;
+	}
+
+	public void setBusanOwner(String busanOwner) {
+		BusanOwner = busanOwner;
+	}
+
+	public String HawaiiOwner() {
+		return HawaiiOwner;
+	}
+
+	public void setHawaiiOwner(String hawaiiOwner) {
+		HawaiiOwner = hawaiiOwner;
+	}
+
+	public String LisbonOwner() {
+		return LisbonOwner;
+	}
+
+	public void setLisbonOwner(String lisbonOwner) {
+		LisbonOwner = lisbonOwner;
+	}
+
+	public String QueenElizabethOwner() {
+		return QueenElizabethOwner;
+	}
+
+	public void setQueenElizabethOwner(String queenElizabethOwner) {
+		QueenElizabethOwner = queenElizabethOwner;
+	}
+
+	public String MadridOwner() {
+		return MadridOwner;
+	}
+
+	public void setMadridOwner(String madridOwner) {
+		MadridOwner = madridOwner;
+	}
+
+	public String TokyoOwner() {
+		return TokyoOwner;
+	}
+
+	public void setTokyoOwner(String tokyoOwner) {
+		TokyoOwner = tokyoOwner;
+	}
+
+	public String ColombiaOwner() {
+		return ColombiaOwner;
+	}
+
+	public void setColombiaOwner(String colombiaOwner) {
+		ColombiaOwner = colombiaOwner;
+	}
+
+	public String ParisOwner() {
+		return ParisOwner;
+	}
+
+	public void setParisOwner(String parisOwner) {
+		ParisOwner = parisOwner;
+	}
+
+	public String RomaOwner() {
+		return RomaOwner;
+	}
+
+	public void setRomaOwner(String romaOwner) {
+		RomaOwner = romaOwner;
+	}
+
+	public String LondonOwner() {
+		return LondonOwner;
+	}
+
+	public void setLondonOwner(String londonOwner) {
+		LondonOwner = londonOwner;
+	}
+
+	public String NewYorkOwner() {
+		return NewYorkOwner;
+	}
+
+	public void setNewYorkOwner(String newYorkOwner) {
+		NewYorkOwner = newYorkOwner;
+	}
+
+	public String SeoulOwner() {
+		return SeoulOwner;
+	}
+
+	public void setSeoulOwner(String seoulOwner) {
+		SeoulOwner = seoulOwner;
+	}
+
+	public int TaibeiNum() {
+		return TaibeiNum;
+	}
+
+	public void setTaibeiNum(int taibeiNum) {
+		TaibeiNum = taibeiNum;
+	}
+
+	public int HongKongNum() {
+		return HongKongNum;
+	}
+
+	public void setHongKongNum(int hongKongNum) {
+		HongKongNum = hongKongNum;
+	}
+
+	public int ManilaNum() {
+		return ManilaNum;
+	}
+
+	public void setManilaNum(int manilaNum) {
+		ManilaNum = manilaNum;
+	}
+
+	public int JejuNum() {
+		return JejuNum;
+	}
+
+	public void setJejuNum(int jejuNum) {
+		JejuNum = jejuNum;
+	}
+
+	public int SingaporeNum() {
+		return SingaporeNum;
+	}
+
+	public void setSingaporeNum(int singaporeNum) {
+		SingaporeNum = singaporeNum;
+	}
+
+	public int CairoNum() {
+		return CairoNum;
+	}
+
+	public void setCairoNum(int cairoNum) {
+		CairoNum = cairoNum;
+	}
+
+	public int IstanbulNum() {
+		return IstanbulNum;
+	}
+
+	public void setIstanbulNum(int istanbulNum) {
+		IstanbulNum = istanbulNum;
+	}
+
+	public int AthenaeNum() {
+		return AthenaeNum;
+	}
+
+	public void setAthenaeNum(int athenaeNum) {
+		AthenaeNum = athenaeNum;
+	}
+
+	public int CopenhagenNum() {
+		return CopenhagenNum;
+	}
+
+	public void setCopenhagenNum(int copenhagenNum) {
+		CopenhagenNum = copenhagenNum;
+	}
+
+	public int StockholmNum() {
+		return StockholmNum;
+	}
+
+	public void setStockholmNum(int stockholmNum) {
+		StockholmNum = stockholmNum;
+	}
+
+	public int ConcordeNum() {
+		return ConcordeNum;
+	}
+
+	public void setConcordeNum(int concordeNum) {
+		ConcordeNum = concordeNum;
+	}
+
+	public int ZurichNum() {
+		return ZurichNum;
+	}
+
+	public void setZurichNum(int zurichNum) {
+		ZurichNum = zurichNum;
+	}
+
+	public int BerlinNum() {
+		return BerlinNum;
+	}
+
+	public void setBerlinNum(int berlinNum) {
+		BerlinNum = berlinNum;
+	}
+
+	public int MontrealNum() {
+		return MontrealNum;
+	}
+
+	public void setMontrealNum(int montrealNum) {
+		MontrealNum = montrealNum;
+	}
+
+	public int BuenosAiresNum() {
+		return BuenosAiresNum;
+	}
+
+	public void setBuenosAiresNum(int buenosAiresNum) {
+		BuenosAiresNum = buenosAiresNum;
+	}
+
+	public int SaoPauloNum() {
+		return SaoPauloNum;
+	}
+
+	public void setSaoPauloNum(int saoPauloNum) {
+		SaoPauloNum = saoPauloNum;
+	}
+
+	public int SydneyNum() {
+		return SydneyNum;
+	}
+
+	public void setSydneyNum(int sydneyNum) {
+		SydneyNum = sydneyNum;
+	}
+
+	public int BusanNum() {
+		return BusanNum;
+	}
+
+	public void setBusanNum(int busanNum) {
+		BusanNum = busanNum;
+	}
+
+	public int HawaiiNum() {
+		return HawaiiNum;
+	}
+
+	public void setHawaiiNum(int hawaiiNum) {
+		HawaiiNum = hawaiiNum;
+	}
+
+	public int LisbonNum() {
+		return LisbonNum;
+	}
+
+	public void setLisbonNum(int lisbonNum) {
+		LisbonNum = lisbonNum;
+	}
+
+	public int QueenElizabethNum() {
+		return QueenElizabethNum;
+	}
+
+	public void setQueenElizabethNum(int queenElizabethNum) {
+		QueenElizabethNum = queenElizabethNum;
+	}
+
+	public int MadridNum() {
+		return MadridNum;
+	}
+
+	public void setMadridNum(int madridNum) {
+		MadridNum = madridNum;
+	}
+
+	public int TokyoNum() {
+		return TokyoNum;
+	}
+
+	public void setTokyoNum(int tokyoNum) {
+		TokyoNum = tokyoNum;
+	}
+
+	public int ColombiaNum() {
+		return ColombiaNum;
+	}
+
+	public void setColombiaNum(int colombiaNum) {
+		ColombiaNum = colombiaNum;
+	}
+
+	public int ParisNum() {
+		return ParisNum;
+	}
+
+	public void setParisNum(int parisNum) {
+		ParisNum = parisNum;
+	}
+
+	public int RomaNum() {
+		return RomaNum;
+	}
+
+	public void setRomaNum(int romaNum) {
+		RomaNum = romaNum;
+	}
+
+	public int LondonNum() {
+		return LondonNum;
+	}
+
+	public void setLondonNum(int londonNum) {
+		LondonNum = londonNum;
+	}
+
+	public int NewYorkNum() {
+		return NewYorkNum;
+	}
+
+	public void setNewYorkNum(int newYorkNum) {
+		NewYorkNum = newYorkNum;
+	}
+
+	public int SeoulNum() {
+		return SeoulNum;
+	}
+
+	public void setSeoulNum(int seoulNum) {
+		SeoulNum = seoulNum;
 	}
 }
 

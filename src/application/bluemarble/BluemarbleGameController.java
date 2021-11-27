@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -39,47 +40,52 @@ public class BluemarbleGameController implements Initializable {
     @FXML private AnchorPane apPlayer2Container;
     @FXML private AnchorPane apPlayer3Container;
     @FXML private AnchorPane apPlayer4Container;
-    @FXML private AnchorPane atheanaePane;
-    @FXML private AnchorPane berlinPane;
-    @FXML private AnchorPane buenosAiresPane;
-    @FXML private AnchorPane busanPane;
-    @FXML private AnchorPane cairoPane;
-    @FXML private AnchorPane colombiaPane;
-    @FXML private AnchorPane concordePane;
-    @FXML private AnchorPane copenhagenPane;
-    @FXML private AnchorPane goldCardPane1;
-    @FXML private AnchorPane goldCardPane2;
-    @FXML private AnchorPane goldCardPane3;
-    @FXML private AnchorPane goldCardPane4;
-    @FXML private AnchorPane goldCardPane5;
-    @FXML private AnchorPane goldCardPane6;
-    @FXML private AnchorPane hawaiiPane;
+    @FXML private AnchorPane taibeiPane;
     @FXML private AnchorPane hongKongPane;
-    @FXML private AnchorPane islandPane;
-    @FXML private AnchorPane istanbulPane;
-    @FXML private AnchorPane jejuPane;
-    @FXML private AnchorPane lisbonPane;
-    @FXML private AnchorPane londonPane;
-    @FXML private AnchorPane madridPane;
+    @FXML private AnchorPane goldCardPane1;
     @FXML private AnchorPane manilaPane;
+    @FXML private AnchorPane jejuPane;
+    @FXML private AnchorPane singaporePane;
+    @FXML private AnchorPane goldCardPane2;
+    @FXML private AnchorPane cairoPane;
+    @FXML private AnchorPane istanbulPane;
+    @FXML private AnchorPane islandPane;
+    @FXML private AnchorPane atheanaePane;
+    @FXML private AnchorPane goldCardPane3;
+    @FXML private AnchorPane copenhagenPane;
+    @FXML private AnchorPane stockholmPane;
+    @FXML private AnchorPane concordePane;
+    @FXML private AnchorPane zurichPane;
+    @FXML private AnchorPane goldCardPane4;
+    @FXML private AnchorPane berlinPane;
     @FXML private AnchorPane montrealPane;
+    @FXML private AnchorPane socialMoneyGetPane;
+    @FXML private AnchorPane buenosAiresPane;
+    @FXML private AnchorPane goldCardPane5;
+    @FXML private AnchorPane saoPauloPane;
+    @FXML private AnchorPane sydneyPane;
+    @FXML private AnchorPane busanPane;
+    @FXML private AnchorPane hawaiiPane;
+    @FXML private AnchorPane lisbonPane;
+    @FXML private AnchorPane queenElizabethPane;
+    @FXML private AnchorPane madridPane;
+    @FXML private AnchorPane spacePane;
+    @FXML private AnchorPane tokyoPane;
+    @FXML private AnchorPane colombiaPane;
+    @FXML private AnchorPane parisPane;
+    @FXML private AnchorPane romaPane;
+    @FXML private AnchorPane goldCardPane6;
+    @FXML private AnchorPane londonPane;
     @FXML private AnchorPane newYorkPane;
+    @FXML private AnchorPane socialMoneyPayPane;
+    @FXML private AnchorPane seoulPane;
+    @FXML private AnchorPane startPane;
+
     @FXML private Pane pPlayer1Profile;
     @FXML private Pane pPlayer2Profile;
     @FXML private Pane pPlayer3Profile;
     @FXML private Pane pPlayer4Profile;
-    @FXML private AnchorPane parisPane;
-    @FXML private AnchorPane queenElizabethPane;
-    @FXML private AnchorPane romaPane;
-    @FXML private AnchorPane saoPauloPane;
-    @FXML private AnchorPane seoulPane;
-    @FXML private AnchorPane singaporePane;
-    @FXML private AnchorPane socialMoneyGetPane;
-    @FXML private AnchorPane socialMoneyPayPane;
-    @FXML private AnchorPane spacePane;
-    @FXML private AnchorPane startPane;
-    @FXML private AnchorPane stockholmPane;
-    @FXML private AnchorPane sydneyPane;
+
     @FXML private Text tPlayer1Asset;
     @FXML private Text tPlayer1Money;
     @FXML private Text tPlayer1Nickname;
@@ -92,10 +98,15 @@ public class BluemarbleGameController implements Initializable {
     @FXML private Text tPlayer4Asset;
     @FXML private Text tPlayer4Money;
     @FXML private Text tPlayer4Nickname;
-    @FXML private AnchorPane taibeiPane;
-    @FXML private AnchorPane tokyoPane;
-    @FXML private AnchorPane zurichPane;
 
+    AnchorPane[] LandPaneList = {taibeiPane, hongKongPane, goldCardPane1, manilaPane, jejuPane,
+            singaporePane, goldCardPane2, cairoPane, istanbulPane, islandPane,
+            atheanaePane, goldCardPane3, copenhagenPane, stockholmPane, concordePane,
+            zurichPane, goldCardPane4, berlinPane, montrealPane, socialMoneyGetPane,
+            buenosAiresPane, goldCardPane5, saoPauloPane, sydneyPane, busanPane,
+            hawaiiPane, lisbonPane, queenElizabethPane, madridPane, spacePane,
+            tokyoPane, colombiaPane, parisPane, romaPane, goldCardPane6,
+            londonPane, newYorkPane, socialMoneyPayPane, seoulPane, startPane};
     final private byte goldCardNum = 10; // 황금카드 갯수
     Player[] player = new Player[5]; // 플레이어는 1 ~ 4번으로 0번 인덱스는 사용하지 않습니다.
     //플레이어 프로필 이미지
@@ -112,8 +123,6 @@ public class BluemarbleGameController implements Initializable {
     Image building101Image = new Image(Main.class.getResourceAsStream("texture/building_101.png"));
     Image building011Image = new Image(Main.class.getResourceAsStream("texture/building_011.png"));
     Image flagImage = new Image(Main.class.getResourceAsStream("texture/building_flag.png"));
-
-
 
     Text[] profileAsset = new Text[5];
     Text[] profileMoney = new Text[5];
@@ -288,25 +297,56 @@ public class BluemarbleGameController implements Initializable {
         printPlayerObject();
     }
 
+
+    @FXML void onClickFunc3(ActionEvent e) {
+        ImageView playerImg = playerHorseImg.get(0);
+        System.out.println("image X, Y >> " + playerImg.getLayoutX() + ", " + playerImg.getLayoutY());
+        playerImg.setFitWidth(45);
+        playerImg.setFitHeight(45);
+        playerImg.setRotate(0);
+
+        new TranslateTransition();
+        TranslateTransition tt = new TranslateTransition(new Duration(1000), playerImg);
+
+        double x = islandPane.getLayoutX() - startPane.getLayoutX();
+        double y = islandPane.getLayoutY() - startPane.getLayoutY();
+        tt.setFromX(x);
+        tt.setFromY(y);
+        double xx = berlinPane.getLayoutX() - startPane.getLayoutX();
+        double yy = berlinPane.getLayoutY() - startPane.getLayoutY();
+        tt.setToX(xx);
+        tt.setToY(yy);
+        tt.play();
+
+        playerHorseImg.add(playerImg);
+    }
+
+    ArrayList<ImageView> playerHorseImg = new ArrayList<ImageView>();
+
 ////////////////////////////////////
     void playerMove(int moveNum, int playerNum) {
-        // 플레이어 이동
-        //		player[playerNum]
 
         ImageView playerImg = new ImageView(player[turnCount].profileImgURI());
+        playerHorseImg.add(playerImg);
+        System.out.println("image X, Y >> " + playerImg.getLayoutX() + ", " + playerImg.getLayoutY());
         startPane.getChildren().add(playerImg);
         playerImg.setFitWidth(45);
         playerImg.setFitHeight(45);
+        playerImg.setRotate(45);
+        double x = islandPane.getLayoutX() - startPane.getLayoutX();
+        double y = islandPane.getLayoutY() - startPane.getLayoutY();
 
         new TranslateTransition();
         TranslateTransition tt = new TranslateTransition(new Duration(1000), playerImg);
         tt.setFromX(0);
         tt.setFromY(0);
-        tt.setToX(-500);
-        tt.setToY(25);
+        System.out.println("x = " + x);
+        System.out.println("y = " + y);
+        tt.setToX(x);
+        tt.setToY(y);
         tt.play();
 
-
+        System.out.println("말 이미지 주소 >> " + playerHorseImg);
     }
 
     // 마우스 호버 액션
@@ -323,7 +363,7 @@ public class BluemarbleGameController implements Initializable {
     }
 
     // ==================================================
-    //              Ground Document Modal
+    //              Ground #Document Modal
     // ==================================================
     // 모달은 선택항목 반환하는 역할만 수행
     @FXML AnchorPane apGroundDocumentModal;
@@ -332,12 +372,53 @@ public class BluemarbleGameController implements Initializable {
     @FXML Text tVillaPrice;
     @FXML Text tBuildingPrice;
     @FXML Text tHotelPrice;
+    @FXML Text tDocumentMessage;
+    @FXML CheckBox cbLandPrice;
+    @FXML CheckBox cbVillaPrice;
+    @FXML CheckBox cbBuildingPrice;
+    @FXML CheckBox cbHotelPrice;
+
     BuildingData building = new BuildingData();
 
+    @FXML void onToggleBuildCard(MouseEvent e) {
+        // 토지 정보에 토지 주인, 어느토지까지 구매했는지 작성
+        building.Cairo();
+        System.out.println(building.buyLand());
+        building.Manila();
+        System.out.println(building.buyLand());
+
+        Node source = (Node) e.getSource();
+        String buildId = source.idProperty().getValue();
+        switch (buildId){
+            case "pLandPrice":
+                if(cbLandPrice.isSelected()) cbLandPrice.setSelected(false);
+                else cbLandPrice.setSelected(true);
+                break;
+            case "pVillaPrice":
+                if(cbVillaPrice.isSelected()) cbVillaPrice.setSelected(false);
+                else cbVillaPrice.setSelected(true);
+                break;
+            case "pBuildingPrice":
+                if(cbBuildingPrice.isSelected()) cbBuildingPrice.setSelected(false);
+                else cbBuildingPrice.setSelected(true);
+                break;
+            case "pHotelPrice":
+                if(cbHotelPrice.isSelected()) cbHotelPrice.setSelected(false);
+                else cbHotelPrice.setSelected(true);
+                break;
+            default: break;
+        }
+
+    }
+
     void onShowGroundDocumentModal(String buildName){
+
+        //모달 제목
         buildName = "OK";
         tDocumentTitle.setText(buildName);
-
+        //토지 가격(토지 -> 빌라 -> 빌딩 -> 호텔)순
+//        tLandPrice.setText(building.owner.setOwner());
+        tLandPrice.setText("344,000");
 
 
 
@@ -347,8 +428,6 @@ public class BluemarbleGameController implements Initializable {
 
     @FXML void onClickBuy(MouseEvent e){
         System.out.println("Buy");
-
-
 
     }
 
