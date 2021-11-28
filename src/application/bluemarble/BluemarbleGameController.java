@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import application.Main;
 import application.MainController;
@@ -272,30 +274,65 @@ public class BluemarbleGameController implements Initializable {
     // ==================================================
     //                      #Dice
     // ==================================================
-    @FXML  private ImageView dice1;
-    @FXML  private ImageView dice2;
     int turnCount = 1;
     int diceSum;
-    @FXML
-    void onClickRunDice(ActionEvent e) {
+    @FXML  private ImageView dice1;
+    @FXML  private ImageView dice2;
+
+    boolean runDelay(){
+        try{
+            Thread.sleep(500);
+            return true;
+        }catch(Exception err){
+            err.printStackTrace();
+        }
+        return false;
+    }
+
+    @FXML void onClickRunDice(ActionEvent e) {
         // 더블 구현해야함.
         ImageView[] diceIV = { dice1, dice2 };
         int randomDice = 0;
+        int sum = 0;
         for(int i = 0 ; i<2 ; i++) {
             randomDice = (int)(Math.random()*6)+1;
-            diceSum += randomDice;
+            sum += randomDice;
             diceIV[i].setImage(new Image(Main.class.getResourceAsStream("texture/"+randomDice+".png")));
         }
+        diceSum = sum;
 
-        new Thread(() -> {
-            for(int i = 0; i < diceSum; i++) {
-                System.out.println("이동 횟수 >> " + i);
-                playerMove(1, turnCount);
+
+        for(int i = 0; i < sum; i++) {
+            if(runDelay()){
+                System.out.println("실행 지연 테스트 i >> " + i);
             }
-        }).start();
+
+        }
+//        new Thread(() -> {
+//                playerMove(diceSum, turnCount);
+//
+//
+//            Thread.sleep(200);
+//
+//
+//
+//        }).start();
 
 
-
+        //
+//        try{
+//            final ScheduledExecutorService executorService = Exception.newSi
+//
+//            for(int i = 0; i < sum; i++) {
+//                System.out.println("이동 횟수 >> " + i);
+//                playerMove(1, turnCount);
+////                Thread.sleep();
+////                TimeUnit.SECONDS.sleep(1);
+//
+//            }
+//        } catch(Exception err) {
+//            err.printStackTrace();
+//        }
 
         // 턴 설정
         turnCount++;
