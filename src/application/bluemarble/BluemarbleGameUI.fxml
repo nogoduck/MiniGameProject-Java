@@ -578,6 +578,11 @@
             <Font size="36.0" />
          </font>
       </Label>
+      <Label fx:id="lbDiceDouble" alignment="CENTER" layoutX="586.0" layoutY="151.0" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #3399FF; -fx-border-color: #000000; -fx-border-radius: 24px; -fx-border-width: 3px; -fx-background-radius: 24px;" text="더블" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
    </children>
    <effect>
       <DropShadow height="28.3275" radius="12.564375" width="23.93" />

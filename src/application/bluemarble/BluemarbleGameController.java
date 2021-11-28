@@ -260,6 +260,7 @@ public class BluemarbleGameController implements Initializable {
     // ==================================================
 
     @FXML private Label lbDiceNumber;
+    @FXML private Label lbDiceDouble;
     //현재 턴인 유저 프로필에 하이라이트 추가
     void showProfileHighlight(){
         for(Pane p:profileHighlight){
@@ -269,19 +270,25 @@ public class BluemarbleGameController implements Initializable {
         profileHighlight[turnCount].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
     }
 
-    void showDiceNumber(int num){
+    Timer timerDice;
+    TimerTask timerTaskDice;
+    //주사위 결과 출력
+    void showDiceNumber(int num, boolean isDouble){
+        if(timerDice != null) timerDice.cancel();
+        if(isDouble) lbDiceDouble.setVisible(true);
+        else lbDiceDouble.setVisible(false);
         lbDiceNumber.setText(Integer.toString(num));
         lbDiceNumber.setVisible(true);
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
+        timerDice = new Timer();
+        timerTaskDice = new TimerTask() {
             @Override
             public void run() {
                 lbDiceNumber.setVisible(false);
+                lbDiceDouble.setVisible(false);
             }
         };
-        timer.schedule(timerTask, 2000);
+        timerDice.schedule(timerTaskDice, 2000);
     }
-
 
     @FXML private Button btnRunDice;
     @FXML	// 주사위를 던지는 메소드
@@ -294,12 +301,12 @@ public class BluemarbleGameController implements Initializable {
             diceResult[i] = (int)(Math.random()*6)+1;
             diceIV[i].setImage(new Image(Main.class.getResourceAsStream("texture/"+diceResult[i]+".png")));
         }
-        showDiceNumber(diceResult[0]+diceResult[1]);
         System.out.println(diceResult[0]+diceResult[1]);
         playerMove(diceResult[0]+diceResult[1], turnCount);
 
         // 더블이 아닌경우 다음턴으로 넘어간다.
         if(!(diceResult[0] == diceResult[1])) {
+            showDiceNumber(diceResult[0]+diceResult[1], false);
             turnCount++;
             if(turnCount > playerCnt) turnCount = 1; // 플레이어 턴 재배정
         }else {
@@ -307,6 +314,7 @@ public class BluemarbleGameController implements Initializable {
              * 게임 내 보여줄만한 label 추가해야할듯
              * 지금은 : ㅁ 의 턴 입니다. / 더블로 ㅁ의 턴을 한번더 진행합니다 등등..
              */
+            showDiceNumber(diceResult[0]+diceResult[1], true);
             System.out.println("더블 입니다 "+turnCount+"플레이어가 한 번 더 주사위를 돌립니다.");
         }
     }
@@ -368,7 +376,7 @@ public class BluemarbleGameController implements Initializable {
             tt2.setToY(LandPaneList[((movePosition/10)*10)].getLayoutY() - startPane.getLayoutY());
             // 매개변수 (움직일것, 애니메이션1, 애니메이션2, ... , 애니메이션N)  -> 앞에서 순차적으로 실행
             st = new SequentialTransition(playerHorseImg[turn],tt2,tt);
-        }else {
+        } else {
             st = new SequentialTransition(playerHorseImg[turn],tt);
         }
 
@@ -383,6 +391,7 @@ public class BluemarbleGameController implements Initializable {
     }
     void initDice(){
         lbDiceNumber.setVisible(false);
+        lbDiceDouble.setVisible(false);
     }
 
     // 마우스 호버 액션
