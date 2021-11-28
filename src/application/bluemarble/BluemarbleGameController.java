@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -279,15 +280,20 @@ public class BluemarbleGameController implements Initializable {
     @FXML  private ImageView dice1;
     @FXML  private ImageView dice2;
 
-    boolean runDelay(){
-        try{
-            Thread.sleep(500);
-            return true;
-        }catch(Exception err){
-            err.printStackTrace();
+    void runDelay(){
+        try {
+            final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(BluemarbleGameController::executeTask, 1, 2, TimeUnit.SECONDS);
+        }catch(Exception e) {
+            System.out.println(e);
         }
-        return false;
     }
+
+     static void executeTask() {
+        System.out.println("Task Executing... ");
+        playerMove(diceSum, turnCount);
+    }
+
 
     @FXML void onClickRunDice(ActionEvent e) {
         // 더블 구현해야함.
@@ -302,38 +308,8 @@ public class BluemarbleGameController implements Initializable {
         diceSum = sum;
 
 
-        for(int i = 0; i < sum; i++) {
-            if(runDelay()){
-                System.out.println("실행 지연 테스트 i >> " + i);
-            }
-
-        }
-//        new Thread(() -> {
-//                playerMove(diceSum, turnCount);
-//
-//
-//            Thread.sleep(200);
-//
-//
-//
-//        }).start();
-
-
-        //
-//        try{
-//            final ScheduledExecutorService executorService = Exception.newSi
-//
-//            for(int i = 0; i < sum; i++) {
-//                System.out.println("이동 횟수 >> " + i);
-//                playerMove(1, turnCount);
-////                Thread.sleep();
-////                TimeUnit.SECONDS.sleep(1);
-//
-//            }
-//        } catch(Exception err) {
-//            err.printStackTrace();
-//        }
-
+        runDelay();
+//        playerMove(1, turnCount);
         // 턴 설정
         turnCount++;
         if(turnCount > playerCnt) turnCount = 1;
@@ -350,6 +326,7 @@ public class BluemarbleGameController implements Initializable {
     int setDuration(int val) { return val * 100; }
 
     void playerMove(int diceNum, int turn) {
+
         int LandPaneTotalCnt = 40;
         AnchorPane[] LandPaneList = {startPane, taibeiPane, hongKongPane, goldCardPane1, manilaPane,
                 jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
