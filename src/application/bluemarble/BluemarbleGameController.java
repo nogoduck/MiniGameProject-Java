@@ -3,16 +3,12 @@ package application.bluemarble;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Stack;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import application.Main;
 import application.MainController;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -34,7 +30,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -89,6 +84,10 @@ public class BluemarbleGameController implements Initializable {
     @FXML private Pane pPlayer2Profile;
     @FXML private Pane pPlayer3Profile;
     @FXML private Pane pPlayer4Profile;
+    @FXML private Pane pPlayer1Highlight;
+    @FXML private Pane pPlayer2Highlight;
+    @FXML private Pane pPlayer3Highlight;
+    @FXML private Pane pPlayer4Highlight;
 
     @FXML private Text tPlayer1Asset;
     @FXML private Text tPlayer1Money;
@@ -103,7 +102,6 @@ public class BluemarbleGameController implements Initializable {
     @FXML private Text tPlayer4Money;
     @FXML private Text tPlayer4Nickname;
 
-
     final private byte goldCardNum = 10; // 황금카드 갯수
     Player[] player = new Player[5]; // 플레이어는 1 ~ 4번으로 0번 인덱스는 사용하지 않습니다.
     //플레이어 프로필 이미지
@@ -111,7 +109,7 @@ public class BluemarbleGameController implements Initializable {
     Image dinosaurImage = new Image(Main.class.getResourceAsStream("texture/horse_dinosaur.png"));
     Image fairyImage = new Image(Main.class.getResourceAsStream("texture/horse_fairy.png"));
     Image ghostImage = new Image(Main.class.getResourceAsStream("texture/horse_ghost.png"));
-    //빌딩 이미지
+    //빌딩 이미지  [ 1 -> 건설된 건물, 0-> 건설안된건물  ex) 호텔만 건설된 경우 001, 소형건물과 호텔이 건설된 경우 101 ]
     Image building100Image = new Image(Main.class.getResourceAsStream("texture/building_100.png"));
     Image building110Image = new Image(Main.class.getResourceAsStream("texture/building_110.png"));
     Image building111Image = new Image(Main.class.getResourceAsStream("texture/building_111.png"));
@@ -121,21 +119,27 @@ public class BluemarbleGameController implements Initializable {
     Image building011Image = new Image(Main.class.getResourceAsStream("texture/building_011.png"));
     Image flagImage = new Image(Main.class.getResourceAsStream("texture/building_flag.png"));
 
+    // FXML을 반복문으로 사용하기 위해 주소를 저장할 배열
     Text[] profileAsset = new Text[5];
     Text[] profileMoney = new Text[5];
     Text[] profileNickname = new Text[5];
     AnchorPane[] playerContainer = new AnchorPane[5];
     Pane[] profilePane = new Pane[5];
+    Pane[] profileHighlight = new Pane[5];
 
+    // 주사위 이미지 저장
+    @FXML  private ImageView dice1;
+    @FXML  private ImageView dice2;
+    int turnCount = 1;	// 시작 플레이어 설정
 
 
     // ==================================================
     //                    Test Code
     // ==================================================
     int n = 0;
-  Stack imageURI = new Stack();
-//    new TranslateTransition();
+    Stack imageURI = new Stack();
 
+    @FXML void onClickFunc3(ActionEvent e) {}
     @FXML void onClickFunc2(ActionEvent e) {
         pPlayer1Profile.setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
         onShowGroundDocumentModal("Open Modal");
@@ -143,74 +147,43 @@ public class BluemarbleGameController implements Initializable {
 
 
     @FXML void onClickFunc(ActionEvent e){
-        ImageView iv2 = new ImageView();
-        taibeiPane.getChildren().add(iv2);
-        iv2.setImage(ghostImage);
-        iv2.setFitWidth(50);
-        iv2.setFitHeight(50);
-
-        new TranslateTransition();
-        TranslateTransition tt = new TranslateTransition(new Duration(1000), iv2);
-//        tt.setFromX(saoPauloPane.getLayoutX());
-        tt.setFromX(0);
-        tt.setFromY(0);
-
-        double moveToX = istanbulPane.getLayoutX() - startPane.getLayoutX();
-        double moveToY = istanbulPane.getLayoutY() - startPane.getLayoutY();
-        double moveToXr = startPane.getLayoutX() - istanbulPane.getLayoutX();
-        double moveToYr = startPane.getLayoutY() - istanbulPane.getLayoutY();
-//        tt.setToX(moveToXr);
-//        tt.setToY(moveToYr);
-        tt.setToX(100);
-        tt.setToY(0);
-//        tt.setToX(istanbulPane.getLayoutX());
-//        tt.setToY(istanbulPane.getLayoutY());
-        System.out.println("startPane x, y " + startPane.getLayoutX() + ", " + startPane.getLayoutY());
-        System.out.println("istanbulPane x, y " + istanbulPane.getLayoutX() + ", " + istanbulPane.getLayoutY());
-        System.out.println("moveToX, Y = " + moveToX + ", " + moveToY);
-        System.out.println("moveToXr, Yr = " + moveToXr + ", " + moveToYr);
-        tt.setAutoReverse(true);
-        tt.setCycleCount(5);
-        tt.play();
 
         System.out.println("기능 버튼");
         imageURI.forEach(e2 -> System.out.println("e2 >> " + e2));
         System.out.println("func >>  " + n);
         atheanaePane.getChildren().removeAll();
 
-            System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
-            ImageView iv = new ImageView();
-            if(!imageURI.isEmpty()) atheanaePane.getChildren().removeAll();
+        System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
+        ImageView iv = new ImageView();
+        if(!imageURI.isEmpty()) atheanaePane.getChildren().removeAll();
 //            if(!imageURI.isEmpty()) atheanaePane.getChildren().remove(imageURI.pop());
 
         imageURI.add(building111Image);
-            switch(50){
-                case 0:
+        switch(50){
+            case 0:
 //                    atheanaePane.getChildren().add(iv);
-                    taibeiPane.getChildren().add(iv);
-                    break;
-                case 1:
+                taibeiPane.getChildren().add(iv);
+                break;
+            case 1:
 //                    hongKongPane.getChildren().add(iv);
-                    seoulPane.getChildren().add(iv);
-                    break;
-                case 2:
-                    hawaiiPane.getChildren().add(iv);
-                    break;
-                case 4:
-                    tokyoPane.getChildren().add(iv);
-                    break;
-            }
-            iv.setImage(building111Image);
-            iv.setFitHeight(50);
-            iv.setFitWidth(50);
-            iv.setX(0);
-            iv.setY(-44);
+                seoulPane.getChildren().add(iv);
+                break;
+            case 2:
+                hawaiiPane.getChildren().add(iv);
+                break;
+            case 4:
+                tokyoPane.getChildren().add(iv);
+                break;
+        }
+        iv.setImage(building111Image);
+        iv.setFitHeight(50);
+        iv.setFitWidth(50);
+        iv.setX(0);
+        iv.setY(-44);
         n++;
     }
 
-
-
-    // 인원수에 맞게 text 관리 배열 생성
+    // 반복문으로 사용할 수 있게 배열에 관련 자료를 저장
     void profileSettting() {
         switch (playerCnt) {
             case 4:
@@ -219,24 +192,28 @@ public class BluemarbleGameController implements Initializable {
                 profileNickname[4] = tPlayer4Nickname;
                 playerContainer[4] = apPlayer4Container;
                 profilePane[4] = pPlayer4Profile;
+                profileHighlight[4] = pPlayer4Highlight;
             case 3:
                 profileAsset[3] = tPlayer3Asset;
                 profileMoney[3] = tPlayer3Money;
                 profileNickname[3] = tPlayer3Nickname;
                 playerContainer[3] = apPlayer3Container;
                 profilePane[3] = pPlayer3Profile;
+                profileHighlight[3] = pPlayer3Highlight;
             case 2:
                 profileAsset[2] = tPlayer2Asset;
                 profileMoney[2] = tPlayer2Money;
                 profileNickname[2] = tPlayer2Nickname;
                 playerContainer[2] = apPlayer2Container;
                 profilePane[2] = pPlayer2Profile;
+                profileHighlight[2] = pPlayer2Highlight;
             case 1:
                 profileAsset[1] = tPlayer1Asset;
                 profileMoney[1] = tPlayer1Money;
                 profileNickname[1] = tPlayer1Nickname;
                 playerContainer[1] = apPlayer1Container;
                 profilePane[1] = pPlayer1Profile;
+                profileHighlight[1] = pPlayer1Highlight;
                 break;
         }
     }
@@ -260,7 +237,7 @@ public class BluemarbleGameController implements Initializable {
             playerContainer[i].setVisible(true);
         }
     }
-
+    // 플레이어 정보 출력
     void printPlayerObject() {
         for (int i = 1; i < playerCnt + 1 ; i++) {
             System.out.println("player " + i + " nickname >> " + player[i].nickname());
@@ -271,158 +248,109 @@ public class BluemarbleGameController implements Initializable {
         System.out.println();
     }
 
-
-    // ==================================================
-    //                      #Dice
-    // ==================================================
-    int turnCount = 1;
-    int diceSum;
-    @FXML  private ImageView dice1;
-    @FXML  private ImageView dice2;
-
-    void runDelay(){
-        try {
-            final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(BluemarbleGameController::executeTask, 1, 2, TimeUnit.SECONDS);
-        }catch(Exception e) {
-            System.out.println(e);
+    //현재 턴인 유저 프로필에 하이라이트 추가
+    void drawProfileHighlight(){
+        for(Pane p:profileHighlight){
+            if(p == null) continue;
+            p.setStyle("");
         }
+        profileHighlight[turnCount].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
     }
 
-     static void executeTask() {
-        System.out.println("Task Executing... ");
-        playerMove(diceSum, turnCount);
-    }
-
-
-    @FXML void onClickRunDice(ActionEvent e) {
-        // 더블 구현해야함.
-        ImageView[] diceIV = { dice1, dice2 };
-        int randomDice = 0;
-        int sum = 0;
+    @FXML	// 주사위를 던지는 메소드
+    void onClickRunDice(ActionEvent e) {
+        int[] diceResult = new int[2];			// 주사위 결과 저장 -> 더블 체크용도
+        ImageView[] diceIV = { dice1, dice2 };	// 주사위 이미지
         for(int i = 0 ; i<2 ; i++) {
-            randomDice = (int)(Math.random()*6)+1;
-            sum += randomDice;
-            diceIV[i].setImage(new Image(Main.class.getResourceAsStream("texture/"+randomDice+".png")));
+            diceResult[i] = (int)(Math.random()*6)+1;
+            diceIV[i].setImage(new Image(Main.class.getResourceAsStream("texture/"+diceResult[i]+".png")));
         }
-        diceSum = sum;
+        System.out.println(diceResult[0]+diceResult[1]);
+        playerMove(diceResult[0]+diceResult[1], turnCount);
 
-
-        runDelay();
-//        playerMove(1, turnCount);
-        // 턴 설정
-        turnCount++;
-        if(turnCount > playerCnt) turnCount = 1;
-//        printPlayerObject();
+        // 더블이 아닌경우 다음턴으로 넘어간다.
+        if(!(diceResult[0] == diceResult[1])) {
+            turnCount++;
+            if(turnCount > playerCnt) turnCount = 1; // 플레이어 턴 재배정
+        }else {
+            /*
+             * 게임 내 보여줄만한 label 추가해야할듯
+             * 지금은 : ㅁ 의 턴 입니다. / 더블로 ㅁ의 턴을 한번더 진행합니다 등등..
+             */
+            System.out.println("더블 입니다 "+turnCount+"플레이어가 한 번 더 주사위를 돌립니다.");
+        }
     }
 
-    @FXML void onClickFunc3(ActionEvent e) {}
-
+    // 플레이어의 말을 저장하는 배열
     ImageView[] playerHorseImg = new ImageView[5];
+    // 현재 플레이어의 위치를 숫자로 저장하는 배열
     int playerPosition[] = new int[5];
 
-    //주사위 이동 칸수만큼 애니메이션 시간 유동적으로 반환하는 함수
-    //sec 1칸당 이동 시간(ms)
-    int setDuration(int val) { return val * 100; }
+    // 게임 시작시 스타트팬에 캐릭터 추가
+    void assignPlayer() {
+        for(int i = 1 ; i<playerCnt+1 ; i++) {
+            playerHorseImg[i] = new ImageView(player[i].profileImgURI());
+            startPane.getChildren().add(playerHorseImg[i]);
+            playerHorseImg[i].setFitWidth(45);
+            playerHorseImg[i].setFitHeight(45);
+            playerHorseImg[i].setRotate(45);
+            playerHorseImg[i].setX(10);
+            playerHorseImg[i].setY(10);
+        }
+    }
 
+    int setDuration(int val) { return val * 50; }
+
+    // 주사위 굴렸을때 플레이어 이동에 관련된 메소드
     void playerMove(int diceNum, int turn) {
-
         int LandPaneTotalCnt = 40;
-        AnchorPane[] LandPaneList = {startPane, taibeiPane, hongKongPane, goldCardPane1, manilaPane,
+        AnchorPane[] LandPaneList = {startPane, taibeiPane, goldCardPane1, hongKongPane, manilaPane,
                 jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
                 islandPane, atheanaePane, goldCardPane3, copenhagenPane, stockholmPane,
                 concordePane, zurichPane, goldCardPane4, berlinPane, montrealPane,
                 socialMoneyGetPane, buenosAiresPane, goldCardPane5, saoPauloPane, sydneyPane,
                 busanPane, hawaiiPane, lisbonPane, queenElizabethPane, madridPane,
                 spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
-                goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane};
+                goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane, startPane};
 
         int originPosition = playerPosition[turn] % LandPaneTotalCnt;
         int movePosition = (originPosition + diceNum) % LandPaneTotalCnt;
-        ImageView playerImg;
+        double endX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
+        double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
+        SequentialTransition st;	// 애니메이션을 차례대로 동작시키는 함수
 
-        System.out.println("diceNum >> " + diceNum);
-        System.out.println("originPosition >> " + originPosition);
-        System.out.println("movePosition >> " + movePosition);
+        /*
+         * <<<<수정해야할 사항>>>>
+         * Duratuion을 이동하는 칸에 비례해서 계산하는 식을 하나 짜야할듯함.
+         * 지금 돌려보면 판은 제대로 돌아도 커브를 돌때 이동속도가 제각각이됨.
+         * ++ 바라보는 각도 변경
+         */
 
-        //첫 턴에만 실행
-        if(playerPosition[turn] == 0){
+        // 목적지 까지 가는 이동 애니매이션
+        TranslateTransition tt = new TranslateTransition(new Duration(setDuration(diceNum)), playerHorseImg[turn]);
+        tt.setToX(endX);
+        tt.setToY(endY);
 
-            playerImg = new ImageView(player[turnCount].profileImgURI());
-            playerHorseImg[turn] = playerImg;
-            startPane.getChildren().add(playerImg);
-            playerPosition[turn] += movePosition;
-            playerImg.setFitWidth(45);
-            playerImg.setFitHeight(45);
-            playerImg.setRotate(45);
-
-            double endX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
-            double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
-            new TranslateTransition();
-            TranslateTransition tt = new TranslateTransition(new Duration(setDuration(diceNum)), playerImg);
-            tt.setFromX(0);
-            tt.setFromY(0);
-            tt.setToX(endX);
-            tt.setToY(endY);
-            tt.play();
-        } else {
-            playerImg = playerHorseImg[turn];
-            playerImg.setFitWidth(45);
-            playerImg.setFitHeight(45);
-            playerImg.setRotate(0);
-
-            double startX = LandPaneList[originPosition].getLayoutX() - startPane.getLayoutX();
-            double startY = LandPaneList[originPosition].getLayoutY() - startPane.getLayoutY();
-            double endX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
-            double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
-            new TranslateTransition();
-            TranslateTransition tt = new TranslateTransition(new Duration(setDuration(diceNum)), playerImg);
-            tt.setFromX(startX);
-            tt.setFromY(startY);
-            tt.setToX(endX);
-            tt.setToY(endY);
-            tt.play();
-            playerPosition[turn] += diceNum;
+        // 목적지로 이동할때 보드를 횡단하지 않기위해 추가한 코드
+        if( (originPosition/10) != (movePosition/10) ) {
+            TranslateTransition tt2 = new TranslateTransition(new Duration(1000), playerHorseImg[turn]);
+            tt2.setToX(LandPaneList[((movePosition/10)*10)].getLayoutX() - startPane.getLayoutX());
+            tt2.setToY(LandPaneList[((movePosition/10)*10)].getLayoutY() - startPane.getLayoutY());
+            // 매개변수 (움직일것, 애니메이션1, 애니메이션2, ... , 애니메이션N)  -> 앞에서 순차적으로 실행
+            st = new SequentialTransition(playerHorseImg[turn],tt2,tt);
+        }else {
+            st = new SequentialTransition(playerHorseImg[turn],tt);
         }
-        System.out.println();
+        
+        //이동 종료
+        st.setOnFinished(e -> {
+            drawProfileHighlight();
+        });
+        st.play();
+
+        playerPosition[turn] += diceNum;	// 플레이어 위치 기록
+
     }
-
-    void moveToCorner(int originPosition, int movePosition){
-        int LandPaneTotalCnt = 40;
-        AnchorPane[] LandPaneList = {startPane, taibeiPane, hongKongPane, goldCardPane1, manilaPane,
-                jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
-                islandPane, atheanaePane, goldCardPane3, copenhagenPane, stockholmPane,
-                concordePane, zurichPane, goldCardPane4, berlinPane, montrealPane,
-                socialMoneyGetPane, buenosAiresPane, goldCardPane5, saoPauloPane, sydneyPane,
-                busanPane, hawaiiPane, lisbonPane, queenElizabethPane, madridPane,
-                spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
-                goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane};
-
-        //무인도 코너 처리
-        if(0 <= originPosition && originPosition <= 9 && 10 <= movePosition && movePosition <= 19){
-            System.out.println("1번 코너");
-
-            ImageView playerImg;
-            double startX = LandPaneList[originPosition].getLayoutX() - startPane.getLayoutX();
-            double startY = LandPaneList[originPosition].getLayoutY() - startPane.getLayoutY();
-            double endX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
-            double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
-        //사회복지기금 코너 처리
-        } else if(10 <= originPosition && originPosition <= 19 && 20 <= movePosition && movePosition <= 29){
-            System.out.println("2번 코너");
-
-        //우주여행 코너 처리
-        } else if(20 <= originPosition && originPosition <= 29 && 30 <= movePosition && movePosition <= 39){
-            System.out.println("3번 코너");
-
-        //출발지점 코너 처리
-        } else if(30 <= originPosition && originPosition <= 39 && 0 <= movePosition && movePosition <= 9) {
-            System.out.println("4번 코너");
-
-        }
-    }
-
-
 
     // 마우스 호버 액션
     @FXML
@@ -579,9 +507,9 @@ public class BluemarbleGameController implements Initializable {
 
     //카드 배경 및 상태 초기화
     void setCard(int cnt) {
-        Pane[] playerPane = { new Pane(), pPlayer1, pPlayer2, pPlayer3, pPlayer4 };
+        Pane[] playerPane = { null, pPlayer1, pPlayer2, pPlayer3, pPlayer4 };
         // 카드 배경 초기화
-        for(int i = 1 ; i < cnt+1 ; i++) {
+        for(int i = 1 ; i < playerPane.length ; i++) {
             selectPlayer[i] = false;
             playerPane[i].setStyle("-fx-background-color: #000000;-fx-opacity: 0.5");
         }
@@ -706,6 +634,8 @@ public class BluemarbleGameController implements Initializable {
         apStartBluemarbleModal.setVisible(false);
         profileSettting();
         connectObjectToFX();
+        assignPlayer();
+        drawProfileHighlight();
     }
 
     //캐릭터 카드 호버 시작

@@ -36,6 +36,7 @@
             <Pane layoutY="14.0" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0 8px 0 0;">
                <children>
                   <Pane fx:id="pPlayer1Profile" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8;" />
+                  <Pane fx:id="pPlayer1Highlight" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8; -fx-background-color: transparent;" />
                </children>
             </Pane>
             <Label alignment="CENTER" layoutX="135.0" layoutY="54.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #f1c40f; -fx-padding: 2px 5px;" text="총 자산" textAlignment="CENTER" textFill="WHITE" />
@@ -72,6 +73,7 @@
             <Pane layoutX="215.0" layoutY="20.0" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 8px 0 0 0;">
                <children>
                   <Pane fx:id="pPlayer2Profile" layoutX="8.0" layoutY="7.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8;" />
+                  <Pane fx:id="pPlayer2Highlight" layoutX="8.0" layoutY="7.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8; -fx-background-color: transparent;" />
                </children>
             </Pane>
             <Label alignment="CENTER" layoutX="155.0" layoutY="54.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #d35400; -fx-padding: 2px 5px;" text="총 자산" textAlignment="CENTER" textFill="WHITE" />
@@ -107,6 +109,7 @@
                   <Pane layoutY="-113.0" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0 0 8px 0;">
                      <children>
                         <Pane fx:id="pPlayer3Profile" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8;" />
+                        <Pane fx:id="pPlayer3Highlight" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8; -fx-background-color: transparent;" />
                      </children>
                   </Pane>
                </children>
@@ -144,6 +147,7 @@
                   <Pane layoutX="215.0" layoutY="-113.0" prefHeight="135.0" prefWidth="135.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0 0 0 8px;">
                      <children>
                         <Pane fx:id="pPlayer4Profile" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8;" />
+                        <Pane fx:id="pPlayer4Highlight" layoutX="8.0" layoutY="8.0" prefHeight="120.0" prefWidth="120.0" style="-fx-border-color: a5a6a6; -fx-border-radius: 8; -fx-background-color: transparent;" />
                      </children>
                   </Pane>
                </children>
