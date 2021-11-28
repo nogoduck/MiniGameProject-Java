@@ -173,7 +173,7 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <Button layoutX="456.0" layoutY="463.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
+      <Button fx:id="btnRunDice" layoutX="55.0" layoutY="553.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
       <AnchorPane id="createRoomModal" fx:id="apStartBluemarbleModal" layoutX="281.0" layoutY="192.0" prefHeight="567.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;" visible="false">
          <children>
             <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
@@ -573,6 +573,11 @@
       <Button layoutX="55.0" layoutY="228.0" mnemonicParsing="false" onAction="#onClickFunc" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼" />
       <Button layoutX="55.0" layoutY="336.0" mnemonicParsing="false" onAction="#onClickFunc2" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼2" />
       <Button layoutX="55.0" layoutY="449.0" mnemonicParsing="false" onAction="#onClickFunc3" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼3" />
+      <Label fx:id="lbDiceNumber" alignment="CENTER" layoutX="592.0" layoutY="182.0" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #80D261; -fx-background-radius: 50px; -fx-border-radius: 50px; -fx-border-color: #000000; -fx-border-width: 3px;" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
    </children>
    <effect>
       <DropShadow height="28.3275" radius="12.564375" width="23.93" />

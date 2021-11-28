@@ -5,6 +5,8 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import application.Main;
 import application.MainController;
@@ -18,10 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -118,6 +117,15 @@ public class BluemarbleGameController implements Initializable {
     Image building101Image = new Image(Main.class.getResourceAsStream("texture/building_101.png"));
     Image building011Image = new Image(Main.class.getResourceAsStream("texture/building_011.png"));
     Image flagImage = new Image(Main.class.getResourceAsStream("texture/building_flag.png"));
+
+    String[] LandListKor = {null, "타이베이", "황금카드1", "홍콩", "마닐라",
+            "제주도", "싱가포르", "황금카드2", "카이로", "이스탄불",
+            "무인도", "아테네", "황금카드3", "코펜하겐", "스톡홀름",
+            "콩코드여객기", "취리히", "황금카드4", "베를린", "몬트리올",
+            "사회복지기금-지급", "부에노스아이레스", "황금카드5", "상파울루", "시드니",
+            "부산", "하와이", "리스본", "퀸엘리자베스", "마드리드",
+            "우주정거장", "도쿄", "콜롬비아", "파리", "로마",
+            "황금카드6", "런던", "뉴욕", "사회복지기금-납부", "서울", null};
 
     // FXML을 반복문으로 사용하기 위해 주소를 저장할 배열
     Text[] profileAsset = new Text[5];
@@ -247,9 +255,13 @@ public class BluemarbleGameController implements Initializable {
         }
         System.out.println();
     }
+    // ==================================================
+    //                      Dice
+    // ==================================================
 
+    @FXML private Label lbDiceNumber;
     //현재 턴인 유저 프로필에 하이라이트 추가
-    void drawProfileHighlight(){
+    void showProfileHighlight(){
         for(Pane p:profileHighlight){
             if(p == null) continue;
             p.setStyle("");
@@ -257,14 +269,32 @@ public class BluemarbleGameController implements Initializable {
         profileHighlight[turnCount].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
     }
 
+    void showDiceNumber(int num){
+        lbDiceNumber.setText(Integer.toString(num));
+        lbDiceNumber.setVisible(true);
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                lbDiceNumber.setVisible(false);
+            }
+        };
+        timer.schedule(timerTask, 2000);
+    }
+
+
+    @FXML private Button btnRunDice;
     @FXML	// 주사위를 던지는 메소드
     void onClickRunDice(ActionEvent e) {
+        btnRunDice.setDisable(true);
+
         int[] diceResult = new int[2];			// 주사위 결과 저장 -> 더블 체크용도
         ImageView[] diceIV = { dice1, dice2 };	// 주사위 이미지
-        for(int i = 0 ; i<2 ; i++) {
+        for(int i = 0 ; i < 2 ; i++) {
             diceResult[i] = (int)(Math.random()*6)+1;
             diceIV[i].setImage(new Image(Main.class.getResourceAsStream("texture/"+diceResult[i]+".png")));
         }
+        showDiceNumber(diceResult[0]+diceResult[1]);
         System.out.println(diceResult[0]+diceResult[1]);
         playerMove(diceResult[0]+diceResult[1], turnCount);
 
@@ -341,15 +371,18 @@ public class BluemarbleGameController implements Initializable {
         }else {
             st = new SequentialTransition(playerHorseImg[turn],tt);
         }
-        
+
         //이동 종료
         st.setOnFinished(e -> {
-            drawProfileHighlight();
+            showProfileHighlight();
+            onShowGroundDocumentModal(LandListKor[movePosition]);
+            btnRunDice.setDisable(false);
         });
         st.play();
-
         playerPosition[turn] += diceNum;	// 플레이어 위치 기록
-
+    }
+    void initDice(){
+        lbDiceNumber.setVisible(false);
     }
 
     // 마우스 호버 액션
@@ -385,11 +418,6 @@ public class BluemarbleGameController implements Initializable {
 
     @FXML void onToggleBuildCard(MouseEvent e) {
         // 토지 정보에 토지 주인, 어느토지까지 구매했는지 작성
-        building.Cairo();
-        System.out.println(building.buyLand());
-        building.Manila();
-        System.out.println(building.buyLand());
-
         Node source = (Node) e.getSource();
         String buildId = source.idProperty().getValue();
         switch (buildId){
@@ -414,11 +442,10 @@ public class BluemarbleGameController implements Initializable {
 
     }
 
-    void onShowGroundDocumentModal(String buildName){
+    void onShowGroundDocumentModal(String title){
 
         //모달 제목
-        buildName = "OK";
-        tDocumentTitle.setText(buildName);
+        tDocumentTitle.setText(title);
         //토지 가격(토지 -> 빌라 -> 빌딩 -> 호텔)순
 //        tLandPrice.setText(building.owner.setOwner());
         tLandPrice.setText("344,000");
@@ -428,20 +455,17 @@ public class BluemarbleGameController implements Initializable {
         apGroundDocumentModal.setVisible(true);
     }
 
-
     @FXML void onClickBuy(MouseEvent e){
         System.out.println("Buy");
-
     }
 
     @FXML void onClickBuySkip(MouseEvent e){
         apGroundDocumentModal.setVisible(false);
     }
 
-    void initGroundDocumentModal(){
+    void initGroundDocumentModal() {
         apGroundDocumentModal.setVisible(false);
     }
-
 
 
     // ==================================================
@@ -556,10 +580,8 @@ public class BluemarbleGameController implements Initializable {
     //시작시 분배 금액 기본 금액 버튼
     @FXML
     void onClickDefaultDistMoneyButton(MouseEvent e) {
-        if (rb2Player.isSelected())
-            setStartDistMoney(586);
-        else
-            setStartDistMoney(293);
+        if (rb2Player.isSelected()) setStartDistMoney(586);
+        else setStartDistMoney(293);
         tfStartDistMoney.setDisable(true);
     }
 
@@ -635,7 +657,7 @@ public class BluemarbleGameController implements Initializable {
         profileSettting();
         connectObjectToFX();
         assignPlayer();
-        drawProfileHighlight();
+        showProfileHighlight();
     }
 
     //캐릭터 카드 호버 시작
@@ -690,6 +712,7 @@ public class BluemarbleGameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initStartBluemarbleModal(); // 부루마블 시작 모달 초기화
-        initGroundDocumentModal(); //땅 문서 구매 모달 초기화
+        initGroundDocumentModal(); // 땅 문서 구매 모달 초기화
+        initDice(); //주사위 초기화
     }
 }
