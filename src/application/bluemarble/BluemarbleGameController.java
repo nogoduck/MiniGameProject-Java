@@ -1,6 +1,8 @@
 package application.bluemarble;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -48,7 +50,7 @@ public class BluemarbleGameController implements Initializable {
     @FXML private AnchorPane cairoPane;
     @FXML private AnchorPane istanbulPane;
     @FXML private AnchorPane islandPane;
-    @FXML private AnchorPane atheanaePane;
+    @FXML private AnchorPane athenaePane;
     @FXML private AnchorPane goldCardPane3;
     @FXML private AnchorPane copenhagenPane;
     @FXML private AnchorPane stockholmPane;
@@ -139,7 +141,8 @@ public class BluemarbleGameController implements Initializable {
     @FXML  private ImageView dice1;
     @FXML  private ImageView dice2;
     int turnCount = 1;	// 시작 플레이어 설정
-
+    String currentLand;
+    BuildingData building = new BuildingData();
 
     // ==================================================
     //                    Test Code
@@ -148,22 +151,17 @@ public class BluemarbleGameController implements Initializable {
     Stack imageURI = new Stack();
 
     @FXML void onClickFunc3(ActionEvent e) {}
-    @FXML void onClickFunc2(ActionEvent e) {
-        pPlayer1Profile.setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
-        onShowGroundDocumentModal("Open Modal");
-    }
-
-
+    @FXML void onClickFunc2(ActionEvent e) {}
     @FXML void onClickFunc(ActionEvent e){
 
         System.out.println("기능 버튼");
         imageURI.forEach(e2 -> System.out.println("e2 >> " + e2));
         System.out.println("func >>  " + n);
-        atheanaePane.getChildren().removeAll();
+        athenaePane.getChildren().removeAll();
 
-        System.out.println("atheanaePane X, Y >> " + atheanaePane.getLayoutX() + ", " + atheanaePane.getLayoutY());
+        System.out.println("athenaePane X, Y >> " + athenaePane.getLayoutX() + ", " + athenaePane.getLayoutY());
         ImageView iv = new ImageView();
-        if(!imageURI.isEmpty()) atheanaePane.getChildren().removeAll();
+        if(!imageURI.isEmpty()) athenaePane.getChildren().removeAll();
 //            if(!imageURI.isEmpty()) atheanaePane.getChildren().remove(imageURI.pop());
 
         imageURI.add(building111Image);
@@ -337,14 +335,16 @@ public class BluemarbleGameController implements Initializable {
         }
     }
 
-    int setDuration(int val) { return val * 50; }
+    int setDuration(int val) { return val * 100; }
+
+
 
     // 주사위 굴렸을때 플레이어 이동에 관련된 메소드
     void playerMove(int diceNum, int turn) {
         int LandPaneTotalCnt = 40;
         AnchorPane[] LandPaneList = {startPane, taibeiPane, goldCardPane1, hongKongPane, manilaPane,
                 jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
-                islandPane, atheanaePane, goldCardPane3, copenhagenPane, stockholmPane,
+                islandPane, athenaePane, goldCardPane3, copenhagenPane, stockholmPane,
                 concordePane, zurichPane, goldCardPane4, berlinPane, montrealPane,
                 socialMoneyGetPane, buenosAiresPane, goldCardPane5, saoPauloPane, sydneyPane,
                 busanPane, hawaiiPane, lisbonPane, queenElizabethPane, madridPane,
@@ -357,6 +357,7 @@ public class BluemarbleGameController implements Initializable {
         double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
         SequentialTransition st;	// 애니메이션을 차례대로 동작시키는 함수
 
+        setBuildingPrice(LandPaneList[movePosition].getId().toString());
         /*
          * <<<<수정해야할 사항>>>>
          * Duratuion을 이동하는 칸에 비례해서 계산하는 식을 하나 짜야할듯함.
@@ -371,7 +372,7 @@ public class BluemarbleGameController implements Initializable {
 
         // 목적지로 이동할때 보드를 횡단하지 않기위해 추가한 코드
         if( (originPosition/10) != (movePosition/10) ) {
-            TranslateTransition tt2 = new TranslateTransition(new Duration(1000), playerHorseImg[turn]);
+            TranslateTransition tt2 = new TranslateTransition(new Duration(setDuration(diceNum)), playerHorseImg[turn]);
             tt2.setToX(LandPaneList[((movePosition/10)*10)].getLayoutX() - startPane.getLayoutX());
             tt2.setToY(LandPaneList[((movePosition/10)*10)].getLayoutY() - startPane.getLayoutY());
             // 매개변수 (움직일것, 애니메이션1, 애니메이션2, ... , 애니메이션N)  -> 앞에서 순차적으로 실행
@@ -389,6 +390,7 @@ public class BluemarbleGameController implements Initializable {
         st.play();
         playerPosition[turn] += diceNum;	// 플레이어 위치 기록
     }
+
     void initDice(){
         lbDiceNumber.setVisible(false);
         lbDiceDouble.setVisible(false);
@@ -423,7 +425,38 @@ public class BluemarbleGameController implements Initializable {
     @FXML CheckBox cbBuildingPrice;
     @FXML CheckBox cbHotelPrice;
 
-    BuildingData building = new BuildingData();
+    void setBuildingPrice(String landId){
+        landId = landId.replaceAll("Pane", "");
+        char[] arr = landId.toCharArray();
+        arr[0] = Character.toUpperCase(arr[0]);
+        landId = new String(arr);
+
+        //땅 정보 불러올 예정
+        currentLand = landId;
+        try {
+            Class<?> cls = Class.forName(building.getClass().getName());
+            Method m = cls.getDeclaredMethod(landId);
+            m.invoke(building);
+        } catch(Exception exc) {
+            System.out.println(exc.toString());
+        }
+
+        // 가격 정보 없는 부지 정리
+        System.out.println("landId >> " + landId);
+        System.out.println("building Land price >> " + building.buyLand());
+        System.out.println("building Villa price >> " + building.buyVilla());
+        System.out.println("building Building price >> " + building.buyBuilding());
+        System.out.println("building Hotel price >> " + building.buyHotel());
+
+        tLandPrice.setText(Integer.toString(building.buyLand()));
+        tVillaPrice.setText(Integer.toString(building.buyVilla()));
+        tBuildingPrice.setText(Integer.toString(building.buyBuilding()));
+        tHotelPrice.setText(Integer.toString(building.buyHotel()));
+
+        // Player field 불러올 예정
+//        building.setBerlinOwner(player[turnCount].nickname());
+    }
+
 
     @FXML void onToggleBuildCard(MouseEvent e) {
         // 토지 정보에 토지 주인, 어느토지까지 구매했는지 작성
@@ -448,19 +481,13 @@ public class BluemarbleGameController implements Initializable {
                 break;
             default: break;
         }
-
     }
 
     void onShowGroundDocumentModal(String title){
-
         //모달 제목
         tDocumentTitle.setText(title);
         //토지 가격(토지 -> 빌라 -> 빌딩 -> 호텔)순
-//        tLandPrice.setText(building.owner.setOwner());
-        tLandPrice.setText("344,000");
-
-
-
+        //setBuildingPrice() 함수에서 빌딩별 가격 적용함
         apGroundDocumentModal.setVisible(true);
     }
 

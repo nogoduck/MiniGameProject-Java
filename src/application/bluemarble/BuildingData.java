@@ -2,6 +2,7 @@ package application.bluemarble;
 public class BuildingData{
 	int buyLand, buyVilla, buyBuilding, buyHotel;		// 땅 구매 비용
 	int passLand, passVilla, passBuilding, passHotel;	// 땅 통행 비용
+
 	public int buyLand() {
 		return buyLand;
 	}
@@ -251,12 +252,26 @@ public class BuildingData{
 			QueenElizabethOwner, MadridOwner, TokyoOwner, ColombiaOwner, ParisOwner,
 			RomaOwner, LondonOwner, NewYorkOwner, SeoulOwner;
 
-	int TaibeiNum, HongKongNum, ManilaNum, JejuNum,	SingaporeNum,
-			CairoNum, IstanbulNum,	AthenaeNum, CopenhagenNum, StockholmNum,
-			ConcordeNum, ZurichNum, BerlinNum, MontrealNum, BuenosAiresNum,
-			SaoPauloNum, SydneyNum, BusanNum, HawaiiNum, LisbonNum,
-			QueenElizabethNum, MadridNum, TokyoNum, ColombiaNum, ParisNum,
-			RomaNum, LondonNum, NewYorkNum, SeoulNum;
+	
+	/* 총 사용할 타입 종류 : 9가지(String)
+	* 0(1) 0(2) 0(3) >> (1)빌라 구매여부, (2)빌딩 구매여부, (3)호텔 구매여부 
+	* 000: 건축물이 존재하지 않을 때
+	* ---: 토지만 구매했을 때
+	* 100: 빌라만 구매했을 때
+	* 010: 빌딩만 구매했을 때
+	* 001: 호텔만 구매했을 때
+	* 011: 빌딩과 호텔을 구매했을 때
+	* 110: 빌라와 빌딩만 구매했을 때
+	* 101: 빌라와 호텔을 구매했을 때
+	* 111: 빌라, 빌딩, 호텔을 구매했을 때
+	*/
+
+	String TaibeiType, HongKongType, ManilaType, JejuType,	SingaporeType,
+			CairoType, IstanbulType, AthenaeType, CopenhagenType, StockholmType,
+			ConcordeType, ZurichType, BerlinType, MontrealType, BuenosAiresType,
+			SaoPauloType, SydneyType, BusanType, HawaiiType, LisbonType,
+			QueenElizabethType, MadridType, TokyoType, ColombiaType, ParisType,
+			RomaType, LondonType, NewYorkType, SeoulType;
 
 	public String TaibeiOwner() {
 		return TaibeiOwner;
@@ -490,236 +505,236 @@ public class BuildingData{
 		SeoulOwner = seoulOwner;
 	}
 
-	public int TaibeiNum() {
-		return TaibeiNum;
+	public String TaibeiType() {
+		return TaibeiType;
 	}
 
-	public void setTaibeiNum(int taibeiNum) {
-		TaibeiNum = taibeiNum;
+	public void setTaibeiType(String taibeiType) {
+		TaibeiType = taibeiType;
 	}
 
-	public int HongKongNum() {
-		return HongKongNum;
+	public String HongKongType() {
+		return HongKongType;
 	}
 
-	public void setHongKongNum(int hongKongNum) {
-		HongKongNum = hongKongNum;
+	public void setHongKongType(String hongKongType) {
+		HongKongType = hongKongType;
 	}
 
-	public int ManilaNum() {
-		return ManilaNum;
+	public String ManilaType() {
+		return ManilaType;
 	}
 
-	public void setManilaNum(int manilaNum) {
-		ManilaNum = manilaNum;
+	public void setManilaType(String manilaType) {
+		ManilaType = manilaType;
 	}
 
-	public int JejuNum() {
-		return JejuNum;
+	public String JejuType() {
+		return JejuType;
 	}
 
-	public void setJejuNum(int jejuNum) {
-		JejuNum = jejuNum;
+	public void setJejuType(String jejuType) {
+		JejuType = jejuType;
 	}
 
-	public int SingaporeNum() {
-		return SingaporeNum;
+	public String SingaporeType() {
+		return SingaporeType;
 	}
 
-	public void setSingaporeNum(int singaporeNum) {
-		SingaporeNum = singaporeNum;
+	public void setSingaporeType(String singaporeType) {
+		SingaporeType = singaporeType;
 	}
 
-	public int CairoNum() {
-		return CairoNum;
+	public String CairoType() {
+		return CairoType;
 	}
 
-	public void setCairoNum(int cairoNum) {
-		CairoNum = cairoNum;
+	public void setCairoType(String cairoType) {
+		CairoType = cairoType;
 	}
 
-	public int IstanbulNum() {
-		return IstanbulNum;
+	public String IstanbulType() {
+		return IstanbulType;
 	}
 
-	public void setIstanbulNum(int istanbulNum) {
-		IstanbulNum = istanbulNum;
+	public void setIstanbulType(String istanbulType) {
+		IstanbulType = istanbulType;
 	}
 
-	public int AthenaeNum() {
-		return AthenaeNum;
+	public String AthenaeType() {
+		return AthenaeType;
 	}
 
-	public void setAthenaeNum(int athenaeNum) {
-		AthenaeNum = athenaeNum;
+	public void setAthenaeType(String athenaeType) {
+		AthenaeType = athenaeType;
 	}
 
-	public int CopenhagenNum() {
-		return CopenhagenNum;
+	public String CopenhagenType() {
+		return CopenhagenType;
 	}
 
-	public void setCopenhagenNum(int copenhagenNum) {
-		CopenhagenNum = copenhagenNum;
+	public void setCopenhagenType(String copenhagenType) {
+		CopenhagenType = copenhagenType;
 	}
 
-	public int StockholmNum() {
-		return StockholmNum;
+	public String StockholmType() {
+		return StockholmType;
 	}
 
-	public void setStockholmNum(int stockholmNum) {
-		StockholmNum = stockholmNum;
+	public void setStockholmType(String stockholmType) {
+		StockholmType = stockholmType;
 	}
 
-	public int ConcordeNum() {
-		return ConcordeNum;
+	public String ConcordeType() {
+		return ConcordeType;
 	}
 
-	public void setConcordeNum(int concordeNum) {
-		ConcordeNum = concordeNum;
+	public void setConcordeType(String concordeType) {
+		ConcordeType = concordeType;
 	}
 
-	public int ZurichNum() {
-		return ZurichNum;
+	public String ZurichType() {
+		return ZurichType;
 	}
 
-	public void setZurichNum(int zurichNum) {
-		ZurichNum = zurichNum;
+	public void setZurichType(String zurichType) {
+		ZurichType = zurichType;
 	}
 
-	public int BerlinNum() {
-		return BerlinNum;
+	public String BerlinType() {
+		return BerlinType;
 	}
 
-	public void setBerlinNum(int berlinNum) {
-		BerlinNum = berlinNum;
+	public void setBerlinType(String berlinType) {
+		BerlinType = berlinType;
 	}
 
-	public int MontrealNum() {
-		return MontrealNum;
+	public String MontrealType() {
+		return MontrealType;
 	}
 
-	public void setMontrealNum(int montrealNum) {
-		MontrealNum = montrealNum;
+	public void setMontrealType(String montrealType) {
+		MontrealType = montrealType;
 	}
 
-	public int BuenosAiresNum() {
-		return BuenosAiresNum;
+	public String BuenosAiresType() {
+		return BuenosAiresType;
 	}
 
-	public void setBuenosAiresNum(int buenosAiresNum) {
-		BuenosAiresNum = buenosAiresNum;
+	public void setBuenosAiresType(String buenosAiresType) {
+		BuenosAiresType = buenosAiresType;
 	}
 
-	public int SaoPauloNum() {
-		return SaoPauloNum;
+	public String SaoPauloType() {
+		return SaoPauloType;
 	}
 
-	public void setSaoPauloNum(int saoPauloNum) {
-		SaoPauloNum = saoPauloNum;
+	public void setSaoPauloType(String saoPauloType) {
+		SaoPauloType = saoPauloType;
 	}
 
-	public int SydneyNum() {
-		return SydneyNum;
+	public String SydneyType() {
+		return SydneyType;
 	}
 
-	public void setSydneyNum(int sydneyNum) {
-		SydneyNum = sydneyNum;
+	public void setSydneyType(String sydneyType) {
+		SydneyType = sydneyType;
 	}
 
-	public int BusanNum() {
-		return BusanNum;
+	public String BusanType() {
+		return BusanType;
 	}
 
-	public void setBusanNum(int busanNum) {
-		BusanNum = busanNum;
+	public void setBusanType(String busanType) {
+		BusanType = busanType;
 	}
 
-	public int HawaiiNum() {
-		return HawaiiNum;
+	public String HawaiiType() {
+		return HawaiiType;
 	}
 
-	public void setHawaiiNum(int hawaiiNum) {
-		HawaiiNum = hawaiiNum;
+	public void setHawaiiType(String hawaiiType) {
+		HawaiiType = hawaiiType;
 	}
 
-	public int LisbonNum() {
-		return LisbonNum;
+	public String LisbonType() {
+		return LisbonType;
 	}
 
-	public void setLisbonNum(int lisbonNum) {
-		LisbonNum = lisbonNum;
+	public void setLisbonType(String lisbonType) {
+		LisbonType = lisbonType;
 	}
 
-	public int QueenElizabethNum() {
-		return QueenElizabethNum;
+	public String QueenElizabethType() {
+		return QueenElizabethType;
 	}
 
-	public void setQueenElizabethNum(int queenElizabethNum) {
-		QueenElizabethNum = queenElizabethNum;
+	public void setQueenElizabethType(String queenElizabethType) {
+		QueenElizabethType = queenElizabethType;
 	}
 
-	public int MadridNum() {
-		return MadridNum;
+	public String MadridType() {
+		return MadridType;
 	}
 
-	public void setMadridNum(int madridNum) {
-		MadridNum = madridNum;
+	public void setMadridType(String madridType) {
+		MadridType = madridType;
 	}
 
-	public int TokyoNum() {
-		return TokyoNum;
+	public String TokyoType() {
+		return TokyoType;
 	}
 
-	public void setTokyoNum(int tokyoNum) {
-		TokyoNum = tokyoNum;
+	public void setTokyoType(String tokyoType) {
+		TokyoType = tokyoType;
 	}
 
-	public int ColombiaNum() {
-		return ColombiaNum;
+	public String ColombiaType() {
+		return ColombiaType;
 	}
 
-	public void setColombiaNum(int colombiaNum) {
-		ColombiaNum = colombiaNum;
+	public void setColombiaType(String colombiaType) {
+		ColombiaType = colombiaType;
 	}
 
-	public int ParisNum() {
-		return ParisNum;
+	public String ParisType() {
+		return ParisType;
 	}
 
-	public void setParisNum(int parisNum) {
-		ParisNum = parisNum;
+	public void setParisType(String parisType) {
+		ParisType = parisType;
 	}
 
-	public int RomaNum() {
-		return RomaNum;
+	public String RomaType() {
+		return RomaType;
 	}
 
-	public void setRomaNum(int romaNum) {
-		RomaNum = romaNum;
+	public void setRomaType(String romaType) {
+		RomaType = romaType;
 	}
 
-	public int LondonNum() {
-		return LondonNum;
+	public String LondonType() {
+		return LondonType;
 	}
 
-	public void setLondonNum(int londonNum) {
-		LondonNum = londonNum;
+	public void setLondonType(String londonType) {
+		LondonType = londonType;
 	}
 
-	public int NewYorkNum() {
-		return NewYorkNum;
+	public String NewYorkType() {
+		return NewYorkType;
 	}
 
-	public void setNewYorkNum(int newYorkNum) {
-		NewYorkNum = newYorkNum;
+	public void setNewYorkType(String newYorkType) {
+		NewYorkType = newYorkType;
 	}
 
-	public int SeoulNum() {
-		return SeoulNum;
+	public String SeoulType() {
+		return SeoulType;
 	}
 
-	public void setSeoulNum(int seoulNum) {
-		SeoulNum = seoulNum;
+	public void setSeoulType(String seoulType) {
+		SeoulType = seoulType;
 	}
 }
 
