@@ -457,7 +457,6 @@ public class BluemarbleGameController implements Initializable {
         System.out.println("building Villa price >> " + building.buyVilla());
         System.out.println("building Building price >> " + building.buyBuilding());
         System.out.println("building Hotel price >> " + building.buyHotel());
-//        System.out.println("building Author >> " +  building.);
 
 
         //땅 주인이 없을 때
@@ -489,14 +488,11 @@ public class BluemarbleGameController implements Initializable {
         } else {
             System.out.println("침입자");
         }
-
         tLandPrice.setText(Integer.toString(building.buyLand()));
         tVillaPrice.setText(Integer.toString(building.buyVilla()));
         tBuildingPrice.setText(Integer.toString(building.buyBuilding()));
         tHotelPrice.setText(Integer.toString(building.buyHotel()));
-
     }
-
 
     @FXML void onToggleBuildCard(MouseEvent e) {
         // 토지 정보에 토지 주인, 어느토지까지 구매했는지 작성
@@ -533,6 +529,31 @@ public class BluemarbleGameController implements Initializable {
 
     @FXML void onSubmitBuy(MouseEvent e){
         System.out.println("Buy");
+
+        char[] selectTypeArr = new char[3];
+
+
+        if(cbLandPrice.isSelected()) {
+            selectTypeArr[0] = '9';
+            selectTypeArr[1] = '9';
+            selectTypeArr[2] = '9';
+        } else {
+            if(cbVillaPrice.isSelected()) {
+                 selectTypeArr[0] = '1';
+            }
+            if(cbBuildingPrice.isSelected()) {
+                 selectTypeArr[1] = '1';
+            }
+            if(cbHotelPrice.isSelected()){
+                selectTypeArr[2] = '1';
+            }
+        }
+
+        String selectArr = new String(selectTypeArr);
+        System.out.println("selectArr >> " + selectArr);
+
+
+
         building.setBerlinOwner(player[turnCount].nickname());
         try {
             Class<?> cls = Class.forName(building.getClass().getName());
@@ -552,34 +573,32 @@ public class BluemarbleGameController implements Initializable {
     @FXML void onCancelBuy(MouseEvent e){
         apGroundDocumentModal.setVisible(false);
     }
-
     void initGroundDocumentModal() {
         apGroundDocumentModal.setVisible(false);
     }
-
 
     // ==================================================
     //              Start Bluemarble Modal
     // ==================================================
     DecimalFormat df = new DecimalFormat("###,###");
-    @FXML	private AnchorPane apStartBluemarbleModal;
-    @FXML	private ToggleGroup startDistMoneyGroup;
-    @FXML	private ToggleGroup PlayerCntGroup;
-    @FXML	private RadioButton rb2Player;
-    @FXML	private RadioButton rb3Player;
-    @FXML	private RadioButton rb4Player;
-    @FXML	private RadioButton rbDefaultDistMoney;
-    @FXML	private RadioButton rbCustomDistMoney;
-    @FXML	private TextField tfStartDistMoney;
-    @FXML	private TextField tf1PlayerNickname;
-    @FXML	private TextField tf2PlayerNickname;
-    @FXML	private TextField tf3PlayerNickname;
-    @FXML	private TextField tf4PlayerNickname;
-    @FXML	private Text tStartModalMessage;
-    @FXML	private Pane pPlayer1;
-    @FXML	private Pane pPlayer2;
-    @FXML	private Pane pPlayer3;
-    @FXML	private Pane pPlayer4;
+    @FXML private AnchorPane apStartBluemarbleModal;
+    @FXML private ToggleGroup startDistMoneyGroup;
+    @FXML private ToggleGroup PlayerCntGroup;
+    @FXML private RadioButton rb2Player;
+    @FXML private RadioButton rb3Player;
+    @FXML private RadioButton rb4Player;
+    @FXML private RadioButton rbDefaultDistMoney;
+    @FXML private RadioButton rbCustomDistMoney;
+    @FXML private TextField tfStartDistMoney;
+    @FXML private TextField tf1PlayerNickname;
+    @FXML private TextField tf2PlayerNickname;
+    @FXML private TextField tf3PlayerNickname;
+    @FXML private TextField tf4PlayerNickname;
+    @FXML private Text tStartModalMessage;
+    @FXML private Pane pPlayer1;
+    @FXML private Pane pPlayer2;
+    @FXML private Pane pPlayer3;
+    @FXML private Pane pPlayer4;
     private boolean[] selectPlayer = new boolean[5];
     private int playerCnt; // 선택 해야할 카드 개수 (총 플레이 인원 수)
     private int selectedCharacterCnt; // 선택된 카드 개수
@@ -706,11 +725,9 @@ public class BluemarbleGameController implements Initializable {
         }
         int objectCnt = 1;
         for (int i = 1; i < selectPlayer.length; i++) {
-            if (selectPlayer[i] == false)
-                continue;
+            if (selectPlayer[i] == false) continue;
             String nickname = "";
             Image imageURI = null;
-//            System.out.println("submit i >> " + i);
             int money = Integer.parseInt(tfStartDistMoney.getText() + "0000");
             switch (i) {
                 case 1:
