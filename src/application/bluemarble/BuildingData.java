@@ -70,6 +70,7 @@ public class BuildingData{
 		buyLand = 100000;	buyVilla = 50000;	buyBuilding = 150000;	buyHotel = 250000;
 		passLand = 6000;	passVilla = 30000;	passBuilding = 180000;	passHotel = 450000;
 	}
+
 	// 황금카드2번
 	void goldCard2() {
 		buyLand = 0;
@@ -138,6 +139,8 @@ public class BuildingData{
 		buyLand = 200000;	buyVilla = 100000;	buyBuilding = 300000;	buyHotel = 500000;
 		passLand = 16000;	passVilla = 80000;	passBuilding = 600000;	passHotel = 1000000;
 	}
+
+
 	/*
 	 * 3번라인
 	 */
@@ -539,10 +542,6 @@ public class BuildingData{
 
 	public String SingaporeType() {
 		return SingaporeType;
-	}
-
-	public void setSingaporeType(String singaporeType) {
-		SingaporeType = singaporeType;
 	}
 
 	public String CairoType() {

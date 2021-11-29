@@ -141,7 +141,6 @@ public class BluemarbleGameController implements Initializable {
     @FXML  private ImageView dice1;
     @FXML  private ImageView dice2;
     int turnCount = 1;	// 시작 플레이어 설정
-    String currentLand;
     BuildingData building = new BuildingData();
 
     // ==================================================
@@ -424,6 +423,12 @@ public class BluemarbleGameController implements Initializable {
     @FXML CheckBox cbVillaPrice;
     @FXML CheckBox cbBuildingPrice;
     @FXML CheckBox cbHotelPrice;
+    
+    //현재 땅, 땅의 주인, 땅의 타입
+    String currentLand;
+    String currentLandOwner;
+    String currentLandType;
+    String selectType;
 
     void setBuildingPrice(String landId){
         landId = landId.replaceAll("Pane", "");
@@ -432,29 +437,64 @@ public class BluemarbleGameController implements Initializable {
         landId = new String(arr);
 
         //땅 정보 불러올 예정
-        currentLand = landId;
         try {
             Class<?> cls = Class.forName(building.getClass().getName());
-            Method m = cls.getDeclaredMethod(landId);
-            m.invoke(building);
+            Method mId = cls.getDeclaredMethod(landId);
+            Method mOwner = cls.getDeclaredMethod(landId + "Owner");
+            Method mType = cls.getDeclaredMethod(landId + "Type");
+            mId.invoke(building);
+            currentLandOwner = (String) mOwner.invoke(building);
+            currentLandType = (String) mType.invoke(building);
         } catch(Exception exc) {
             System.out.println(exc.toString());
         }
 
         // 가격 정보 없는 부지 정리
         System.out.println("landId >> " + landId);
+        System.out.println("landOwner >> " + currentLandOwner);
+        System.out.println("landType >> " + currentLandType);
         System.out.println("building Land price >> " + building.buyLand());
         System.out.println("building Villa price >> " + building.buyVilla());
         System.out.println("building Building price >> " + building.buyBuilding());
         System.out.println("building Hotel price >> " + building.buyHotel());
+//        System.out.println("building Author >> " +  building.);
+
+
+        //땅 주인이 없을 때
+        if(currentLandOwner == null) {
+            System.out.println("주인 없음");
+
+
+        //땅 주인과 현재 플레이어가 같을 때
+        } else if(currentLandOwner.equals(player[turnCount].nickname())){
+            System.out.println("어서와");
+
+            char[] typeArr = currentLandType.toCharArray();
+            //구매된 토지 중복 선택 불가
+            if((typeArr[0]) == '-'){
+                cbLandPrice.setSelected(true);
+                cbLandPrice.setDisable(true);
+            } else if(typeArr[0] == '1'){
+                cbVillaPrice.setSelected(true);
+                cbVillaPrice.setDisable(true);
+            } else if(typeArr[1] == '1'){
+                cbBuildingPrice.setSelected(true);
+                cbBuildingPrice.setDisable(true);
+            } else if(typeArr[2] == '1'){
+                cbHotelPrice.setSelected(true);
+                cbHotelPrice.setDisable(true);
+            }
+
+        //땅 주인과 현재 플레이어가 다를 때
+        } else {
+            System.out.println("침입자");
+        }
 
         tLandPrice.setText(Integer.toString(building.buyLand()));
         tVillaPrice.setText(Integer.toString(building.buyVilla()));
         tBuildingPrice.setText(Integer.toString(building.buyBuilding()));
         tHotelPrice.setText(Integer.toString(building.buyHotel()));
 
-        // Player field 불러올 예정
-//        building.setBerlinOwner(player[turnCount].nickname());
     }
 
 
@@ -491,11 +531,25 @@ public class BluemarbleGameController implements Initializable {
         apGroundDocumentModal.setVisible(true);
     }
 
-    @FXML void onClickBuy(MouseEvent e){
+    @FXML void onSubmitBuy(MouseEvent e){
         System.out.println("Buy");
+        building.setBerlinOwner(player[turnCount].nickname());
+        try {
+            Class<?> cls = Class.forName(building.getClass().getName());
+            Method mId = cls.getDeclaredMethod(currentLand);
+            Method mOwner = cls.getDeclaredMethod("set" + currentLand + "Owner", String.class);
+            Method mType = cls.getDeclaredMethod("set" + currentLand + "Type", String.class);
+            mId.invoke(building);
+            currentLandOwner = (String) mOwner.invoke(building, player[turnCount].nickname());
+            currentLandType = (String) mType.invoke(building, selectType);
+        } catch(Exception exc) {
+            System.out.println(exc.toString());
+        }
+
+
     }
 
-    @FXML void onClickBuySkip(MouseEvent e){
+    @FXML void onCancelBuy(MouseEvent e){
         apGroundDocumentModal.setVisible(false);
     }
 

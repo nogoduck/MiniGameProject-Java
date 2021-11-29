@@ -393,7 +393,7 @@
          <children>
             <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
                <children>
-                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onClickBuySkip" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 0px 12px 0px 0px;" stylesheets="@../application.css">
+                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCancelBuy" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 0px 12px 0px 0px;" stylesheets="@../application.css">
                      <children>
                         <Text fill="#a5a6a6" layoutX="7.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="×" textAlignment="CENTER" wrappingWidth="35.572265625">
                            <font>
@@ -552,7 +552,7 @@
                         </DropShadow>
                      </effect>
                   </Pane>
-                  <Button id="create_room_submit" layoutX="277.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#onClickBuy" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="구매">
+                  <Button id="create_room_submit" layoutX="277.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#onSubmitBuy" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="구매">
                      <font>
                         <Font size="16.0" />
                      </font>
