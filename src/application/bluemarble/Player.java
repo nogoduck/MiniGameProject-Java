@@ -13,8 +13,6 @@ public class Player {
     private int turn;
     private Image profileImgURI;
 
-
-
     Player(String nickaname, long money, Image profileImgURI){
         //유저 생성 시 가지고 있는 자산은 현금밖에 없기 때문에 자산과 현금에 같은 값 삽입
         this.nickname = nickaname;
