@@ -237,39 +237,16 @@ public class BluemarbleGameController implements Initializable {
         showProfileHighlight();
     }
 
-
     //현재 턴인 유저 프로필에 하이라이트 추가
-    int profileTurn = 1;
-    ArrayList<Integer> profileIndex = new ArrayList<Integer>();
-    void showProfileHighlight(){
-        if(turnCount > playerCnt) turnCount = 1;
-
+    void showProfileHighlight() {
+        if (turnCount > playerCnt) turnCount = 1;
         //전체 프로필 초기화
-        for(Pane p : profileHighlight){
-            if(p == null) continue;
+        for (Pane p : profileHighlight) {
+            if (p == null) continue;
             p.setStyle("");
-            System.out.println("pane Profile >> " + p);
         }
-
-        System.out.println("turnCount = " + turnCount);
-        System.out.println("profileIndex.indexOf(turnCount) = " + profileIndex.indexOf(turnCount));
-
         profileHighlight[turnCount].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
-//
-//        profileHighlight[profileIndex.indexOf(turnCount)].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
-
-//
-//        for(int i = 1; i <= playerCnt; i++){
-//            if()
-//            System.out.println("Pane >> " + profileHighlight[i]);
-        }
-//
-//        //현재 활성화된 프로필 확인
-//        System.out.println("turn Count  >> " + turnCount);
-//        profileHighlight[profileTurn].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
-//        //        System.out.println("2 >> " + profileHighlight[turnCount]);
-////        profileHighlight[turnCount].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
-//    }
+    }
 
     Timer timerDice;
     TimerTask timerTaskDice;
@@ -360,7 +337,6 @@ public class BluemarbleGameController implements Initializable {
         int[] goldCardPaneNum = { 2, 7, 12, 17, 22, 35 };
         SequentialTransition st;	// 애니메이션을 차례대로 동작시키는 함수
 
-        System.out.println("playerTotalPosition = " + playerTotalPosition[turnCount]);
         setBuildingPrice(LandPaneList[movePosition].getId().toString());
         /*
          * <<<<수정해야할 사항>>>>
@@ -689,11 +665,6 @@ public class BluemarbleGameController implements Initializable {
         }
 
         String selectType = new String(selectTypeArr);
-        System.out.println("player[turnCount].nickname() >> " + player[turnCount].nickname());
-        System.out.println("selectType >> " + selectType);
-
-        System.out.println("currentLand = " + currentLand);
-
 
         // 플레이어가 땅을 구매할 금액이 충분할 때
         if(playerMoney >= buyMoney){
@@ -925,19 +896,6 @@ public class BluemarbleGameController implements Initializable {
             }
             objectCnt++;
         }
-
-        //유저 하이라이트에 쓸 리스트 생성
-        profileIndex.add(0);
-        for(int i = 1; i < 5; i++){
-            if(selectPlayer[i]){
-                profileIndex.add(i);
-            }
-        }
-
-        for(int i = 0; i < profileIndex.size(); i++){
-            System.out.println("index >> " + profileIndex.get(i));
-        }
-
 
         apStartBluemarbleModal.setVisible(false);
         profileSettting();
