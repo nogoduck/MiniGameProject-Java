@@ -277,7 +277,7 @@ public class BluemarbleGameController implements Initializable {
         }
         System.out.println("diceNum >> " + diceResult[0]+diceResult[1]);
 //        playerMove(diceResult[0]+diceResult[1], turnCount);
-        playerMove(8, turnCount);
+        playerMove(8);
 
         // 더블이 아닌경우 다음턴으로 넘어간다.
         if(!(diceResult[0] == diceResult[1])) {
@@ -316,7 +316,7 @@ public class BluemarbleGameController implements Initializable {
     int setDuration(int val) { return val * 100; }
 
     // 주사위 굴렸을때 플레이어 이동에 관련된 메소드
-    void playerMove(int diceNum, int turn) {
+    void playerMove(int diceNum) {
         int LandPaneTotalCnt = 40;
         AnchorPane[] LandPaneList = {startPane, taibeiPane, goldCardPane1, hongKongPane, manilaPane,
                 jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
@@ -327,14 +327,14 @@ public class BluemarbleGameController implements Initializable {
                 spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
                 goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane, startPane};
 
-        int originPosition = playerTotalPosition[turn] % LandPaneTotalCnt;
+        int originPosition = playerTotalPosition[turnCount] % LandPaneTotalCnt;
         int movePosition = (originPosition + diceNum) % LandPaneTotalCnt;
         double endX = LandPaneList[movePosition].getLayoutX() - startPane.getLayoutX();
         double endY = LandPaneList[movePosition].getLayoutY() - startPane.getLayoutY();
         int[] goldCardPaneNum = { 2, 7, 12, 17, 22, 35 };
         SequentialTransition st;	// 애니메이션을 차례대로 동작시키는 함수
 
-        System.out.println("playerTotalPosition = " + playerTotalPosition[turn]);
+        System.out.println("playerTotalPosition = " + playerTotalPosition[turnCount]);
         setBuildingPrice(LandPaneList[movePosition].getId().toString());
         /*
          * <<<<수정해야할 사항>>>>
@@ -343,23 +343,23 @@ public class BluemarbleGameController implements Initializable {
          * ++ 바라보는 각도 변경
          */
         // 목적지 까지 가는 이동 애니매이션
-        TranslateTransition tt = new TranslateTransition(new Duration(setDuration(diceNum)), playerHorseImg[turn]);
+        TranslateTransition tt = new TranslateTransition(new Duration(setDuration(diceNum)), playerHorseImg[turnCount]);
         tt.setToX(endX);
         tt.setToY(endY);
 
         // 목적지로 이동할때 보드를 횡단하지 않기위해 추가한 코드
         if( (originPosition/10) != (movePosition/10) ) {
-            TranslateTransition tt2 = new TranslateTransition(new Duration(setDuration(diceNum)), playerHorseImg[turn]);
+            TranslateTransition tt2 = new TranslateTransition(new Duration(setDuration(diceNum)), playerHorseImg[turnCount]);
             tt2.setToX(LandPaneList[((movePosition/10)*10)].getLayoutX() - startPane.getLayoutX());
             tt2.setToY(LandPaneList[((movePosition/10)*10)].getLayoutY() - startPane.getLayoutY());
             // 매개변수 (움직일것, 애니메이션1, 애니메이션2, ... , 애니메이션N)  -> 앞에서 순차적으로 실행
-            st = new SequentialTransition(playerHorseImg[turn],tt2,tt);
+            st = new SequentialTransition(playerHorseImg[turnCount],tt2,tt);
         } else {
-            st = new SequentialTransition(playerHorseImg[turn],tt);
+            st = new SequentialTransition(playerHorseImg[turnCount],tt);
         }
 
-        playerTotalPosition[turn] += diceNum;	// 플레이어 위치 누적 기록
-        playerPosition[turn] = movePosition;    // 플레이어 절대 위치 기록
+        playerTotalPosition[turnCount] += diceNum;	// 플레이어 위치 누적 기록
+        playerPosition[turnCount] = movePosition;    // 플레이어 절대 위치 기록
 
         //이동 종료
         st.setOnFinished(e -> {
@@ -378,15 +378,15 @@ public class BluemarbleGameController implements Initializable {
 
 
 
-                if(LandPaneList[playerPosition[turn]] == startPane) {
+                if(LandPaneList[playerPosition[turnCount]] == startPane) {
                     // 도착한곳이 출발지 인 경우
-                }else if(LandPaneList[playerPosition[turn]] == islandPane){
+                }else if(LandPaneList[playerPosition[turnCount]] == islandPane){
                     // 도착한 곳이 무인도 인 경우
-                }else if (LandPaneList[playerPosition[turn]] == spacePane) {
+                }else if (LandPaneList[playerPosition[turnCount]] == spacePane) {
                     // 도착한 곳이 우주여행 인 경우
                 }else {
                     for(int i = 0 ; i< goldCardPaneNum.length ; i++) {
-                        if( playerPosition[turn] == goldCardPaneNum[i]) {
+                        if( playerPosition[turnCount] == goldCardPaneNum[i]) {
                             isGoldCardPane = true;
                         }
                     }
@@ -394,7 +394,7 @@ public class BluemarbleGameController implements Initializable {
                         // 도착한 곳이 골드카드 인 경우
                         goldcard.choiceRandomGoldCard();
                     }else {
-                        onShowGroundDocumentModal(LandListKor[movePosition], turn);
+                        onShowGroundDocumentModal(LandListKor[movePosition]);
                     }
                 }
 
@@ -581,7 +581,7 @@ public class BluemarbleGameController implements Initializable {
         }
     }
 
-    void onShowGroundDocumentModal(String title,int turn){
+    void onShowGroundDocumentModal(String title){
         boolean isSpecialRegin = false;
         //모달 제목
         tDocumentTitle.setText(title);
