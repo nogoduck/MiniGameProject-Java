@@ -6,10 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ResourceBundle;
-import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import application.Main;
 import application.MainController;
@@ -145,10 +142,11 @@ public class BluemarbleGameController implements Initializable {
     int turnCount = 1;	// 시작 플레이어 설정
     BuildingData building = new BuildingData();
 
-    // 플레이어가 가진돈의 정보를 불러옴
+    // 플레이어가 가진돈과 자산 정보를 불러옴
     void refreshMoney() {
         for(int i = 1 ; i <= playerCnt ; i++) {
             profileMoney[i].setText(String.valueOf(convertNumberToCurrency((player[i].money()))));
+            profileAsset[i].setText(String.valueOf(convertNumberToCurrency((player[i].asset()))));
         }
     }
 
@@ -231,16 +229,47 @@ public class BluemarbleGameController implements Initializable {
 
     @FXML private Label lbDiceNumber;
     @FXML private Label lbDiceDouble;
+
+    // 다음턴
+    void nextTurn(){
+        //더블이 아니면 다음턴 전환
+        if(!isDouble)turnCount++;
+        showProfileHighlight();
+    }
+
+
     //현재 턴인 유저 프로필에 하이라이트 추가
+    int profileTurn = 1;
+    ArrayList<Integer> profileIndex = new ArrayList<Integer>();
     void showProfileHighlight(){
-        for(Pane p:profileHighlight){
+        if(turnCount > playerCnt) turnCount = 1;
+
+        //전체 프로필 초기화
+        for(Pane p : profileHighlight){
             if(p == null) continue;
             p.setStyle("");
+            System.out.println("pane Profile >> " + p);
         }
-//        System.out.println("1 >> " + turnCount);
-//        System.out.println("2 >> " + profileHighlight[turnCount]);
+
+        System.out.println("turnCount = " + turnCount);
+        System.out.println("profileIndex.indexOf(turnCount) = " + profileIndex.indexOf(turnCount));
+
         profileHighlight[turnCount].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
-    }
+//
+//        profileHighlight[profileIndex.indexOf(turnCount)].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
+
+//
+//        for(int i = 1; i <= playerCnt; i++){
+//            if()
+//            System.out.println("Pane >> " + profileHighlight[i]);
+        }
+//
+//        //현재 활성화된 프로필 확인
+//        System.out.println("turn Count  >> " + turnCount);
+//        profileHighlight[profileTurn].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
+//        //        System.out.println("2 >> " + profileHighlight[turnCount]);
+////        profileHighlight[turnCount].setStyle("-fx-border-color: red;-fx-border-width: 12px;-fx-border-radius: 8px");
+//    }
 
     Timer timerDice;
     TimerTask timerTaskDice;
@@ -262,11 +291,12 @@ public class BluemarbleGameController implements Initializable {
         timerDice.schedule(timerTaskDice, 2000);
     }
 
+    boolean isDouble;
     @FXML private Button btnRunDice;
     @FXML	// 주사위를 던지는 메소드
     void onClickRunDice(ActionEvent e) {
         if(turnCount > playerCnt) turnCount = 1; // 플레이어 턴 재배정
-
+        isDouble = false;
         btnRunDice.setDisable(true);
 
         int[] diceResult = new int[2];			// 주사위 결과 저장 -> 더블 체크용도
@@ -275,22 +305,18 @@ public class BluemarbleGameController implements Initializable {
             diceResult[i] = (int)(Math.random()*6)+1;
             diceIV[i].setImage(new Image(Main.class.getResourceAsStream("texture/"+diceResult[i]+".png")));
         }
-        System.out.println("diceNum >> " + diceResult[0]+diceResult[1]);
-//        playerMove(diceResult[0]+diceResult[1], turnCount);
-        playerMove(8);
+//        System.out.println("dice 1, 2 >> " + diceResult[0] + ", " + diceResult[1]);
+//        System.out.println("dice Total >> " + diceResult[0] + diceResult[1]);
+        playerMove(diceResult[0] + diceResult[1]);
+//        playerMove(8);
 
         // 더블이 아닌경우 다음턴으로 넘어간다.
-        if(!(diceResult[0] == diceResult[1])) {
-            showDiceNumber(diceResult[0]+diceResult[1], false);
-//            turnCount++; (위치 변경) 애니메이션 끝나고 턴 이동
-            if(turnCount > playerCnt) turnCount = 1; // 플레이어 턴 재배정
-        }else {
-            /*
-             * 게임 내 보여줄만한 label 추가해야할듯
-             * 지금은 : ㅁ 의 턴 입니다. / 더블로 ㅁ의 턴을 한번더 진행합니다 등등..
-             */
+        if(diceResult[0] == diceResult[1]) {
+            isDouble = true;
             showDiceNumber(diceResult[0]+diceResult[1], true);
             System.out.println("더블 입니다 "+turnCount+"플레이어가 한 번 더 주사위를 돌립니다.");
+        }else {
+            showDiceNumber(diceResult[0]+diceResult[1], false);
         }
     }
 
@@ -365,18 +391,16 @@ public class BluemarbleGameController implements Initializable {
         st.setOnFinished(e -> {
             boolean isGoldCardPane = false;
 
-
             //이전 빌딩 체크상태 및 메시지 초기화
             cbVillaPrice.setSelected(false);
             cbBuildingPrice.setSelected(false);
             cbHotelPrice.setSelected(false);
             tDocumentMessage.setText("");
 
+
             //땅 주인이 없을 때
             if(currentLandOwner == null) {
                 System.out.println("NULL 땅 주인이 존재하지 않음");
-
-
 
                 if(LandPaneList[playerPosition[turnCount]] == startPane) {
                     // 도착한곳이 출발지 인 경우
@@ -405,23 +429,22 @@ public class BluemarbleGameController implements Initializable {
                 char[] typeArr = currentLandType.toCharArray();
 
                 //구매된 토지 중복 선택 불가
-                if(typeArr[0] == '1'){
-                    cbVillaPrice.setSelected(true);
-                    cbVillaPrice.setDisable(true);
-                }
-                if(typeArr[1] == '1'){
-                    cbBuildingPrice.setSelected(true);
-                    cbBuildingPrice.setDisable(true);
-                }
-                if(typeArr[2] == '1'){
-                    cbHotelPrice.setSelected(true);
-                    cbHotelPrice.setDisable(true);
-                }
+//                if(typeArr[0] == '1'){
+//                    cbVillaPrice.setSelected(true);
+//                    cbVillaPrice.setDisable(true);
+//                }
+//                if(typeArr[1] == '1'){
+//                    cbBuildingPrice.setSelected(true);
+//                    cbBuildingPrice.setDisable(true);
+//                }
+//                if(typeArr[2] == '1'){
+//                    cbHotelPrice.setSelected(true);
+//                    cbHotelPrice.setDisable(true);
+//                }
 
                 //땅 주인과 현재 플레이어가 다를 때
             } else {
                 System.out.println("X 땅 주인과 현재 플레이어가 동일하지 않음");
-
 
                 char[] payLandType = currentLandType.toCharArray();
                 long playerMoney = player[turnCount].money();
@@ -453,9 +476,10 @@ public class BluemarbleGameController implements Initializable {
                             player[i].setMoney(player[i].money() + payMoney);
                         }
                     }
+
                     //턴이 넘어가는 경우(토지 구매, 토지 구매 취소, 통행료 납부)
-                    //다음 턴
-                    turnCount++;
+                    //더블이 아니면 다음 턴
+                    nextTurn();
                 // 플레이어가 지불할 금액이 모자랄 때
                 /* 게임 종료 조건
                 * 지정된 턴 수를 초과 했을 때, 한 사람이 파산했을 때 시점으로
@@ -545,14 +569,14 @@ public class BluemarbleGameController implements Initializable {
         System.out.println(landId + "Owner");
         System.out.println(landId + "Type");
 
-        System.out.println("landId >> " + landId);
-        System.out.println("currentLandOwner >> " + currentLandOwner);
-        System.out.println("currentLandType >> " + currentLandType);
-        System.out.println("building Land price >> " + building.buyLand());
-        System.out.println("building Villa price >> " + building.buyVilla());
-        System.out.println("building Building price >> " + building.buyBuilding());
-        System.out.println("building Hotel price >> " + building.buyHotel());
-        System.out.println();
+//        System.out.println("landId >> " + landId);
+//        System.out.println("currentLandOwner >> " + currentLandOwner);
+//        System.out.println("currentLandType >> " + currentLandType);
+//        System.out.println("building Land price >> " + building.buyLand());
+//        System.out.println("building Villa price >> " + building.buyVilla());
+//        System.out.println("building Building price >> " + building.buyBuilding());
+//        System.out.println("building Hotel price >> " + building.buyHotel());
+//        System.out.println();
     }
 
     @FXML void onToggleBuildCard(MouseEvent e) {
@@ -566,8 +590,8 @@ public class BluemarbleGameController implements Initializable {
 
         switch (buildId){
             case "pVillaPrice":
-                    cbVillaPrice.setSelected(true);
-                    cbVillaPrice.setDisable(true);
+                if(cbVillaPrice.isSelected()) cbVillaPrice.setSelected(false);
+                else cbVillaPrice.setSelected(true);
                 break;
             case "pBuildingPrice":
                 if(cbBuildingPrice.isSelected()) cbBuildingPrice.setSelected(false);
@@ -692,8 +716,9 @@ public class BluemarbleGameController implements Initializable {
             drawBuilding(selectType);
             apGroundDocumentModal.setVisible(false);
 
-            //다음 턴
-            turnCount++;
+            //더블이 아니면 다음 턴
+            nextTurn();
+
             // 플레이어가 구매할 금액이 모자랄 때
         } else {
             tDocumentMessage.setText("금액이 충분하지 않습니다.");
@@ -701,15 +726,17 @@ public class BluemarbleGameController implements Initializable {
         }
 
         refreshMoney();
-        showProfileHighlight();
+//        showProfileHighlight();
 
     }
 
     @FXML void onCancelBuy(MouseEvent e){
         apGroundDocumentModal.setVisible(false);
-        //다음 턴
-        turnCount++;
-        showProfileHighlight();
+
+        //더블이 아니면 다음 턴
+        nextTurn();
+
+//        showProfileHighlight();
     }
     void initGroundDocumentModal() {
         apGroundDocumentModal.setVisible(false);
@@ -898,6 +925,20 @@ public class BluemarbleGameController implements Initializable {
             }
             objectCnt++;
         }
+
+        //유저 하이라이트에 쓸 리스트 생성
+        profileIndex.add(0);
+        for(int i = 1; i < 5; i++){
+            if(selectPlayer[i]){
+                profileIndex.add(i);
+            }
+        }
+
+        for(int i = 0; i < profileIndex.size(); i++){
+            System.out.println("index >> " + profileIndex.get(i));
+        }
+
+
         apStartBluemarbleModal.setVisible(false);
         profileSettting();
         connectObjectToFX();
