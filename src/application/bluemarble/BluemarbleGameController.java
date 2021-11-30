@@ -602,12 +602,8 @@ public class BluemarbleGameController implements Initializable {
                 spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
                 goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane, startPane};
 
-//        turnCount는 이미 턴을 넘긴상태로 가져와져서 아래와 같이 이전턴으로 처리
-        int preTurn = 0;
-        if(turnCount == 1) preTurn = playerCnt;
-        else preTurn = turnCount - 1;
 
-        LandPaneList[playerPosition[preTurn]].getChildren().add(iv);
+        LandPaneList[playerPosition[turnCount]].getChildren().add(iv);
         iv.setFitHeight(50);
         iv.setFitWidth(50);
         iv.setX(0);
