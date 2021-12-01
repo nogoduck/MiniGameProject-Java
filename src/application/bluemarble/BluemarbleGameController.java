@@ -371,7 +371,11 @@ public class BluemarbleGameController implements Initializable {
             cbVillaPrice.setSelected(false);
             cbBuildingPrice.setSelected(false);
             cbHotelPrice.setSelected(false);
+            cbVillaPrice.setDisable(false);
+            cbBuildingPrice.setDisable(false);
+            cbHotelPrice.setDisable(false);
             tDocumentMessage.setText("");
+
 
             //무시할 대상 초기화
             ignoreVilla = false;
@@ -407,8 +411,14 @@ public class BluemarbleGameController implements Initializable {
                 //땅 주인과 현재 플레이어가 같을 때
             } else if(currentLandOwner.equals(player[turnCount].nickname())){
                 System.out.println("O 땅 주인과 현재 플레이어가 동일함");
-                char[] typeArr = currentLandType.toCharArray();
 
+                //모든 건물을 구매했으면 바로 다음 턴
+                if(currentLandType.equals("111")) {
+                    System.out.println("모든 건물을 구매함");
+                    onCloseGroundDocumentModal();
+                }
+
+                char[] typeArr = currentLandType.toCharArray();
                 System.out.println("currentLandType >> " + currentLandType);
                 
 //                구매된 토지 중복 선택 불가
@@ -428,7 +438,6 @@ public class BluemarbleGameController implements Initializable {
                     cbHotelPrice.setDisable(true);
                 }
                 onShowGroundDocumentModal(LandListKor[playerPosition[turnCount]]);
-
 
                 //땅 주인과 현재 플레이어가 다를 때
             } else {
@@ -686,6 +695,28 @@ public class BluemarbleGameController implements Initializable {
 
         // 플레이어가 땅을 구매할 금액이 충분할 때
         if(playerMoney >= buyMoney){
+
+            //이전의 땅 구매 내역이 있으면 비교해서 금액 합산
+            if(!(currentLandType == null)) {
+                char[] currentLandTypeArr = currentLandType.toCharArray();
+                System.out.println("[ Bluemarble ] 땅 구매 내역 존재");
+                buyMoney = Integer.parseInt(tLandPrice.getText());
+
+                if(currentLandTypeArr[0] == selectTypeArr[0]){
+                    System.out.println("빌리 이미 구매");
+                    buyMoney += Integer.parseInt(tVillaPrice.getText());
+                }
+                if(currentLandTypeArr[1] == selectTypeArr[1]){
+                    System.out.println("빌딩 이미 구매");
+                    buyMoney += Integer.parseInt(tBuildingPrice.getText());
+                }
+                if(currentLandTypeArr[2] == selectTypeArr[2]){
+                    System.out.println("호텔 이미 구매");
+                    buyMoney += Integer.parseInt(tHotelPrice.getText());
+                }
+            }
+
+            //땅 구매
             player[turnCount].setMoney(playerMoney - buyMoney);
             System.out.println("[ Bluemarble ] 땅 구매 >> " + turnCount + " 플레이어가 " + buyMoney + "원을 지불했습니다.");
 
@@ -720,13 +751,14 @@ public class BluemarbleGameController implements Initializable {
     }
 
     @FXML void onCancelBuy(MouseEvent e){
-        apGroundDocumentModal.setVisible(false);
-
-        //더블이 아니면 다음 턴
-        nextTurn();
-
-//        showProfileHighlight();
+        onCloseGroundDocumentModal();
     }
+
+    void onCloseGroundDocumentModal(){
+        apGroundDocumentModal.setVisible(false);
+        nextTurn();
+    }
+
     void initGroundDocumentModal() {
         apGroundDocumentModal.setVisible(false);
     }
