@@ -284,8 +284,8 @@ public class BluemarbleGameController implements Initializable {
         }
 //        System.out.println("dice 1, 2 >> " + diceResult[0] + ", " + diceResult[1]);
 //        System.out.println("dice Total >> " + diceResult[0] + diceResult[1]);
-//        playerMove(diceResult[0] + diceResult[1]);
-        playerMove(8);
+        playerMove(diceResult[0] + diceResult[1]);
+//        playerMove(8);
 
         // 더블이 아닌경우 다음턴으로 넘어간다.
         if(diceResult[0] == diceResult[1]) {
@@ -466,10 +466,8 @@ public class BluemarbleGameController implements Initializable {
                     
                     //땅 주인에게 통행료 전달
                     for(int i = 1; i <= playerCnt; i++){
-                        System.out.println("pay i = " + i);
                         if(currentLandOwner.equals(player[i].nickname())){
 //                            System.out.println("지불 대상 존재");
-
                             player[i].setMoney(player[i].money() + payMoney);
                         }
                     }
