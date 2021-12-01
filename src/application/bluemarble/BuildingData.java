@@ -80,6 +80,7 @@ public class BuildingData{
 	void Cairo() {
 		buyLand = 100000;	buyVilla = 50000;	buyBuilding = 150000;	buyHotel = 250000;
 		passLand = 6000;	passVilla = 30000;	passBuilding = 270000;	passHotel = 550000;
+//		passLand = 6000000;	passVilla = 30000;	passBuilding = 270000;	passHotel = 550000;
 	}
 	// 이스탄불
 	void Istanbul() {

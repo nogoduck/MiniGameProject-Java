@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class BluemarbleGameController implements Initializable {
+    private Stage stage;
 
     @FXML private AnchorPane apPlayer1Container;
     @FXML private AnchorPane apPlayer2Container;
@@ -135,6 +136,7 @@ public class BluemarbleGameController implements Initializable {
     AnchorPane[] playerContainer = new AnchorPane[5];
     Pane[] profilePane = new Pane[5];
     Pane[] profileHighlight = new Pane[5];
+    String[] playerColor = new String[5];
 
     // 주사위 이미지 저장
     @FXML  private ImageView dice1;
@@ -167,6 +169,7 @@ public class BluemarbleGameController implements Initializable {
                 playerContainer[4] = apPlayer4Container;
                 profilePane[4] = pPlayer4Profile;
                 profileHighlight[4] = pPlayer4Highlight;
+                playerColor[4] = "#3498db";
             case 3:
                 profileAsset[3] = tPlayer3Asset;
                 profileMoney[3] = tPlayer3Money;
@@ -174,6 +177,7 @@ public class BluemarbleGameController implements Initializable {
                 playerContainer[3] = apPlayer3Container;
                 profilePane[3] = pPlayer3Profile;
                 profileHighlight[3] = pPlayer3Highlight;
+                playerColor[3] = "#2ecc71";
             case 2:
                 profileAsset[2] = tPlayer2Asset;
                 profileMoney[2] = tPlayer2Money;
@@ -181,6 +185,7 @@ public class BluemarbleGameController implements Initializable {
                 playerContainer[2] = apPlayer2Container;
                 profilePane[2] = pPlayer2Profile;
                 profileHighlight[2] = pPlayer2Highlight;
+                playerColor[2] = "#d35400";
             case 1:
                 profileAsset[1] = tPlayer1Asset;
                 profileMoney[1] = tPlayer1Money;
@@ -188,6 +193,7 @@ public class BluemarbleGameController implements Initializable {
                 playerContainer[1] = apPlayer1Container;
                 profilePane[1] = pPlayer1Profile;
                 profileHighlight[1] = pPlayer1Highlight;
+                playerColor[1] = "#f1c40f";
                 break;
         }
     }
@@ -229,6 +235,7 @@ public class BluemarbleGameController implements Initializable {
 
     @FXML private Label lbDiceNumber;
     @FXML private Label lbDiceDouble;
+    @FXML private Pane pDiceShadow;
 
     // 다음턴
     void nextTurn(){
@@ -376,13 +383,10 @@ public class BluemarbleGameController implements Initializable {
             cbHotelPrice.setDisable(false);
             tDocumentMessage.setText("");
 
-
             //무시할 대상 초기화
             ignoreVilla = false;
             ignoreBuilding = false;
             ignoreHotel = false;
-
-
 
             //땅 주인이 없을 때
             if(currentLandOwner == null) {
@@ -415,30 +419,28 @@ public class BluemarbleGameController implements Initializable {
                 //모든 건물을 구매했으면 바로 다음 턴
                 if(currentLandType.equals("111")) {
                     System.out.println("모든 건물을 구매함");
-                    onCloseGroundDocumentModal();
-                }
+                } else {
+                    char[] typeArr = currentLandType.toCharArray();
+                    System.out.println("currentLandType >> " + currentLandType);
 
-                char[] typeArr = currentLandType.toCharArray();
-                System.out.println("currentLandType >> " + currentLandType);
-                
-//                구매된 토지 중복 선택 불가
-                if(typeArr[0] == '1'){
-                    ignoreVilla = true;
-                    cbVillaPrice.setSelected(true);
-                    cbVillaPrice.setDisable(true);
+    //                구매된 토지 중복 선택 불가
+                    if(typeArr[0] == '1'){
+                        ignoreVilla = true;
+                        cbVillaPrice.setSelected(true);
+                        cbVillaPrice.setDisable(true);
+                    }
+                    if(typeArr[1] == '1'){
+                        ignoreBuilding = true;
+                        cbBuildingPrice.setSelected(true);
+                        cbBuildingPrice.setDisable(true);
+                    }
+                    if(typeArr[2] == '1'){
+                        ignoreHotel = true;
+                        cbHotelPrice.setSelected(true);
+                        cbHotelPrice.setDisable(true);
+                    }
+                    onShowGroundDocumentModal(LandListKor[playerPosition[turnCount]]);
                 }
-                if(typeArr[1] == '1'){
-                    ignoreBuilding = true;
-                    cbBuildingPrice.setSelected(true);
-                    cbBuildingPrice.setDisable(true);
-                }
-                if(typeArr[2] == '1'){
-                    ignoreHotel = true;
-                    cbHotelPrice.setSelected(true);
-                    cbHotelPrice.setDisable(true);
-                }
-                onShowGroundDocumentModal(LandListKor[playerPosition[turnCount]]);
-
                 //땅 주인과 현재 플레이어가 다를 때
             } else {
                 System.out.println("X 땅 주인과 현재 플레이어가 동일하지 않음");
@@ -475,29 +477,41 @@ public class BluemarbleGameController implements Initializable {
                     //턴이 넘어가는 경우(토지 구매, 토지 구매 취소, 통행료 납부)
                     //더블이 아니면 다음 턴
                     nextTurn();
+                } else {
                 // 플레이어가 지불할 금액이 모자랄 때
                 /* 게임 종료 조건
                 * 지정된 턴 수를 초과 했을 때, 한 사람이 파산했을 때 시점으로
                 * 가장 현금이 많은 사람이 승리
                  */
-                } else {
-                    //게임 결과 모달 호출 예정(안만듬)
+
+                    //현재 유저 파산 처리
+                    player[turnCount].setMoney(0);
+                    setGameOver();
+                    onShowGameOverModal();
                     System.out.println("[ Bluemarble ] 게임이 종료되었습니다.");
                 }
-
-
             }
-
             refreshMoney();
             btnRunDice.setDisable(false);
-
         });
         st.play();
     }
 
+    void showDiceButton(){
+        pDiceShadow.setVisible(true);
+        btnRunDice.setVisible(true);
+    }
+
+    void hideDiceButton(){
+        pDiceShadow.setVisible(false);
+        btnRunDice.setVisible(false);
+    }
+
+
     void initDice(){
         lbDiceNumber.setVisible(false);
         lbDiceDouble.setVisible(false);
+        hideDiceButton();
     }
 
     // 마우스 호버 액션
@@ -577,9 +591,6 @@ public class BluemarbleGameController implements Initializable {
         // 토지 정보에 토지 주인, 어느토지까지 구매했는지 작성
         Node source = (Node) e.getSource();
         String buildId = source.idProperty().getValue();
-//        char[] landTypeArr = null;
-//        if(currentLandType != null) landTypeArr = currentLandType.toCharArray();
-//
 
        if(buildId.equals("pVillaPrice")){
             if (!ignoreVilla) {
@@ -605,6 +616,9 @@ public class BluemarbleGameController implements Initializable {
     }
 
     void onShowGroundDocumentModal(String title){
+        //주사위 숨기기
+        hideDiceButton();
+
         boolean isSpecialRegin = false;
         //모달 제목
         tDocumentTitle.setText(title);
@@ -615,7 +629,6 @@ public class BluemarbleGameController implements Initializable {
 
     // 건물 그려주는 함수
     void drawBuilding(String type){
-        ImageView iv = new ImageView();
         AnchorPane[] LandPaneList = {startPane, taibeiPane, goldCardPane1, hongKongPane, manilaPane,
                 jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
                 islandPane, athenaePane, goldCardPane3, copenhagenPane, stockholmPane,
@@ -624,13 +637,19 @@ public class BluemarbleGameController implements Initializable {
                 busanPane, hawaiiPane, lisbonPane, queenElizabethPane, madridPane,
                 spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
                 goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane, startPane};
+        ImageView iv = new ImageView();
+        Pane pPlayerType = new Pane();
 
-
-        LandPaneList[playerPosition[turnCount]].getChildren().add(iv);
+        LandPaneList[playerPosition[turnCount]].getChildren().addAll(iv, pPlayerType);
         iv.setFitHeight(50);
         iv.setFitWidth(50);
         iv.setX(0);
         iv.setY(-44);
+
+        pPlayerType.setStyle("-fx-background-color: " + playerColor[turnCount]);
+        pPlayerType.setPrefSize(20,50);
+        pPlayerType.setLayoutX(15);
+        pPlayerType.setLayoutY(0);
 
         switch(type){
             case "000":
@@ -666,7 +685,6 @@ public class BluemarbleGameController implements Initializable {
         int buyMoney = building.buyLand();
         long playerMoney = player[turnCount].money();
 
-        
         //현재 체크된 건물 타입설정
         if(cbVillaPrice.isSelected()) {
             selectTypeArr[0] = '1';
@@ -744,8 +762,7 @@ public class BluemarbleGameController implements Initializable {
         }
 
         refreshMoney();
-//        showProfileHighlight();
-
+        showDiceButton();
     }
 
     @FXML void onCancelBuy(MouseEvent e){
@@ -754,6 +771,7 @@ public class BluemarbleGameController implements Initializable {
 
     void onCloseGroundDocumentModal(){
         apGroundDocumentModal.setVisible(false);
+        showDiceButton();
         nextTurn();
     }
 
@@ -951,6 +969,7 @@ public class BluemarbleGameController implements Initializable {
         connectObjectToFX();
         assignPlayer();
         showProfileHighlight();
+        showDiceButton();
     }
 
 
@@ -1014,10 +1033,62 @@ public class BluemarbleGameController implements Initializable {
         pInformationModal.setVisible(false);
     }
 
+    // ==================================================
+    //              End Bluemarble Modal
+    // ==================================================
+    @FXML private AnchorPane apGameOverModel;
+    @FXML private Label lbWinPlayer;
+
+
+    void setGameOver(){
+        int winPlayerIndex = 1;
+        long max = player[1].money();
+        for (int i = 2; i < playerCnt + 1; i++) {
+            if(player[i].money() > max){
+                max = player[i].money();
+                winPlayerIndex = i;
+            }
+        }
+
+        System.out.println("승리한 플레이어 >> " + player[winPlayerIndex].nickname());
+        System.out.println("승리한 플레이어의 현금 >> " + player[winPlayerIndex].money());
+        lbWinPlayer.setText(player[winPlayerIndex].nickname());
+    }
+
+    void onShowGameOverModal(){
+        apGameOverModel.setVisible(true);
+    }
+
+    @FXML void onRestartBluemarble(MouseEvent e) throws IOException {
+        Node node = (Node)(e.getSource());
+        stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(getClass().getResource("BluemarbleGameUI.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("부루마블");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML void onCloseBluemarble(MouseEvent e) throws IOException {
+        Node node = (Node)(e.getSource());
+        stage = (Stage)(node.getScene().getWindow());
+        Parent root = FXMLLoader.load(getClass().getResource("/application/MainUI.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("미니게임");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    void initGameOverModal(){
+        apGameOverModel.setVisible(false);
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initStartBluemarbleModal(); // 부루마블 시작 모달 초기화
-        initGroundDocumentModal(); // 땅 문서 구매 모달 초기화
-        initDice(); //주사위 초기화
+        initGroundDocumentModal();  // 땅 문서 구매 모달 초기화
+        initDice();                 //주사위 초기화
+        initGameOverModal();        //게임 종료 모달 초기회
     }
 }

@@ -22,6 +22,13 @@
          <image>
             <Image url="@../texture/GameBoard.png" />
          </image>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.44736841320991516" green="0.44736841320991516" blue="0.44736841320991516" />
+               </color>
+            </DropShadow>
+         </effect>
       </ImageView>
       <AnchorPane fx:id="apPlayer1Container" prefHeight="150.0" prefWidth="350.0" style="-fx-background-radius: 0 0 32px 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0 0 32px 0;">
          <children>
@@ -173,7 +180,6 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <Button fx:id="btnRunDice" layoutX="55.0" layoutY="553.0" mnemonicParsing="false" onAction="#onClickRunDice" text="주사위굴리기" />
       <ImageView fx:id="dice1" fitHeight="50.0" fitWidth="50.0" layoutX="573.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="dice2" fitHeight="50.0" fitWidth="50.0" layoutX="636.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true" />
       <AnchorPane fx:id="taibeiPane" layoutX="560.0" layoutY="739.0" prefHeight="79.0" prefWidth="50.0" rotate="225.0" />
@@ -186,7 +192,6 @@
       <AnchorPane fx:id="cairoPane" layoutX="310.0" layoutY="490.0" prefHeight="79.0" prefWidth="50.0" rotate="225.0" />
       <AnchorPane fx:id="istanbulPane" layoutX="275.0" layoutY="453.0" prefHeight="79.0" prefWidth="50.0" rotate="225.0" />
       <AnchorPane fx:id="islandPane" layoutX="214.0" layoutY="406.0" prefHeight="83.0" prefWidth="79.0" rotate="225.0" />
-      <AnchorPane fx:id="startPane" layoutX="591.0" layoutY="783.0" prefHeight="83.0" prefWidth="79.0" />
       <AnchorPane fx:id="spacePane" layoutX="970.0" layoutY="404.0" prefHeight="83.0" prefWidth="79.0" rotate="45.0" />
       <AnchorPane fx:id="socialMoneyGetPane" layoutX="592.0" layoutY="28.0" prefHeight="83.0" prefWidth="79.0" rotate="45.0" />
       <AnchorPane fx:id="athenaePane" layoutX="275.0" layoutY="360.0" prefHeight="79.0" prefWidth="50.0" rotate="-45.0" />
@@ -216,10 +221,9 @@
       <AnchorPane fx:id="newYorkPane" layoutX="725.0" layoutY="666.0" prefHeight="79.0" prefWidth="50.0" rotate="135.0" />
       <AnchorPane fx:id="seoulPane" layoutX="652.0" layoutY="739.0" prefHeight="79.0" prefWidth="50.0" rotate="135.0" />
       <AnchorPane fx:id="socialMoneyPayPane" layoutX="688.0" layoutY="703.0" prefHeight="79.0" prefWidth="50.0" rotate="135.0" />
-      <Button layoutX="55.0" layoutY="228.0" mnemonicParsing="false" onAction="#onClickFunc" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼" />
-      <Button layoutX="55.0" layoutY="336.0" mnemonicParsing="false" onAction="#onClickFunc2" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼2" />
-      <Button layoutX="55.0" layoutY="449.0" mnemonicParsing="false" onAction="#onClickFunc3" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼3" />
-      <AnchorPane id="createRoomModal" fx:id="apGroundDocumentModal" layoutX="281.0" layoutY="270.0" prefHeight="409.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;">
+      <AnchorPane fx:id="startPane" layoutX="591.0" layoutY="783.0" prefHeight="83.0" prefWidth="79.0" />
+      <Button layoutX="25.0" layoutY="181.0" mnemonicParsing="false" onAction="#onClickFunc" prefHeight="79.0" prefWidth="150.0" text="임시 동작 버튼" />
+      <AnchorPane id="createRoomModal" fx:id="apGroundDocumentModal" layoutX="281.0" layoutY="270.0" prefHeight="409.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;" visible="false">
          <children>
             <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
                <children>
@@ -584,14 +588,14 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <Label fx:id="lbDiceNumber" alignment="CENTER" layoutX="592.0" layoutY="182.0" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #80D261; -fx-background-radius: 50px; -fx-border-radius: 50px; -fx-border-color: #000000; -fx-border-width: 3px;" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="lbDiceNumber" alignment="CENTER" contentDisplay="CENTER" layoutX="572.0" layoutY="136.0" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-background-radius: 64px; -fx-border-radius: 64px; -fx-border-color: #000000; -fx-border-width: 3px;" text="11" textAlignment="CENTER" visible="false">
          <font>
-            <Font size="36.0" />
+            <Font size="74.0" />
          </font>
       </Label>
-      <Label fx:id="lbDiceDouble" alignment="CENTER" layoutX="586.0" layoutY="151.0" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #3399FF; -fx-border-color: #000000; -fx-border-radius: 24px; -fx-border-width: 3px; -fx-background-radius: 24px;" text="더블" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="lbDiceDouble" alignment="CENTER" layoutX="575.0" layoutY="117.0" prefHeight="35.0" prefWidth="115.0" style="-fx-background-color: #F9A201; -fx-border-color: #000000; -fx-border-radius: 12px; -fx-border-width: 2px; -fx-background-radius: 12px;" text="더블" textAlignment="CENTER" textFill="WHITE" visible="false">
          <font>
-            <Font size="29.0" />
+            <Font size="26.0" />
          </font>
       </Label>
       <Pane fx:id="pInformationModal" layoutX="289.0" layoutY="514.0" prefHeight="192.0" prefWidth="471.0" style="-fx-background-color: transparent;" visible="false">
@@ -628,6 +632,67 @@
             </Pane>
          </children>
       </Pane>
+      <Pane fx:id="pDiceShadow" layoutX="581.0" layoutY="515.0" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 64px; -fx-background-color: transparent; -fx-border-radius: 64px; -fx-border-color: #E0FFC1;">
+         <effect>
+            <DropShadow spread="0.32" />
+         </effect>
+      </Pane>
+      <Button fx:id="btnRunDice" layoutX="581.0" layoutY="515.0" mnemonicParsing="false" onAction="#onClickRunDice" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #F27FE5; -fx-background-radius: 64px; -fx-border-color: #80D261; -fx-border-width: 5px; -fx-border-radius: 64px;" text="주사위굴리기" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <AnchorPane id="createRoomModal" fx:id="apGameOverModel" layoutX="281.0" layoutY="271.0" prefHeight="409.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;">
+         <children>
+            <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
+               <children>
+                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCloseBluemarble" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 0px 12px 0px 0px;" stylesheets="@../application.css">
+                     <children>
+                        <Text fill="#a5a6a6" layoutX="7.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="×" textAlignment="CENTER" wrappingWidth="35.572265625">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <Text fx:id="tDocumentTitle1" layoutX="54.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nanum_font" text="게임 결과">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="14.0" layoutY="10.0">
+                     <image>
+                        <Image url="@../texture/logo_bluemarble.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane id="createRoomModal_container" layoutX="15.0" layoutY="70.0" prefHeight="272.0" prefWidth="671.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-border-radius: 8;">
+               <children>
+                  <Label fx:id="lbWinPlayer" layoutX="41.0" layoutY="61.0" text="lbWinPlayer">
+                     <font>
+                        <Font size="46.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+            <Button id="create_room_submit" layoutX="569.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#onRestartBluemarble" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="재대결">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button id="create_room_cancel" layoutX="441.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#onCloseBluemarble" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="종료">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.38528138399124146" />
+               </color>
+            </DropShadow>
+         </effect>
+      </AnchorPane>
    </children>
    <effect>
       <DropShadow height="28.3275" radius="12.564375" width="23.93" />
