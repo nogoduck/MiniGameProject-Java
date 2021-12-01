@@ -641,11 +641,11 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <AnchorPane id="createRoomModal" fx:id="apGameOverModel" layoutX="281.0" layoutY="271.0" prefHeight="409.0" prefWidth="700.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;">
+      <AnchorPane id="createRoomModal" fx:id="apGameOverModel" layoutX="349.0" layoutY="328.0" prefHeight="272.0" prefWidth="567.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;">
          <children>
-            <AnchorPane prefHeight="36.0" prefWidth="700.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
+            <AnchorPane prefHeight="49.0" prefWidth="567.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
                <children>
-                  <AnchorPane id="create_room_close" layoutX="650.0" onMouseClicked="#onCloseBluemarble" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 0px 12px 0px 0px;" stylesheets="@../application.css">
+                  <AnchorPane id="create_room_close" layoutX="517.0" onMouseClicked="#onCloseBluemarble" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 0px 12px 0px 0px;" stylesheets="@../application.css">
                      <children>
                         <Text fill="#a5a6a6" layoutX="7.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="×" textAlignment="CENTER" wrappingWidth="35.572265625">
                            <font>
@@ -666,20 +666,30 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane id="createRoomModal_container" layoutX="15.0" layoutY="70.0" prefHeight="272.0" prefWidth="671.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-border-radius: 8;">
+            <AnchorPane id="createRoomModal_container" layoutX="15.0" layoutY="70.0" prefHeight="135.0" prefWidth="539.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-border-radius: 8;">
                <children>
-                  <Label fx:id="lbWinPlayer" layoutX="41.0" layoutY="61.0" text="lbWinPlayer">
+                  <Label fx:id="lbWinPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="27.0" prefHeight="62.0" prefWidth="343.0" textAlignment="CENTER">
                      <font>
-                        <Font size="46.0" />
+                        <Font size="42.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="35.0" layoutY="18.0">
+                     <image>
+                        <Image url="@../texture/winner.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lbWinPlayerMoney" alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="89.0" prefHeight="32.0" prefWidth="343.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="22.0" />
                      </font>
                   </Label>
                </children></AnchorPane>
-            <Button id="create_room_submit" layoutX="569.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#onRestartBluemarble" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="재대결">
+            <Button id="create_room_submit" layoutX="437.0" layoutY="216.0" mnemonicParsing="false" onMouseClicked="#onRestartBluemarble" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="재대결">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button id="create_room_cancel" layoutX="441.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#onCloseBluemarble" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="종료">
+            <Button id="create_room_cancel" layoutX="309.0" layoutY="216.0" mnemonicParsing="false" onMouseClicked="#onCloseBluemarble" onMouseEntered="#onHoverEnter" onMouseExited="#onHoverExit" prefHeight="39.0" prefWidth="117.0" style="-fx-background-radius: 8;" stylesheets="@../application.css" text="종료">
                <font>
                   <Font size="16.0" />
                </font>

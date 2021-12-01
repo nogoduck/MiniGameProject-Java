@@ -1,8 +1,6 @@
 package application.bluemarble;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -26,7 +24,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -291,8 +291,8 @@ public class BluemarbleGameController implements Initializable {
         }
 //        System.out.println("dice 1, 2 >> " + diceResult[0] + ", " + diceResult[1]);
 //        System.out.println("dice Total >> " + diceResult[0] + diceResult[1]);
-        playerMove(diceResult[0] + diceResult[1]);
-//        playerMove(8);
+//        playerMove(diceResult[0] + diceResult[1]);
+        playerMove(8);
 
         // 더블이 아닌경우 다음턴으로 넘어간다.
         if(diceResult[0] == diceResult[1]) {
@@ -637,6 +637,7 @@ public class BluemarbleGameController implements Initializable {
                 busanPane, hawaiiPane, lisbonPane, queenElizabethPane, madridPane,
                 spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
                 goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane, startPane};
+
         ImageView iv = new ImageView();
         Pane pPlayerType = new Pane();
 
@@ -995,6 +996,7 @@ public class BluemarbleGameController implements Initializable {
             source.setStyle("-fx-cursor:hand;-fx-background-color: #000000;-fx-opacity: 0.1");
     }
 
+
     //캐릭터 카드 호버 종료
     @FXML
     void onHoverExitCard(MouseEvent e) {
@@ -1038,6 +1040,7 @@ public class BluemarbleGameController implements Initializable {
     // ==================================================
     @FXML private AnchorPane apGameOverModel;
     @FXML private Label lbWinPlayer;
+    @FXML private Label lbWinPlayerMoney;
 
 
     void setGameOver(){
@@ -1053,6 +1056,7 @@ public class BluemarbleGameController implements Initializable {
         System.out.println("승리한 플레이어 >> " + player[winPlayerIndex].nickname());
         System.out.println("승리한 플레이어의 현금 >> " + player[winPlayerIndex].money());
         lbWinPlayer.setText(player[winPlayerIndex].nickname());
+        lbWinPlayerMoney.setText(convertNumberToCurrency(player[winPlayerIndex].money()));
     }
 
     void onShowGameOverModal(){
