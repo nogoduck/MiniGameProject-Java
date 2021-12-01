@@ -395,7 +395,7 @@ public class BluemarbleGameController implements Initializable {
                 }else if (LandPaneList[playerPosition[turnCount]] == spacePane) {
                     // 도착한 곳이 우주여행 인 경우
                 }else {
-                    for(int i = 0 ; i< goldCardPaneNum.length ; i++) {
+                    for(int i = 0 ; i < goldCardPaneNum.length ; i++) {
                         if( playerPosition[turnCount] == goldCardPaneNum[i]) {
                             isGoldCardPane = true;
                         }
@@ -785,6 +785,7 @@ public class BluemarbleGameController implements Initializable {
     @FXML private Pane pPlayer2;
     @FXML private Pane pPlayer3;
     @FXML private Pane pPlayer4;
+    @FXML private Pane pInformationModal;
     private boolean[] selectPlayer = new boolean[5];
     private int playerCnt; // 선택 해야할 카드 개수 (총 플레이 인원 수)
     private int selectedCharacterCnt; // 선택된 카드 개수
@@ -954,6 +955,17 @@ public class BluemarbleGameController implements Initializable {
         showProfileHighlight();
     }
 
+
+    @FXML
+    void onShowInformationModal(MouseEvent e) {
+        pInformationModal.setVisible(true);
+    }
+
+    @FXML
+    void onCloseInformationModal(MouseEvent e) {
+        pInformationModal.setVisible(false);
+    }
+
     //캐릭터 카드 호버 시작
     @FXML
     void onHoverEnterCard(MouseEvent e) {
@@ -1001,6 +1013,7 @@ public class BluemarbleGameController implements Initializable {
         apPlayer2Container.setVisible(false);
         apPlayer3Container.setVisible(false);
         apPlayer4Container.setVisible(false);
+        pInformationModal.setVisible(false);
     }
 
     @Override
