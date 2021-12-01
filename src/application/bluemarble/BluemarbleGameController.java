@@ -144,6 +144,9 @@ public class BluemarbleGameController implements Initializable {
     int turnCount = 1;	// 시작 플레이어 설정
     BuildingData building = new BuildingData();
 
+    //총 턴수
+    int totalTurnCount;
+
     // 플레이어가 가진돈과 자산 정보를 불러옴
     void refreshMoney() {
         for(int i = 1 ; i <= playerCnt ; i++) {
@@ -155,8 +158,6 @@ public class BluemarbleGameController implements Initializable {
     // ==================================================
     //                    Test Code
     // ==================================================
-    @FXML void onClickFunc3(ActionEvent e) { goldcard.choiceRandomGoldCard(); }
-    @FXML void onClickFunc2(ActionEvent e) {}
     @FXML void onClickFunc(ActionEvent e) {}
 
     // 반복문으로 사용할 수 있게 배열에 관련 자료를 저장
@@ -291,8 +292,8 @@ public class BluemarbleGameController implements Initializable {
         }
 //        System.out.println("dice 1, 2 >> " + diceResult[0] + ", " + diceResult[1]);
 //        System.out.println("dice Total >> " + diceResult[0] + diceResult[1]);
-//        playerMove(diceResult[0] + diceResult[1]);
-        playerMove(8);
+        playerMove(diceResult[0] + diceResult[1]);
+//        playerMove(8);
 
         // 더블이 아닌경우 다음턴으로 넘어간다.
         if(diceResult[0] == diceResult[1]) {
@@ -755,7 +756,7 @@ public class BluemarbleGameController implements Initializable {
 
             //더블이 아니면 다음 턴
             nextTurn();
-
+            showDiceButton();
             // 플레이어가 구매할 금액이 모자랄 때
         } else {
             tDocumentMessage.setText("금액이 충분하지 않습니다.");
@@ -763,7 +764,6 @@ public class BluemarbleGameController implements Initializable {
         }
 
         refreshMoney();
-        showDiceButton();
     }
 
     @FXML void onCancelBuy(MouseEvent e){
@@ -964,15 +964,15 @@ public class BluemarbleGameController implements Initializable {
             }
             objectCnt++;
         }
-
         apStartBluemarbleModal.setVisible(false);
         profileSettting();
         connectObjectToFX();
         assignPlayer();
         showProfileHighlight();
         showDiceButton();
+        totalTurnCount = playerCnt * 50;
+        System.out.println("totalTurnCount = " + totalTurnCount);
     }
-
 
     @FXML
     void onShowInformationModal(MouseEvent e) {
@@ -995,7 +995,6 @@ public class BluemarbleGameController implements Initializable {
         else
             source.setStyle("-fx-cursor:hand;-fx-background-color: #000000;-fx-opacity: 0.1");
     }
-
 
     //캐릭터 카드 호버 종료
     @FXML
@@ -1086,7 +1085,6 @@ public class BluemarbleGameController implements Initializable {
     void initGameOverModal(){
         apGameOverModel.setVisible(false);
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

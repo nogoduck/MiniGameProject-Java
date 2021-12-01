@@ -641,7 +641,7 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <AnchorPane id="createRoomModal" fx:id="apGameOverModel" layoutX="349.0" layoutY="328.0" prefHeight="272.0" prefWidth="567.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;">
+      <AnchorPane id="createRoomModal" fx:id="apGameOverModel" layoutX="349.0" layoutY="328.0" prefHeight="272.0" prefWidth="567.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 12;" visible="false">
          <children>
             <AnchorPane prefHeight="49.0" prefWidth="567.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12px 12px 0px 0px;" stylesheets="@../application.css">
                <children>
