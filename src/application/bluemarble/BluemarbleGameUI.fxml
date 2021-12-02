@@ -587,7 +587,7 @@
             </DropShadow>
          </effect>
       </AnchorPane>
-      <Label fx:id="lbDiceNumber" alignment="CENTER" contentDisplay="CENTER" layoutX="572.0" layoutY="136.0" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-background-radius: 64px; -fx-border-radius: 64px; -fx-border-color: #000000; -fx-border-width: 3px;" text="11" textAlignment="CENTER" visible="false">
+      <Label fx:id="lbDiceNumber" alignment="CENTER" contentDisplay="CENTER" layoutX="572.0" layoutY="136.0" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-background-radius: 64px; -fx-border-radius: 64px; -fx-border-color: #000000; -fx-border-width: 3px;" textAlignment="CENTER" visible="false">
          <font>
             <Font size="74.0" />
          </font>
@@ -717,6 +717,23 @@
             <Image url="@../texture/money.png" />
          </image>
       </ImageView>
+      <AnchorPane fx:id="apPlayer1Container1" layoutY="301.0" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 0 4px 4px 0; -fx-background-color: #F0F0F0; -fx-border-radius: 0;">
+         <children>
+            <Label alignment="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="21.0" prefWidth="58.0" style="-fx-background-color: #F27FE5; -fx-padding: 2px 5px;" text="남은 턴" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="lbTotalTurnCnt" layoutX="110.0" layoutY="11.0" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.2943722903728485" />
+               </color>
+            </DropShadow>
+         </effect>
+      </AnchorPane>
    </children>
    <effect>
       <DropShadow height="28.3275" radius="12.564375" width="23.93" />

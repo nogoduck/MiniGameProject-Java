@@ -146,8 +146,9 @@ public class BluemarbleGameController implements Initializable {
     int turnCount = 1;	// 시작 플레이어 설정
     BuildingData building = new BuildingData();
 
-    //총 턴수
-    int totalTurnCount;
+    //1인당 턴수
+    @FXML private Label lbTotalTurnCnt;
+    private final int TURNCNT = 50;
 
     // 플레이어가 가진돈과 자산 정보를 불러옴
     void refreshMoney() {
@@ -339,6 +340,11 @@ public class BluemarbleGameController implements Initializable {
     @FXML private Label lbDiceDouble;
     @FXML private Pane pDiceShadow;
 
+    //전체 턴 감소
+    void declineTotalTurn(){
+        lbTotalTurnCnt.setText(Integer.toString(Integer.parseInt(lbTotalTurnCnt.getText()) - 1));
+    }
+
     // 다음턴
     void nextTurn(){
         //더블이 아니면 다음턴 전환
@@ -391,6 +397,9 @@ public class BluemarbleGameController implements Initializable {
     @FXML private Button btnRunDice;
     @FXML	// 주사위를 던지는 메소드
     void onClickRunDice(ActionEvent e) {
+        //전체 턴 감소
+        declineTotalTurn();
+
         if(turnCount > playerCnt) turnCount = 1; // 플레이어 턴 재배정
         isDouble = false;
         btnRunDice.setDisable(true);
@@ -663,9 +672,18 @@ public class BluemarbleGameController implements Initializable {
                     player[turnCount].setMoney(0);
                     setGameOver();
                     onShowGameOverModal();
-                    System.out.println("[ Bluemarble ] 게임이 종료되었습니다.");
+                    System.out.println("[ Bluemarble ] 파산으로 게임이 종료되었습니다.");
                 }
             }
+
+            //모든 토지 구매가 끝난 후 남은 턴이 0 일 때 게임종료
+            if(lbTotalTurnCnt.getText().equals("0")){
+                setGameOver();
+                onShowGameOverModal();
+                System.out.println("[ Bluemarble ] 모든 턴이 소진되어 게임이 종료되었습니다.");
+            }
+
+
             refreshMoney();
             btnRunDice.setDisable(false);
         });
@@ -1176,8 +1194,10 @@ public class BluemarbleGameController implements Initializable {
         assignPlayer();
         showProfileHighlight();
         showDiceButton();
-        totalTurnCount = playerCnt * 50;
-        System.out.println("totalTurnCount = " + totalTurnCount);
+
+        //전체 턴수 설정
+        System.out.println("TOTAL TURNCNT >> " + playerCnt * TURNCNT);
+        lbTotalTurnCnt.setText(Integer.toString(playerCnt * TURNCNT));
     }
 
     @FXML
