@@ -1,11 +1,5 @@
 package application.bluemarble;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.util.*;
-
 import application.Main;
 import application.MainController;
 import javafx.animation.SequentialTransition;
@@ -24,13 +18,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BluemarbleGameController implements Initializable {
     private Stage stage;
@@ -101,8 +101,9 @@ public class BluemarbleGameController implements Initializable {
     @FXML private Text tPlayer4Asset;
     @FXML private Text tPlayer4Money;
     @FXML private Text tPlayer4Nickname;
-
-    final private byte goldCardNum = 6; // 황금카드 갯수
+    
+    final long salaryMoney = 200000;	// 출발지 지날경우 월급 설정
+    final private byte goldCardNum = 5; // 황금카드 갯수
     GoldCard goldcard = new GoldCard(goldCardNum,this);
     Player[] player = new Player[5]; // 플레이어는 1 ~ 4번으로 0번 인덱스는 사용하지 않습니다.
     //플레이어 프로필 이미지
@@ -141,6 +142,7 @@ public class BluemarbleGameController implements Initializable {
     // 주사위 이미지 저장
     @FXML  private ImageView dice1;
     @FXML  private ImageView dice2;
+    @FXML  private ImageView ivSocialMoney;
     int turnCount = 1;	// 시작 플레이어 설정
     BuildingData building = new BuildingData();
 
@@ -154,11 +156,110 @@ public class BluemarbleGameController implements Initializable {
             profileAsset[i].setText(String.valueOf(convertNumberToCurrency((player[i].asset()))));
         }
     }
-
-    // ==================================================
-    //                    Test Code
-    // ==================================================
-    @FXML void onClickFunc(ActionEvent e) {}
+    
+    AnchorPane getIslandPane() {
+    	return islandPane;
+    }
+    AnchorPane getStartPane() {
+    	return startPane;
+    }
+    AnchorPane getSocialMoneyGetPane() {
+    	return socialMoneyGetPane;
+    }
+    AnchorPane getSpacePane() {
+    	return spacePane;
+    }
+    // 땅 클릭하면 작동하는 메소드
+    @FXML
+    void onClickLandPane(MouseEvent event) {
+    	if(isArrivalSpaceTravel[turnCount]) {
+	    	AnchorPane apTemp = (AnchorPane) event.getSource();
+	    	spaceTraval(apTemp);
+    	}
+    }
+    void spaceTraval(AnchorPane selectPane) {
+    	// 우주여행 상태인경우
+    	if(isArrivalSpaceTravel[turnCount]) {
+    		isArrivalSpaceTravel[turnCount] = false;
+    		byte selectLandNum = 0;
+    		boolean passStartPane = false;
+    		final byte spaceLandNum = 30;
+	    	AnchorPane[] LandPaneList = {startPane, taibeiPane, goldCardPane1, hongKongPane, manilaPane,
+	                jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
+	                islandPane, athenaePane, goldCardPane3, copenhagenPane, stockholmPane,
+	                concordePane, zurichPane, goldCardPane4, berlinPane, montrealPane,
+	                socialMoneyGetPane, buenosAiresPane, goldCardPane5, saoPauloPane, sydneyPane,
+	                busanPane, hawaiiPane, lisbonPane, queenElizabethPane, madridPane,
+	                spacePane, tokyoPane, colombiaPane, parisPane, romaPane,
+	                goldCardPane6, londonPane, newYorkPane, socialMoneyPayPane, seoulPane, startPane};
+	    	int durationLine1= 400, durationLine2= 400, durationLine3 =400,durationLine4 =400;
+	    	// 유저가 선택한 땅 번호를 가져옴
+	    	for(int i = 0 ; i<LandPaneList.length ; i++) {
+	    		if(LandPaneList[i] == selectPane) {
+	    			selectLandNum = (byte)i;
+	    		}
+	    	}
+	    	
+	    	if(selectLandNum == spaceLandNum) {
+	    		return;	// 우주여행 땅을 고른경우 우주여행 취소
+	    	}
+	    	
+	    	byte paneNumDiff = (byte)(spaceLandNum-selectLandNum);
+	    	TranslateTransition line1 = new TranslateTransition(new Duration(durationLine1), playerHorseImg[turnCount]);
+	    	TranslateTransition line2 = new TranslateTransition(new Duration(durationLine2), playerHorseImg[turnCount]);
+	    	TranslateTransition line3 = new TranslateTransition(new Duration(durationLine3), playerHorseImg[turnCount]);
+	    	TranslateTransition tt = new TranslateTransition(new Duration(durationLine4), playerHorseImg[turnCount]);
+            tt.setToX(LandPaneList[selectLandNum].getLayoutX()-startPane.getLayoutX());
+            tt.setToY(LandPaneList[selectLandNum].getLayoutY()-startPane.getLayoutY());
+	    	SequentialTransition st = null;	
+	    	
+	    	if( (paneNumDiff<11)&&(paneNumDiff>0) ) {	// 3라인을 선택한 경우
+	    		// 3라인 ( 1(마드리드) ~ 10(사회복지기금)
+	    		passStartPane = true; // 시작지 지나서 월급지급
+	    		line1.setToX(startPane.getLayoutX() - startPane.getLayoutX());
+	    		line1.setToY(startPane.getLayoutY() - startPane.getLayoutY());
+	    		line2.setToX(islandPane.getLayoutX() - startPane.getLayoutX());
+	    		line2.setToY(islandPane.getLayoutY() - startPane.getLayoutY());
+	    		line3.setToX(socialMoneyGetPane.getLayoutX() - startPane.getLayoutX());
+	    		line3.setToY(socialMoneyGetPane.getLayoutY() - startPane.getLayoutY());
+	    		st = new SequentialTransition(playerHorseImg[turnCount],line1,line2,line3,tt);
+	    		st.play();
+	    	}
+	    	if( (paneNumDiff<21)&&(paneNumDiff>10) ) {	// 2라인을 선택한 경우
+	    		// 2라인 ( 11(몬트리올) ~ 20(무인도) )
+	    		passStartPane = true; // 시작지 지나서 월급지급
+	    		line1.setToX(startPane.getLayoutX() - startPane.getLayoutX());
+	    		line1.setToY(startPane.getLayoutY() - startPane.getLayoutY());
+	    		line2.setToX(islandPane.getLayoutX() - startPane.getLayoutX());
+	    		line2.setToY(islandPane.getLayoutY() - startPane.getLayoutY());
+	    		st = new SequentialTransition(playerHorseImg[turnCount],line1,line2,tt);
+	    		st.play();
+	    	}
+	    	if( (paneNumDiff<31)&&(paneNumDiff>20) ) {	// 1라인을 선택한 경우
+	    		// 1라인 ( 30(출발지) ~ 21(이스탄불) )
+	    		passStartPane = true; // 시작지 지나서 월급지급
+	    		line1.setToX(startPane.getLayoutX() - startPane.getLayoutX());
+	    		line1.setToY(startPane.getLayoutY() - startPane.getLayoutY());	
+	    		st = new SequentialTransition(playerHorseImg[turnCount],line1,tt);
+	    		st.play();
+	    	}
+	    	if( paneNumDiff<0) {	// 4라인을 선택한 경우
+	    		st = new SequentialTransition(playerHorseImg[turnCount],tt);
+		    	st.play();
+	    	}
+	    	if(passStartPane) {
+	    		// 월급 20만원 지급
+	    		player[turnCount].setMoney(player[turnCount].money()+salaryMoney);
+	    		refreshMoney();
+	    	}
+	    	playerPosition[turnCount] = selectLandNum;			// 플레이어 절대위치
+	    	playerTotalPosition[turnCount] += selectLandNum+10;	// 플레이어 누적위치
+	    	st.setOnFinished(e -> {
+	    		playerMove(0);
+//	    		nextTurn();
+	        });
+    	}
+    }
 
     // 반복문으로 사용할 수 있게 배열에 관련 자료를 저장
     void profileSettting() {
@@ -242,7 +343,16 @@ public class BluemarbleGameController implements Initializable {
     void nextTurn(){
         //더블이 아니면 다음턴 전환
         if(!isDouble)turnCount++;
+    	if(turnCount > playerCnt) turnCount = 1; // 플레이어 턴 재배정
         showProfileHighlight();
+        showDiceButton();
+        // 우주여행을 가야하는 경우 주사위 숨기기
+        if(isArrivalSpaceTravel[turnCount]) {
+        	System.out.println(turnCount+"플레이어 우주여행 시작");
+        	hideDiceButton();
+        }
+        currentLandOwner = null;
+        currentLandType = null;
     }
 
     //현재 턴인 유저 프로필에 하이라이트 추가
@@ -277,6 +387,7 @@ public class BluemarbleGameController implements Initializable {
     }
 
     boolean isDouble;
+    long socialMoneyStack = 0;	
     @FXML private Button btnRunDice;
     @FXML	// 주사위를 던지는 메소드
     void onClickRunDice(ActionEvent e) {
@@ -290,10 +401,18 @@ public class BluemarbleGameController implements Initializable {
             diceResult[i] = (int)(Math.random()*6)+1;
             diceIV[i].setImage(new Image(Main.class.getResourceAsStream("texture/"+diceResult[i]+".png")));
         }
-//        System.out.println("dice 1, 2 >> " + diceResult[0] + ", " + diceResult[1]);
-//        System.out.println("dice Total >> " + diceResult[0] + diceResult[1]);
-        playerMove(diceResult[0] + diceResult[1]);
-//        playerMove(8);
+        // 무인도 체크하는 조건
+        if( !(diceResult[0] == diceResult[1]) && islandExitCount[turnCount]>0) {
+        	islandExitCount[turnCount]--;
+        	System.out.println("[무인도 탈출 실패] 탈출까지 "+islandExitCount[turnCount]+"턴 남았습니다.");
+        	btnRunDice.setDisable(false);
+        	nextTurn();
+        }else {
+        	islandExitCount[turnCount] = 0;
+        	playerMove(diceResult[0]+diceResult[1]);
+//        	playerMove(5);
+        }
+//        playerMove(diceResult[0] + diceResult[1]);
 
         // 더블이 아닌경우 다음턴으로 넘어간다.
         if(diceResult[0] == diceResult[1]) {
@@ -310,6 +429,10 @@ public class BluemarbleGameController implements Initializable {
     // 현재 플레이어의 위치를 숫자로 저장하는 배열
     int playerTotalPosition[] = new int[5];
     int playerPosition[] = new int[5];
+    byte[] islandExitCount = new byte[5]; 	// 무인도 탈출까지 몇 턴 남았는지 저장하는 배열
+    boolean[] isArrivalSpaceTravel = new boolean[5]; // 플레이어별로 우주여행에 도착했는지 확인하는 배열
+    byte[] diceMulitple = { 1,1,1,1,1 };		// [황금카드]주사위 보정값
+    boolean[] isTollFree = new boolean[5];		// [황금카드]통행료 무료 여부
 
     // 게임 시작시 스타트팬에 캐릭터 추가
     void assignPlayer() {
@@ -325,10 +448,15 @@ public class BluemarbleGameController implements Initializable {
     }
 
     int setDuration(int val) { return val * 100; }
-
+    int prePlayerPosition;	// 월급 주기위해 체크하려고 만든 변수
     // 주사위 굴렸을때 플레이어 이동에 관련된 메소드
     void playerMove(int diceNum) {
         int LandPaneTotalCnt = 40;
+        diceNum *= diceMulitple[turnCount]; // 황금카드 주사위 2배 확인
+        diceMulitple[turnCount] = 1;
+
+        // 한 번만 살 수 있는 땅 리스트
+        AnchorPane[] justOneLand = {jejuPane, concordePane, busanPane, queenElizabethPane, colombiaPane, seoulPane};
         AnchorPane[] LandPaneList = {startPane, taibeiPane, goldCardPane1, hongKongPane, manilaPane,
                 jejuPane, singaporePane, goldCardPane2, cairoPane, istanbulPane,
                 islandPane, athenaePane, goldCardPane3, copenhagenPane, stockholmPane,
@@ -346,12 +474,6 @@ public class BluemarbleGameController implements Initializable {
         SequentialTransition st;	// 애니메이션을 차례대로 동작시키는 함수
 
         setBuildingPrice(LandPaneList[movePosition].getId().toString());
-        /*
-         * <<<<수정해야할 사항>>>>
-         * Duratuion을 이동하는 칸에 비례해서 계산하는 식을 하나 짜야할듯함.
-         * 지금 돌려보면 판은 제대로 돌아도 커브를 돌때 이동속도가 제각각이됨.
-         * ++ 바라보는 각도 변경
-         */
         // 목적지 까지 가는 이동 애니매이션
         TranslateTransition tt = new TranslateTransition(new Duration(setDuration(diceNum)), playerHorseImg[turnCount]);
         tt.setToX(endX);
@@ -368,38 +490,76 @@ public class BluemarbleGameController implements Initializable {
             st = new SequentialTransition(playerHorseImg[turnCount],tt);
         }
 
+        prePlayerPosition = playerPosition[turnCount];
         playerTotalPosition[turnCount] += diceNum;	// 플레이어 위치 누적 기록
         playerPosition[turnCount] = movePosition;    // 플레이어 절대 위치 기록
-
+        if(prePlayerPosition>playerPosition[turnCount]) {
+        	// 출발지를 지난경우 월급 지급
+        	player[turnCount].setMoney(player[turnCount].money() +salaryMoney);
+        	refreshMoney();
+        }
         //이동 종료
         st.setOnFinished(e -> {
             boolean isGoldCardPane = false;
 
-            //이전 빌딩 체크상태 및 메시지 초기화
-            cbVillaPrice.setSelected(false);
-            cbBuildingPrice.setSelected(false);
-            cbHotelPrice.setSelected(false);
-            cbVillaPrice.setDisable(false);
-            cbBuildingPrice.setDisable(false);
-            cbHotelPrice.setDisable(false);
-            tDocumentMessage.setText("");
-
-            //무시할 대상 초기화
-            ignoreVilla = false;
-            ignoreBuilding = false;
-            ignoreHotel = false;
+            //땅 구매 문서 모달 초기화
+            initGroundDocumentModal();
 
             //땅 주인이 없을 때
             if(currentLandOwner == null) {
+            	System.out.println(currentLandOwner);
                 System.out.println("NULL 땅 주인이 존재하지 않음");
+
+                //한 번만 구매 가능한 관광지 확인
+                for(Pane p : justOneLand){
+                    if(LandPaneList[playerPosition[turnCount]] == p){
+                        //팬 클릭 무시
+                        ignoreVilla = true;
+                        ignoreBuilding = true;
+                        ignoreHotel = true;
+                        //체크박스 클릭 무시
+                        cbVillaPrice.setDisable(true);
+                        cbBuildingPrice.setDisable(true);
+                        cbHotelPrice.setDisable(true);
+                        //팬 비활성화
+                        pVillaPrice.setVisible(false);
+                        pBuildingPrice.setVisible(false);
+                        pHotelPrice.setVisible(false);
+
+                        onShowGroundDocumentModal(LandListKor[playerPosition[turnCount]]);
+                    }
+                }
 
                 if(LandPaneList[playerPosition[turnCount]] == startPane) {
                     // 도착한곳이 출발지 인 경우
+                	nextTurn();
                 }else if(LandPaneList[playerPosition[turnCount]] == islandPane){
                     // 도착한 곳이 무인도 인 경우
+                	islandExitCount[turnCount] = 3;
+                	isDouble = false;
+                	nextTurn();
                 }else if (LandPaneList[playerPosition[turnCount]] == spacePane) {
                     // 도착한 곳이 우주여행 인 경우
-                }else {
+                	isArrivalSpaceTravel[turnCount] = true;
+                	isDouble = false;
+                	nextTurn();
+                }else if(LandPaneList[playerPosition[turnCount]] == socialMoneyPayPane){
+                	// 도착한 곳이 사회복지기금 내는곳 인 경우
+                	player[turnCount].setMoney(player[turnCount].money()-150000);
+                	socialMoneyStack += 150000;
+                	refreshMoney();
+                	player[turnCount].refreshAsset();
+                	ivSocialMoney.setVisible(true);
+                	nextTurn();
+                }else if(LandPaneList[playerPosition[turnCount]] == socialMoneyGetPane) {
+                	// 도착한 곳이 사회복지기금 받는곳인 경우
+                	player[turnCount].setMoney(player[turnCount].money()+socialMoneyStack);
+                	socialMoneyStack = 0;
+                	refreshMoney();
+                	player[turnCount].refreshAsset();
+                	ivSocialMoney.setVisible(false);
+                	nextTurn();
+                } else {
                     for(int i = 0 ; i < goldCardPaneNum.length ; i++) {
                         if( playerPosition[turnCount] == goldCardPaneNum[i]) {
                             isGoldCardPane = true;
@@ -408,22 +568,31 @@ public class BluemarbleGameController implements Initializable {
                     if(isGoldCardPane) {
                         // 도착한 곳이 골드카드 인 경우
                         goldcard.choiceRandomGoldCard();
-                    }else {
+                        nextTurn();
+                    } else {
                         onShowGroundDocumentModal(LandListKor[movePosition]);
                     }
                 }
-
                 //땅 주인과 현재 플레이어가 같을 때
             } else if(currentLandOwner.equals(player[turnCount].nickname())){
                 System.out.println("O 땅 주인과 현재 플레이어가 동일함");
+            	System.out.println(currentLandOwner);
 
+                //한 번만 구매 가능한 관광지 확인
+                for(Pane p : justOneLand){
+                    if(LandPaneList[playerPosition[turnCount]] == p){
+                        nextTurn();
+                    }
+                }
+
+                isTollFree[turnCount] = false;
                 //모든 건물을 구매했으면 바로 다음 턴
-                if(currentLandType.equals("111")) {
+                if(currentLandType != null && currentLandType.equals("111")) {
                     System.out.println("모든 건물을 구매함");
+                    nextTurn();
                 } else {
                     char[] typeArr = currentLandType.toCharArray();
                     System.out.println("currentLandType >> " + currentLandType);
-
     //                구매된 토지 중복 선택 불가
                     if(typeArr[0] == '1'){
                         ignoreVilla = true;
@@ -444,6 +613,7 @@ public class BluemarbleGameController implements Initializable {
                 }
                 //땅 주인과 현재 플레이어가 다를 때
             } else {
+            	System.out.println(currentLandOwner);
                 System.out.println("X 땅 주인과 현재 플레이어가 동일하지 않음");
 
                 char[] payLandType = currentLandType.toCharArray();
@@ -460,31 +630,35 @@ public class BluemarbleGameController implements Initializable {
                     payMoney += building.passHotel();
                 }
 
-                // 플레이어가 차감될 금액이 충분할 때
-                if(playerMoney >= payMoney){
-                    
-                    //현재 플레이어 통행료 납부
-                    player[turnCount].setMoney(playerMoney - payMoney);
-                    System.out.println("[ Bluemarble ] 통행료 납부 >> " + turnCount + " 플레이어가 " + payMoney + "원을 지불했습니다.");
-                    
-                    //땅 주인에게 통행료 전달
-                    for(int i = 1; i <= playerCnt; i++){
-                        if(currentLandOwner.equals(player[i].nickname())){
-//                            System.out.println("지불 대상 존재");
-                            player[i].setMoney(player[i].money() + payMoney);
-                        }
-                    }
-
-                    //턴이 넘어가는 경우(토지 구매, 토지 구매 취소, 통행료 납부)
-                    //더블이 아니면 다음 턴
-                    nextTurn();
+                // 플레이어가 차감될 금액이 충분할 때 or 황금카드 통행료 면제 뽑앗을 경우
+                if((playerMoney >= payMoney || isTollFree[turnCount])){
+                	if(isTollFree[turnCount]) {
+                		isTollFree[turnCount] = false;                		
+                		System.out.println("[ Bluemarble ] 통행료 납부 >> " + turnCount + "플레이어가 황금카드 효과로 통행료가 면제되었습니다.");
+                		nextTurn();
+                	}else {
+	                    //현재 플레이어 통행료 납부
+	                    player[turnCount].setMoney(playerMoney - payMoney);
+	                    System.out.println("[ Bluemarble ] 통행료 납부 >> " + turnCount + " 플레이어가 " + payMoney + "원을 지불했습니다.");
+	                    
+	                    //땅 주인에게 통행료 전달
+	                    for(int i = 1; i <= playerCnt; i++){
+	                        if(currentLandOwner.equals(player[i].nickname())){
+	//                            System.out.println("지불 대상 존재");
+	                            player[i].setMoney(player[i].money() + payMoney);
+	                        }
+	                    }
+	
+	                    //턴이 넘어가는 경우(토지 구매, 토지 구매 취소, 통행료 납부)
+	                    //더블이 아니면 다음 턴
+	                    nextTurn();
+                	}
                 } else {
                 // 플레이어가 지불할 금액이 모자랄 때
                 /* 게임 종료 조건
                 * 지정된 턴 수를 초과 했을 때, 한 사람이 파산했을 때 시점으로
                 * 가장 현금이 많은 사람이 승리
                  */
-
                     //현재 유저 파산 처리
                     player[turnCount].setMoney(0);
                     setGameOver();
@@ -507,7 +681,6 @@ public class BluemarbleGameController implements Initializable {
         pDiceShadow.setVisible(false);
         btnRunDice.setVisible(false);
     }
-
 
     void initDice(){
         lbDiceNumber.setVisible(false);
@@ -543,6 +716,9 @@ public class BluemarbleGameController implements Initializable {
     @FXML CheckBox cbVillaPrice;
     @FXML CheckBox cbBuildingPrice;
     @FXML CheckBox cbHotelPrice;
+    @FXML Pane pVillaPrice;
+    @FXML Pane pBuildingPrice;
+    @FXML Pane pHotelPrice;
 
     //플레이어가 현재 밟은 땅, 땅의 주인, 땅의 타입
     String currentLand;
@@ -575,7 +751,6 @@ public class BluemarbleGameController implements Initializable {
         tVillaPrice.setText(Integer.toString(building.buyVilla()));
         tBuildingPrice.setText(Integer.toString(building.buyBuilding()));
         tHotelPrice.setText(Integer.toString(building.buyHotel()));
-
 //        System.out.println("landId >> " + landId);
 //        System.out.println("currentLandOwner >> " + currentLandOwner);
 //        System.out.println("currentLandType >> " + currentLandType);
@@ -595,21 +770,21 @@ public class BluemarbleGameController implements Initializable {
 
        if(buildId.equals("pVillaPrice")){
             if (!ignoreVilla) {
-                System.out.println("빌라 무시 안함");
+//                System.out.println("빌라 무시 안함");
                 if (cbVillaPrice.isSelected()) cbVillaPrice.setSelected(false);
                 else cbVillaPrice.setSelected(true);
             }
         }
         if(buildId.equals("pBuildingPrice")) {
             if(!ignoreBuilding) {
-                System.out.println("빌딩 무시 안함");
+//                System.out.println("빌딩 무시 안함");
                 if (cbBuildingPrice.isSelected()) cbBuildingPrice.setSelected(false);
                 else cbBuildingPrice.setSelected(true);
             }
         }
         if(buildId.equals("pHotelPrice")) {
             if(!ignoreHotel) {
-                System.out.println("호텔 무시 안함");
+//                System.out.println("호텔 무시 안함");
                 if (cbHotelPrice.isSelected()) cbHotelPrice.setSelected(false);
                 else cbHotelPrice.setSelected(true);
             }
@@ -777,9 +952,40 @@ public class BluemarbleGameController implements Initializable {
     }
 
     void initGroundDocumentModal() {
+        //이전 빌딩 체크상태 및 메시지 초기화
+        cbVillaPrice.setSelected(false);
+        cbBuildingPrice.setSelected(false);
+        cbHotelPrice.setSelected(false);
+        cbVillaPrice.setDisable(false);
+        cbBuildingPrice.setDisable(false);
+        cbHotelPrice.setDisable(false);
+        pVillaPrice.setVisible(true);
+        pBuildingPrice.setVisible(true);
+        pHotelPrice.setVisible(true);
+        tDocumentMessage.setText("");
+
+        //무시할 대상 초기화
+        ignoreVilla = false;
+        ignoreBuilding = false;
+        ignoreHotel = false;
+
         apGroundDocumentModal.setVisible(false);
     }
-
+    // ==================================================
+    //              Gold Card Modal
+    // ==================================================
+    @FXML private ImageView ivGoldCardImage;
+    @FXML private AnchorPane apGoldCardModal;
+    @FXML
+    void onClickGoldCardModalClose(MouseEvent event) {
+    	apGoldCardModal.setVisible(false);
+    	 btnRunDice.setDisable(false);
+    }
+    void goldCardSetImage(Image image) {
+    	 btnRunDice.setDisable(true);
+    	ivGoldCardImage.setImage(image);
+    	apGoldCardModal.setVisible(true);
+    }
     // ==================================================
     //              Start Bluemarble Modal
     // ==================================================

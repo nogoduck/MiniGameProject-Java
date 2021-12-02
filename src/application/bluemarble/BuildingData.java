@@ -36,8 +36,8 @@ public class BuildingData{
 	}
 
 	void startPoint() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;  buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;  passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 타이베이
 	void Taibei() {
@@ -47,8 +47,8 @@ public class BuildingData{
 	// 황금카드1번
 
 	void goldCard1() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 홍콩
 	void HongKong() {
@@ -62,8 +62,8 @@ public class BuildingData{
 	}
 	//제주도
 	void Jeju() {
-		buyLand = 100000;
-		passLand = 150000;
+		buyLand = 100000;  buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 150000; passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 싱가포르
 	void Singapore() {
@@ -73,14 +73,13 @@ public class BuildingData{
 
 	// 황금카드2번
 	void goldCard2() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 카이로
 	void Cairo() {
 		buyLand = 100000;	buyVilla = 50000;	buyBuilding = 150000;	buyHotel = 250000;
 		passLand = 6000;	passVilla = 30000;	passBuilding = 270000;	passHotel = 550000;
-//		passLand = 6000000;	passVilla = 30000;	passBuilding = 270000;	passHotel = 550000;
 	}
 	// 이스탄불
 	void Istanbul() {
@@ -92,8 +91,8 @@ public class BuildingData{
 	 */
 	// 무인도
 	void isLand() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 아테네
 	void Athenae() {
@@ -102,8 +101,8 @@ public class BuildingData{
 	}
 	// 황금카드3번
 	void goldCard3() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 코펜하겐
 	void Copenhagen() {
@@ -127,8 +126,8 @@ public class BuildingData{
 	}
 	// 황금카드4번
 	void goldCard4() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 베를린
 	void Berlin() {
@@ -147,8 +146,8 @@ public class BuildingData{
 	 */
 	// 사회복지기금
 	void socialMoneyGet(){
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 부에노스아이레스
 	void BuenosAires() {
@@ -157,8 +156,8 @@ public class BuildingData{
 	}
 	// 황금카드5번
 	void goldCard5() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 상파울루
 	void SaoPaulo() {
@@ -200,8 +199,8 @@ public class BuildingData{
 	 */
 	// 우주여행
 	void spaceTraval() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 도쿄
 	void Tokyo() {
@@ -225,8 +224,8 @@ public class BuildingData{
 	}
 	// 황금카드6번
 	void goldCard6() {
-		buyLand = 0;
-		passLand = 0;
+		buyLand = 0;	buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 0;	passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 	// 런던
 	void London() {
@@ -240,8 +239,8 @@ public class BuildingData{
 	}
 	// 서울
 	void Seoul() {
-		buyLand = 700000;
-		passLand = 800000;
+		buyLand = 700000;  buyVilla = 0;	buyBuilding = 0;	buyHotel = 0;
+		passLand = 800000; passVilla = 0;	passBuilding = 0;	passHotel = 0;
 	}
 
 
