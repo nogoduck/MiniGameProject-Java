@@ -585,7 +585,7 @@ public class BluemarbleGameController implements Initializable {
                 //땅 주인과 현재 플레이어가 같을 때
             } else if(currentLandOwner.equals(player[turnCount].nickname())){
                 System.out.println("O 땅 주인과 현재 플레이어가 동일함");
-            	System.out.println(currentLandOwner);
+//            	System.out.println(currentLandOwner);
 
                 //한 번만 구매 가능한 관광지 확인
                 for(Pane p : justOneLand){
@@ -908,23 +908,47 @@ public class BluemarbleGameController implements Initializable {
         if(playerMoney >= buyMoney){
 
             //이전의 땅 구매 내역이 있으면 비교해서 금액 합산
-            if(!(currentLandType == null)) {
+            if(currentLandType != null) {
                 char[] currentLandTypeArr = currentLandType.toCharArray();
                 System.out.println("[ Bluemarble ] 땅 구매 내역 존재");
                 buyMoney = Integer.parseInt(tLandPrice.getText());
 
+                
+                // ####################################
+                // 발생 조건: 땅을 산 후 턴을 돌고 다시 와서 건물을 구매할 때 발생
+                // 현상: 땅 값을 추가해서 계산이 됌
+                // 해결 사항: 땅을 산 후 다시 땅을 살 땐 금액이 나가지 않도록 처리했지만
+                // 땅을 산 후 다른 건물을 추가로 구매할 때 땅의 구매여부를 알기 어렵다
+                // ####################################
+                
+                //이전에 구매한 토지 금액에서 제외
                 if(currentLandTypeArr[0] == selectTypeArr[0]){
-                    System.out.println("빌리 이미 구매");
+//                    System.out.println("빌라는 이전에 구매했습니다.");
+                } else {
                     buyMoney += Integer.parseInt(tVillaPrice.getText());
                 }
+                
                 if(currentLandTypeArr[1] == selectTypeArr[1]){
-                    System.out.println("빌딩 이미 구매");
+//                    System.out.println("빌딩은 이전에 구매했습니다.");
+                } else {
                     buyMoney += Integer.parseInt(tBuildingPrice.getText());
                 }
+                
                 if(currentLandTypeArr[2] == selectTypeArr[2]){
-                    System.out.println("호텔 이미 구매");
+//                    System.out.println("호텔은 이전에 구매했습니다.");
+                } else {
                     buyMoney += Integer.parseInt(tHotelPrice.getText());
                 }
+
+                //이전의 선택과 현재의 선택이 같은지 확인
+                if(currentLandType.equals(selectType)){
+                    buyMoney = 0;
+                }
+
+
+            } else {
+                // 이전 땅 구매 내역이 없을 때
+
             }
 
             //땅 구매
