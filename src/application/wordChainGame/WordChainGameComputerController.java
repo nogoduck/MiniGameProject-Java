@@ -86,6 +86,7 @@ public class WordChainGameComputerController implements Initializable {
             connection.setRequestMethod("GET");
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             findWord = (br.readLine());
+            System.out.println("findWord >> " + findWord);
             // 단어 전처리 과정
             findWord = findWord.substring(findWord.indexOf("(")+1, findWord.indexOf(")"));
             String[] wordBox = findWord.split(",");

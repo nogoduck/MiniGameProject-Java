@@ -71,10 +71,11 @@ public class OmokController implements Initializable{
 		if(board[x][y]!= 'O')return true;
 		return false;
 	}
+
 	// 게임이 끝났는지 확인
 	char isWin(int x, int y) {
-		boolean check[][]= new boolean[15][15];
 		for(int i = 0; i < 4; i++) {
+			boolean check[][]= new boolean[15][15];
 			int stoneCnt = 0;
 			Queue<Integer>q = new LinkedList<>();
 			q.add(x);
@@ -105,6 +106,7 @@ public class OmokController implements Initializable{
 		}//for-i
 		return 'n';
 	}
+
 	// 지금 누구의 턴인지 체크
 	void turnCheck() {
 		if(count % 2 == 0) {
@@ -115,38 +117,37 @@ public class OmokController implements Initializable{
 			turnText.setText("백돌의 차례입니다");
 		}
 	}
-	int asdf = 10000;		// 프로그래시브 바 자연스럽게 흘러가게 
+
+	// 진행바
+	int progressBarState = 10000;
 	TimerTask timerTask;
 	Timer timer = new Timer("boardTimer");
+
+	// 타이머 시작
 	public TimerTask createTask() {
 		limitTime = 10;
-		asdf = 10000;
+		progressBarState = 10000;
 		return new TimerTask() {
 			@Override
 			public void run() {
-				asdf = asdf-1;
-				progressBarTimeLimited.progressProperty().set(asdf*0.0001);	// 프로그래시브바 설정
+				progressBarState = progressBarState - 1;
+				progressBarTimeLimited.progressProperty().set(progressBarState * 0.0001);
 					setLimitTime(limitTime);
-					if(asdf%1000 == 0) {
-					limitTime--;
-					}
+					if(progressBarState % 1000 == 0) limitTime--;
 					if(limitTime <= 0) {
 						cancel();
-						Platform.runLater(()->{
+						Platform.runLater(() -> {
 							setLimitTime(limitTime);
-//							progressBarTimeLimited.progressProperty().set(0);
-							//char swapStoneType = (stoneType == 'B') ? 'W' : 'B';
-							//onShowResetModal(swapStoneType, 't');
 							onShowResetModal(stoneType, 't');
 					});
 				}
 			}
 		};
 	}
+
+	// 타이머 재시작
 	void runTimer() {
-		if(timerTask != null) {
-			timerTask.cancel();
-		}
+		if(timerTask != null) timerTask.cancel();
 		timerTask = createTask();
 		timer.scheduleAtFixedRate(timerTask, 0, 1);
 	}
@@ -438,7 +439,6 @@ public class OmokController implements Initializable{
 			resetBoard();
 		}
 	}
-
 
 	@FXML	// 사용자가 돌을 놓음
 	void onClickBoard(MouseEvent e) {
